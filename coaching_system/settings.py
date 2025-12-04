@@ -34,6 +34,9 @@ INSTALLED_APPS = [
     'storages',
 ]
 
+AUTH_USER_MODEL = 'core.User'
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
