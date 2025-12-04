@@ -1,0 +1,203 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Coaching System{% endblock %}</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    
+    {% if user.is_authenticated %}
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container-fluid">
+            <button class="btn btn-link d-md-none me-3" id="sidebarToggle">
+                <i data-feather="menu"></i>
+            </button>
+            <a class="navbar-brand" href="{% url 'dashboard' %}">
+                <i data-feather="book-open" class="me-2"></i>CoachingSys
+            </a>
+            <div class="d-flex ms-auto align-items-center">
+                <span class="me-3 d-none d-md-inline">Welcome, {{ user.first_name|default:user.username }}</span>
+                <form action="{% url 'logout' %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill">Logout</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}" href="{% url 'dashboard' %}">
+                                <i data-feather="home"></i> Dashboard
+                            </a>
+                        </li>
+                        
+                        {% if user.is_teacher %}
+                        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                            <span>Administration</span>
+                        </h6>
+                        <li class="nav-item">
+                            <a class="nav-link {% if 'students' in request.path %}active{% endif %}" href="{% url 'student_list' %}">
+                                <i data-feather="users"></i> Students
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if 'batches' in request.path %}active{% endif %}" href="{% url 'batch_list' %}">
+                                <i data-feather="layers"></i> Batches
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if 'attendance' in request.path %}active{% endif %}" href="{% url 'attendance_dashboard' %}">
+                                <i data-feather="check-circle"></i> Attendance
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if 'fees' in request.path %}active{% endif %}" href="{% url 'fee_list' %}">
+                                <span class="fw-bold d-inline-block text-center" style="width: 24px;">₹</span> Fees
+                            </a>
+                        </li>
+
+                        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                            <span>Academics</span>
+                        </h6>
+                        <li class="nav-item">
+                            <a class="nav-link {% if 'materials' in request.path %}active{% endif %}" href="{% url 'material_list' %}">
+                                <i data-feather="file-text"></i> Materials
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if 'assignments' in request.path %}active{% endif %}" href="{% url 'assignment_list' %}">
+                                <i data-feather="clipboard"></i> Assignments
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if 'exams' in request.path %}active{% endif %}" href="{% url 'exam_list' %}">
+                                <i data-feather="edit-3"></i> Exams
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if 'announcements' in request.path %}active{% endif %}" href="{% url 'announcement_list' %}">
+                                <i data-feather="bell"></i> Announcements
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if 'enquiries' in request.path %}active{% endif %}" href="{% url 'enquiry_list' %}">
+                                <i data-feather="message-square"></i> Enquiries
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% if user.is_student %}
+                        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                            <span>My Learning</span>
+                        </h6>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'student_attendance' %}">
+                                <i data-feather="check-circle"></i> My Attendance
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'student_marks' %}">
+                                <i data-feather="bar-chart-2"></i> My Marks
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'assignment_list' %}">
+                                <i data-feather="clipboard"></i> Assignments
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'student_materials' %}">
+                                <i data-feather="file-text"></i> Study Materials
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'my_fees' %}">
+                                <span class="fw-bold d-inline-block text-center" style="width: 24px;">₹</span> Fee History
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'announcement_list' %}">
+                                <i data-feather="bell"></i> Announcements
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-4">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">{% block header %}Dashboard{% endblock %}</h1>
+                </div>
+
+    {% endif %}
+
+    <!-- Main Content Block (Defined Once) -->
+    {% block content %}{% endblock %}
+
+    {% if user.is_authenticated %}
+            </main>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        feather.replace();
+        
+        // Mobile Sidebar Toggle
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebarMenu');
+        if(sidebarToggle) {
+            sidebarToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('show');
+                sidebar.classList.toggle('active'); // For custom CSS handling
+            });
+        }
+
+        // Global Form Styling
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="hidden"]), textarea, select').forEach(el => {
+                el.classList.add('form-control');
+            });
+            document.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach(el => {
+                el.classList.add('form-check-input');
+            });
+        });
+
+
+    </script>
+
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

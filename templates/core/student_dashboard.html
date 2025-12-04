@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %}Student Dashboard{% endblock %}
+
+{% block header %}My Dashboard{% endblock %}
+
+{% block content %}
+<div class="row g-4 mb-4">
+    {% if fee_due %}
+    <div class="col-12">
+        <div class="alert alert-danger d-flex align-items-center shadow-sm" role="alert">
+            <i data-feather="alert-circle" class="me-2"></i>
+            <div>
+                <strong>Fee Payment Reminder:</strong> Your fees are due. Please pay as soon as possible to avoid interruptions.
+            </div>
+            <a href="{% url 'my_fees' %}" class="btn btn-sm btn-danger ms-auto">Pay Now</a>
+        </div>
+    </div>
+    {% endif %}
+    <div class="col-md-4">
+        <div class="card h-100 border-start border-4 border-primary">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <p class="text-muted mb-1">My Batch</p>
+                        <h4 class="mb-0 fw-bold text-primary">{{ batch.name }}</h4>
+                    </div>
+                    <div class="bg-primary bg-opacity-10 p-3 rounded-circle">
+                        <i data-feather="users" class="text-primary"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 border-start border-4 border-success">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <p class="text-muted mb-1">Attendance</p>
+                        <h4 class="mb-0 fw-bold text-success">85%</h4> <!-- Placeholder for now -->
+                    </div>
+                    <div class="bg-success bg-opacity-10 p-3 rounded-circle">
+                        <i data-feather="check-circle" class="text-success"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 border-start border-4 border-info">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <p class="text-muted mb-1">Next Exam</p>
+                        {% if next_exam %}
+                        <h5 class="mb-0 fw-bold text-info">{{ next_exam.subject.name }} ({{ next_exam.date|date:"M d" }})</h5>
+                        {% else %}
+                        <h5 class="mb-0 fw-bold text-muted">No upcoming exams</h5>
+                        {% endif %}
+                    </div>
+                    <div class="bg-info bg-opacity-10 p-3 rounded-circle">
+                        <i data-feather="calendar" class="text-info"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-8">
+        <div class="card h-100">
+            <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Recent Announcements</h5>
+                <a href="{% url 'announcement_list' %}" class="btn btn-sm btn-outline-primary rounded-pill">View All</a>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    {% for announcement in recent_announcements %}
+                    <li class="list-group-item bg-transparent px-0">
+                        <div class="d-flex justify-content-between mb-1">
+                            <h6 class="mb-0">{{ announcement.title }}</h6>
+                            <small class="text-muted">{{ announcement.created_at|timesince }} ago</small>
+                        </div>
+                        <p class="text-muted small mb-0">{{ announcement.content|truncatewords:20 }}</p>
+                    </li>
+                    {% empty %}
+                    <li class="list-group-item bg-transparent text-center text-muted">No announcements.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-header bg-transparent border-0">
+                <h5 class="mb-0">Quick Links</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{% url 'student_marks' %}" class="btn btn-outline-primary text-start">
+                        <i data-feather="bar-chart-2" class="me-2"></i> View Marks
+                    </a>
+                    <a href="{% url 'assignment_list' %}" class="btn btn-outline-success text-start">
+                        <i data-feather="clipboard" class="me-2"></i> Submit Assignment
+                    </a>
+                    <a href="#" class="btn btn-outline-info text-start">
+                        <i data-feather="file-text" class="me-2"></i> Study Materials
+                    </a>
+                    <a href="{% url 'my_fees' %}" class="btn btn-outline-warning text-start">
+                        <span class="fw-bold me-2">₹</span> Fee Receipts
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

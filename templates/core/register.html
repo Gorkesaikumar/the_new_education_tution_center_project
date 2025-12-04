@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h3>Create Account</h3>
+            <p class="text-muted">Join our learning community today</p>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="mb-3">
+                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <div class="text-danger small">{{ field.errors.0 }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <div class="d-grid gap-2 mt-4">
+                <button type="submit" class="btn btn-primary btn-lg">Register</button>
+            </div>
+        </form>
+        <div class="text-center mt-4">
+            <p>Already have an account? <a href="{% url 'login' %}" class="text-primary text-decoration-none">Login here</a></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Dynamic field visibility based on role
+        const roleInputs = document.querySelectorAll('input[name="role"]');
+        const phoneInput = document.getElementById('id_phone_number');
+        const addressInput = document.getElementById('id_address');
+        
+        function toggleFields() {
+            const selectedRole = document.querySelector('input[name="role"]:checked');
+            if (selectedRole) {
+                const display = selectedRole.value === 'student' ? 'block' : 'none';
+                if(phoneInput) phoneInput.closest('.mb-3').style.display = display;
+                if(addressInput) addressInput.closest('.mb-3').style.display = display;
+            }
+        }
+
+        roleInputs.forEach(input => {
+            input.addEventListener('change', toggleFields);
+        });
+        
+        // Initial check
+        toggleFields();
+    });
+</script>
+{% endblock %}

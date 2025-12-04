@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}Enquiries | Coaching System{% endblock %}
+
+{% block header %}Enquiries{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Date</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for enquiry in enquiries %}
+                    <tr>
+                        <td>{{ enquiry.created_at|date:"M d, Y H:i" }}</td>
+                        <td class="fw-bold">{{ enquiry.full_name }}</td>
+                        <td>
+                            <a href="mailto:{{ enquiry.email }}" class="text-decoration-none">
+                                {{ enquiry.email }}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="tel:{{ enquiry.phone_number }}" class="text-decoration-none">
+                                {{ enquiry.phone_number }}
+                            </a>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#messageModal{{ enquiry.id }}">
+                                View Message
+                            </button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-4 text-muted">
+                            <i data-feather="inbox" class="mb-2" style="width: 32px; height: 32px;"></i>
+                            <p class="mb-0">No enquiries found.</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modals -->
+{% for enquiry in enquiries %}
+<div class="modal fade" id="messageModal{{ enquiry.id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Message from {{ enquiry.full_name }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-break">{{ enquiry.message }}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a href="mailto:{{ enquiry.email }}" class="btn btn-primary">Reply via Email</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

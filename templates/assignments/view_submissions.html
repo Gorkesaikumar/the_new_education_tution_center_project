@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Submissions - {{ assignment.title }}{% endblock %}
+
+{% block header %}Submissions: {{ assignment.title }}{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Submissions: {{ assignment.title }}</h5>
+        <span class="badge bg-info bg-opacity-10 text-info rounded-pill">{{ assignment.batch.name }}</span>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="border-0">Student</th>
+                        <th class="border-0">Submitted At</th>
+                        <th class="border-0">File</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for submission in submissions %}
+                    <tr>
+                        <td class="align-middle">{{ submission.student.get_full_name|default:submission.student.username }}</td>
+                        <td class="align-middle">{{ submission.submitted_at|date:"M d, Y H:i" }}</td>
+                        <td class="align-middle">
+                            {% if submission.file %}
+                            <a href="{{ submission.file.url }}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill">
+                                <i data-feather="download" class="me-1" style="width: 14px; height: 14px;"></i> View File
+                            </a>
+                            {% else %}
+                            <span class="text-muted small">No file</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center py-4 text-muted">No submissions yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer bg-transparent border-top-0">
+        <a href="{% url 'assignment_list' %}" class="btn btn-secondary rounded-pill">Back to Assignments</a>
+    </div>
+</div>
+{% endblock %}

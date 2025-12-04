@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}Batches{% endblock %}
+
+{% block header %}Batches{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Batches</h5>
+        <a href="{% url 'batch_create' %}" class="btn btn-primary btn-sm rounded-pill">
+            <i data-feather="plus" class="me-1"></i> Create Batch
+        </a>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="border-0">Name</th>
+                        <th class="border-0">Start Date</th>
+                        <th class="border-0">End Date</th>
+                        <th class="border-0">Subjects</th>
+                        <th class="border-0">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for batch in batches %}
+                    <tr>
+                        <td class="align-middle fw-bold">{{ batch.name }}</td>
+                        <td class="align-middle">{{ batch.start_date }}</td>
+                        <td class="align-middle">{{ batch.end_date }}</td>
+                        <td class="align-middle">
+                            {% for subject in batch.subjects.all %}
+                                <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill me-1">{{ subject.name }}</span>
+                            {% empty %}
+                                <span class="text-muted small">No subjects</span>
+                            {% endfor %}
+                        </td>
+                        <td class="align-middle">
+                            <a href="{% url 'batch_update' batch.pk %}" class="btn btn-sm btn-outline-secondary rounded-pill me-1">Edit</a>
+                            <a href="{% url 'batch_delete' batch.pk %}" class="btn btn-sm btn-outline-danger rounded-pill">Delete</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-4 text-muted">No batches found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

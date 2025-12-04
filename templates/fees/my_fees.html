@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}My Fees{% endblock %}
+
+{% block header %}My Fees{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-header bg-transparent border-0">
+        <h5 class="mb-0">My Fee History</h5>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="border-0">Date</th>
+                        <th class="border-0">Amount</th>
+                        <th class="border-0">Transaction ID</th>
+                        <th class="border-0">Receipt</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for payment in payments %}
+                    <tr>
+                        <td class="align-middle">{{ payment.date|date:"M d, Y" }}</td>
+                        <td class="align-middle fw-bold text-success">₹{{ payment.amount }}</td>
+                        <td class="align-middle small text-muted">{{ payment.transaction_id }}</td>
+                        <td class="align-middle">
+                            <a href="{% url 'fee_receipt' payment.pk %}" class="btn btn-sm btn-outline-secondary rounded-pill" target="_blank">
+                                <i data-feather="printer" class="me-1" style="width: 14px; height: 14px;"></i> Download
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center py-4 text-muted">No fee payments found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

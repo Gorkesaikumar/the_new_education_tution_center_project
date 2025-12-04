@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}My Attendance{% endblock %}
+
+{% block header %}My Attendance{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Attendance History</h5>
+        <div class="text-muted">
+            Total Present: <span class="text-success fw-bold">{{ total_present }}</span> | 
+            Total Absent: <span class="text-danger fw-bold">{{ total_absent }}</span>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="border-0">Date</th>
+                        <th class="border-0">Batch</th>
+                        <th class="border-0">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in records %}
+                    <tr>
+                        <td class="align-middle">{{ record.date|date:"M d, Y" }}</td>
+                        <td class="align-middle">{{ record.batch.name }}</td>
+                        <td class="align-middle">
+                            {% if record.status == 'PRESENT' %}
+                                <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">Present</span>
+                            {% else %}
+                                <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-3">Absent</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center py-4 text-muted">No attendance records found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

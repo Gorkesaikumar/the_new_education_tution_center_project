@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Upload Material{% endblock %}
+
+{% block header %}Upload Material{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-transparent border-0">
+                <h5 class="mb-0">Upload Material</h5>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <a href="{% url 'material_list' %}" class="btn btn-secondary rounded-pill">Cancel</a>
+                        <button type="submit" class="btn btn-primary rounded-pill px-4">Upload</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
