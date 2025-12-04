@@ -78,8 +78,8 @@ DATABASES = {
 
 # STATIC FILES
 STATIC_URL = "/static/"
+STATIC_ROOT = "/var/www/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # GOOGLE CLOUD STORAGE MEDIA
