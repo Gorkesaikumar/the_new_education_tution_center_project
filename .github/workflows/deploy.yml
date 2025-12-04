@@ -2,7 +2,8 @@ name: Deploy to Production
 
 on:
   push:
-    branches: ["master"]
+    branches:
+      - master
 
 jobs:
   deploy:
@@ -12,20 +13,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Add SSH key
-        uses: webfactory/ssh-agent@v0.7.0
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v0.1.10
         with:
-          ssh-private-key: ${{ secrets.SSH_KEY }}
-
-      - name: Deployment to VM
-        run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-            cd ${{ secrets.PROJECT_DIR }}
-            git pull
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.DEPLOY_KEY_PRIVATE }}
+          script: |
+            cd ~/the_new_education_tution_center_project
+            git pull origin master
             source venv/bin/activate
             pip install -r requirements.txt
+            python manage.py migrate
             python manage.py collectstatic --noinput
-            python manage.py migrate --noinput
             sudo systemctl restart gunicorn
             sudo systemctl restart nginx
-          EOF
