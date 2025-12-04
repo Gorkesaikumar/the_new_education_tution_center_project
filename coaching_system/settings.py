@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     'assignments',
     'fees',
     'enquiries',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 # MIDDLEWARE
@@ -68,7 +70,12 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # MEDIA FILES
 MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+
 
 # DEFAULT PRIMARY KEY FIELD TYPE
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+
+CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
