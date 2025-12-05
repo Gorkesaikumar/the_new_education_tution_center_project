@@ -1,39 +1,42 @@
 {% extends 'base.html' %}
 {% block title %}My Fees{% endblock %}
 
-{% block header %}My Fees{% endblock %}
-
 {% block content %}
-<div class="card shadow-sm">
-    <div class="card-header bg-transparent border-0">
-        <h5 class="mb-0">My Fee History</h5>
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-transparent border-0 pt-4 px-4">
+        <h5 class="mb-0 fw-bold">My Fee History</h5>
     </div>
     <div class="card-body p-0">
         <div class="table-responsive">
-            <table class="table table-hover mb-0">
+            <table class="table table-hover align-middle mb-0">
                 <thead class="bg-light">
                     <tr>
-                        <th class="border-0">Date</th>
-                        <th class="border-0">Amount</th>
-                        <th class="border-0">Transaction ID</th>
-                        <th class="border-0">Receipt</th>
+                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold">Date</th>
+                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold">Amount</th>
+                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold">Transaction ID</th>
+                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold text-end">Receipt</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for payment in payments %}
                     <tr>
-                        <td class="align-middle">{{ payment.date|date:"M d, Y" }}</td>
-                        <td class="align-middle fw-bold text-success">₹{{ payment.amount }}</td>
-                        <td class="align-middle small text-muted">{{ payment.transaction_id }}</td>
-                        <td class="align-middle">
-                            <a href="{% url 'fee_receipt' payment.pk %}" class="btn btn-sm btn-outline-secondary rounded-pill" target="_blank">
+                        <td class="px-4 py-3 text-dark">{{ payment.date|date:"M d, Y" }}</td>
+                        <td class="px-4 py-3 fw-bold text-success">₹{{ payment.amount }}</td>
+                        <td class="px-4 py-3 small text-muted font-monospace">{{ payment.transaction_id }}</td>
+                        <td class="px-4 py-3 text-end">
+                            <a href="{% url 'fee_receipt' payment.pk %}" class="btn btn-sm btn-outline-secondary rounded-pill px-3" target="_blank">
                                 <i data-feather="printer" class="me-1" style="width: 14px; height: 14px;"></i> Download
                             </a>
                         </td>
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="4" class="text-center py-4 text-muted">No fee payments found.</td>
+                        <td colspan="4" class="text-center py-5">
+                            <div class="text-muted">
+                                <i data-feather="dollar-sign" style="width: 48px; height: 48px; opacity: 0.5;" class="mb-2"></i>
+                                <p class="mb-0">No fee payments found.</p>
+                            </div>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>

@@ -2,49 +2,52 @@
 
 {% block title %}Study Materials{% endblock %}
 
-{% block header %}Study Materials{% endblock %}
-
 {% block content %}
-<div class="card shadow-sm">
-    <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Study Materials</h5>
-        <a href="{% url 'material_upload' %}" class="btn btn-primary btn-sm rounded-pill">
-            <i data-feather="upload" class="me-1"></i> Upload Material
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center pt-4 px-4">
+        <h5 class="mb-0 fw-bold">Study Materials</h5>
+        <a href="{% url 'material_upload' %}" class="btn btn-primary rounded-pill px-4 shadow-sm">
+            <i data-feather="upload" class="me-2" style="width: 16px;"></i> Upload Material
         </a>
     </div>
     <div class="card-body p-0">
         <div class="table-responsive">
-            <table class="table table-hover mb-0">
+            <table class="table table-hover align-middle mb-0">
                 <thead class="bg-light">
                     <tr>
-                        <th class="border-0">Title</th>
-                        <th class="border-0">Batch</th>
-                        <th class="border-0">Subject</th>
-                        <th class="border-0">Uploaded By</th>
-                        <th class="border-0">Date</th>
-                        <th class="border-0">Actions</th>
+                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold">Title</th>
+                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold">Batch</th>
+                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold">Subject</th>
+                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold">Uploaded By</th>
+                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold">Date</th>
+                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold text-end">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for material in materials %}
                     <tr>
-                        <td class="align-middle">
-                            <a href="{{ material.file.url }}" target="_blank" class="text-decoration-none fw-bold">
-                                <i data-feather="file" class="me-1 text-muted" style="width: 16px; height: 16px;"></i>
+                        <td class="px-4 py-3">
+                            <a href="{{ material.file.url }}" target="_blank" class="text-decoration-none fw-medium text-dark d-flex align-items-center">
+                                <i data-feather="file-text" class="me-2 text-primary" style="width: 16px; height: 16px;"></i>
                                 {{ material.title }}
                             </a>
                         </td>
-                        <td class="align-middle"><span class="badge bg-info bg-opacity-10 text-info rounded-pill">{{ material.batch.name }}</span></td>
-                        <td class="align-middle">{{ material.subject.name|default:"-" }}</td>
-                        <td class="align-middle small text-muted">{{ material.uploaded_by.username }}</td>
-                        <td class="align-middle small text-muted">{{ material.uploaded_at|date:"M d, Y" }}</td>
-                        <td class="align-middle">
-                            <a href="{% url 'material_delete' material.pk %}" class="btn btn-sm btn-outline-danger rounded-pill">Delete</a>
+                        <td class="px-4 py-3"><span class="badge bg-info bg-opacity-10 text-info rounded-pill px-2 py-1 fw-medium">{{ material.batch.name }}</span></td>
+                        <td class="px-4 py-3 text-secondary">{{ material.subject.name|default:"-" }}</td>
+                        <td class="px-4 py-3 small text-muted">{{ material.uploaded_by.username }}</td>
+                        <td class="px-4 py-3 small text-muted">{{ material.uploaded_at|date:"M d, Y" }}</td>
+                        <td class="px-4 py-3 text-end">
+                            <a href="{% url 'material_delete' material.pk %}" class="btn btn-sm btn-outline-danger rounded-pill px-3">Delete</a>
                         </td>
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="6" class="text-center py-4 text-muted">No materials found.</td>
+                        <td colspan="6" class="text-center py-5">
+                            <div class="text-muted">
+                                <i data-feather="folder" style="width: 48px; height: 48px; opacity: 0.5;" class="mb-2"></i>
+                                <p class="mb-0">No materials found.</p>
+                            </div>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>

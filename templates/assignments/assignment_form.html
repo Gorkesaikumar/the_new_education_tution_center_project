@@ -2,26 +2,76 @@
 
 {% block title %}Create Assignment{% endblock %}
 
-{% block header %}Create Assignment{% endblock %}
-
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card shadow-sm">
-            <div class="card-header bg-transparent border-0">
-                <h5 class="mb-0">{% if form.instance.pk %}Edit Assignment{% else %}Create Assignment{% endif %}</h5>
+    <div class="col-md-8 col-lg-6">
+        <div class="card border-0 shadow-sm rounded-lg">
+            <div class="card-header bg-transparent border-0 pt-4 px-4">
+                <h5 class="mb-0 fw-bold">{% if form.instance.pk %}Edit Assignment{% else %}Create Assignment{% endif %}</h5>
             </div>
-            <div class="card-body">
+            <div class="card-body p-4">
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    {{ form.as_p }}
-                    <div class="d-flex justify-content-end gap-2 mt-4">
-                        <a href="{% url 'assignment_list' %}" class="btn btn-secondary rounded-pill">Cancel</a>
-                        <button type="submit" class="btn btn-primary rounded-pill px-4">Save Assignment</button>
+                    
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger d-flex align-items-center border-0 shadow-sm rounded-3 mb-4" role="alert">
+                        <i data-feather="alert-circle" class="me-2"></i>
+                        <div>{{ form.non_field_errors }}</div>
+                    </div>
+                    {% endif %}
+
+                    {% for field in form %}
+                    <div class="mb-3">
+                        <label for="{{ field.id_for_label }}" class="form-label fw-medium text-secondary small text-uppercase">{{ field.label }}</label>
+                        <div class="input-group">
+                            {% if field.name == 'due_date' %}
+                                <span class="input-group-text bg-light border-end-0"><i data-feather="calendar" class="text-muted" style="width: 16px;"></i></span>
+                            {% elif field.name == 'file' %}
+                                <span class="input-group-text bg-light border-end-0"><i data-feather="file" class="text-muted" style="width: 16px;"></i></span>
+                            {% endif %}
+                            {{ field }}
+                        </div>
+                        {% if field.help_text %}
+                            <div class="form-text text-muted small">{{ field.help_text }}</div>
+                        {% endif %}
+                        {% if field.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in field.errors %}
+                                    <div class="d-flex align-items-center"><i data-feather="alert-circle" class="me-1" style="width: 12px;"></i> {{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+
+                    <div class="d-flex justify-content-end gap-2 mt-4 pt-2 border-top">
+                        <a href="{% url 'assignment_list' %}" class="btn btn-light rounded-pill px-4 fw-medium text-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary rounded-pill px-4 fw-medium shadow-sm">Save Assignment</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var inputs = document.querySelectorAll('input, select, textarea');
+        inputs.forEach(function(input) {
+            if (!input.classList.contains('form-control') && !input.classList.contains('form-check-input') && input.type !== 'file') {
+                input.classList.add('form-control');
+                input.classList.add('bg-light');
+                input.classList.add('border-0');
+                if (input.parentElement.classList.contains('input-group')) {
+                    input.classList.add('border-start-0');
+                    input.classList.add('ps-0');
+                }
+            } else if (input.type === 'file') {
+                input.classList.add('form-control');
+                input.classList.add('bg-light');
+                input.classList.add('border-0');
+            }
+        });
+    });
+</script>
 {% endblock %}

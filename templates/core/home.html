@@ -3,278 +3,31 @@
 
 {% block title %}The New Education Tuition Center - Excellence in Education{% endblock %}
 
-{% block extra_css %}
-<style>
-    /* Custom Variables */
-    :root {
-        --primary-color: #2563eb;
-        --secondary-color: #1e40af;
-        --accent-color: #f59e0b;
-        --dark-bg: #0f172a;
-        --light-bg: #f8fafc;
-    }
-
-    /* General Styles */
-    body {
-        font-family: 'Inter', sans-serif;
-        overflow-x: hidden;
-    }
-
-    .section-padding {
-        padding: 80px 0;
-    }
-
-    .section-title {
-        font-weight: 800;
-        margin-bottom: 1rem;
-        position: relative;
-        display: inline-block;
-    }
-
-    .section-title::after {
-        content: '';
-        display: block;
-        width: 60px;
-        height: 4px;
-        background: var(--primary-color);
-        margin: 10px auto 0;
-        border-radius: 2px;
-    }
-
-    /* Navbar Customization (for unauthenticated view) */
-    .navbar-landing {
-        background-color: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-        padding: 15px 0;
-    }
-
-    .navbar-brand {
-        font-weight: 700;
-        font-size: 1.5rem;
-        color: var(--primary-color) !important;
-    }
-
-    .nav-link {
-        font-weight: 500;
-        color: #334155 !important;
-        transition: color 0.3s;
-    }
-
-    .nav-link:hover {
-        color: var(--primary-color) !important;
-    }
-
-    /* Hero Section */
-    .hero-section {
-        background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-        min-height: 90vh;
-        display: flex;
-        align-items: center;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .hero-content {
-        position: relative;
-        z-index: 2;
-    }
-
-    .hero-title {
-        font-size: 3.5rem;
-        font-weight: 800;
-        line-height: 1.2;
-        margin-bottom: 1.5rem;
-        background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    .hero-subtitle {
-        font-size: 1.25rem;
-        color: #64748b;
-        margin-bottom: 2rem;
-    }
-
-    .hero-image-wrapper {
-        position: relative;
-        z-index: 2;
-    }
-
-    .hero-image {
-        border-radius: 20px;
-        box-shadow: 0 20px 40px rgba(37, 99, 235, 0.15);
-        transform: perspective(1000px) rotateY(-5deg);
-        transition: transform 0.5s ease;
-    }
-
-    .hero-image:hover {
-        transform: perspective(1000px) rotateY(0deg);
-    }
-
-    /* Features Section */
-    .feature-card {
-        background: white;
-        padding: 2rem;
-        border-radius: 15px;
-        border: 1px solid #e2e8f0;
-        transition: all 0.3s ease;
-        height: 100%;
-    }
-
-    .feature-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 15px 30px rgba(0,0,0,0.05);
-        border-color: var(--primary-color);
-    }
-
-    .feature-icon {
-        width: 60px;
-        height: 60px;
-        background: #eff6ff;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--primary-color);
-        margin-bottom: 1.5rem;
-    }
-
-    /* Courses Section */
-    .course-card {
-        border: none;
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        transition: all 0.3s ease;
-        height: 100%;
-    }
-
-    .course-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-    }
-
-    .course-img {
-        height: 250px;
-        object-fit: cover;
-        width: 100%;
-    }
-
-    .course-body {
-        padding: 1.5rem;
-        background: white;
-    }
-
-    /* Stats Section */
-    .stats-section {
-        background: var(--primary-color);
-        color: white;
-    }
-
-    .stat-item h3 {
-        font-size: 3rem;
-        font-weight: 800;
-        margin-bottom: 0.5rem;
-    }
-
-    /* Testimonials */
-    .testimonial-card {
-        background: white;
-        padding: 2rem;
-        border-radius: 15px;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-        position: relative;
-    }
-
-    .quote-icon {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        color: #e2e8f0;
-        width: 40px;
-        height: 40px;
-    }
-
-    /* Contact Section */
-    .contact-form {
-        background: white;
-        padding: 3rem;
-        border-radius: 20px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-    }
-
-    /* Footer */
-    .footer {
-        background: var(--dark-bg);
-        color: #94a3b8;
-        padding: 4rem 0 2rem;
-    }
-
-    .footer-title {
-        color: white;
-        font-weight: 700;
-        margin-bottom: 1.5rem;
-    }
-
-    .footer-link {
-        color: #94a3b8;
-        text-decoration: none;
-        transition: color 0.3s;
-        display: block;
-        margin-bottom: 0.75rem;
-    }
-
-    .footer-link:hover {
-        color: white;
-    }
-
-    /* Responsive Adjustments */
-    @media (max-width: 768px) {
-        .hero-title {
-            font-size: 2.5rem;
-        }
-        .hero-image-wrapper {
-            margin-top: 3rem;
-        }
-    }
-    .navbar-logo {
-        width: 50px;
-        height: 50px;
-        object-fit: cover;
-        border-radius: 50%;
-    }
-
-    @media (max-width: 768px) {
-        .navbar-logo {
-            width: 40px;
-            height: 40px;
-        }
-    }
-</style>
-{% endblock %}
-
 {% block content %}
 
 <!-- Navigation (Only for Landing Page) -->
-<nav class="navbar navbar-expand-lg navbar-landing sticky-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
     <div class="container">
-        <a class="navbar-brand" href="#">
-            <img src="{% static 'images/shoeb.jpg' %}" alt="Logo" class="navbar-logo me-3">The New Education
+        <a class="navbar-brand fw-bold text-primary d-flex align-items-center" href="#">
+            <div class="bg-primary bg-opacity-10 p-2 rounded-circle me-2 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                <i data-feather="book-open" class="text-primary" style="width: 20px; height: 20px;"></i>
+            </div>
+            The New Education
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto align-items-center">
-                <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                <li class="nav-item"><a class="nav-link" href="#courses">Courses</a></li>
-                <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                <li class="nav-item ms-lg-3">
-                    <a href="{% url 'login' %}" class="btn btn-outline-primary rounded-pill px-4 me-2">Login</a>
-                    <a href="{% url 'register' %}" class="btn btn-primary rounded-pill px-4">Join Now</a>
+            <ul class="navbar-nav ms-auto align-items-center gap-3">
+                <li class="nav-item"><a class="nav-link fw-medium text-dark" href="#home">Home</a></li>
+                <li class="nav-item"><a class="nav-link fw-medium text-dark" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link fw-medium text-dark" href="#courses">Courses</a></li>
+                <li class="nav-item"><a class="nav-link fw-medium text-dark" href="#contact">Contact</a></li>
+                <li class="nav-item ms-lg-2">
+                    <a href="{% url 'login' %}" class="btn btn-outline-primary rounded-pill px-4 fw-medium">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'register' %}" class="btn btn-primary rounded-pill px-4 fw-medium shadow-sm">Join Now</a>
                 </li>
             </ul>
         </div>
@@ -282,74 +35,86 @@
 </nav>
 
 <!-- Hero Section -->
-<section id="home" class="hero-section">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6 hero-content">
-                <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-2 mb-3">
+<section id="home" class="py-5 bg-light position-relative overflow-hidden">
+    <div class="container py-5">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6 position-relative z-index-1">
+                <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-2 mb-4 fw-medium">
                     🚀 Admissions Open for 2025-26
                 </span>
-                <h1 class="hero-title">Unlock Your Potential with Expert Guidance</h1>
-                <p class="hero-subtitle">
+                <h1 class="display-4 fw-bold text-dark mb-4 lh-sm">
+                    Unlock Your Potential with <span class="text-primary">Expert Guidance</span>
+                </h1>
+                <p class="lead text-muted mb-5 lh-base">
                     Join "The New Education Tuition Center" for comprehensive coaching in CBSE, SSC, Intermediate, and Diploma. We build foundations for a brighter future.
                 </p>
-                <div class="d-flex gap-3">
-                    <a href="#courses" class="btn btn-primary btn-lg rounded-pill px-5 shadow-lg">Explore Courses</a>
-                    <a href="#contact" class="btn btn-outline-primary btn-lg rounded-pill px-5">Contact Us</a>
+                <div class="d-flex gap-3 flex-wrap">
+                    <a href="#courses" class="btn btn-primary btn-lg rounded-pill px-5 shadow-sm fw-medium">Explore Courses</a>
+                    <a href="#contact" class="btn btn-outline-primary btn-lg rounded-pill px-5 fw-medium">Contact Us</a>
                 </div>
                 
                 <div class="mt-5 d-flex align-items-center gap-4">
                     <div class="d-flex">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" class="rounded-circle border border-2 border-white" width="40" alt="">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" class="rounded-circle border border-2 border-white ms-n3" width="40" style="margin-left: -15px;" alt="">
-                        <img src="https://randomuser.me/api/portraits/men/86.jpg" class="rounded-circle border border-2 border-white ms-n3" width="40" style="margin-left: -15px;" alt="">
+                        <div class="bg-white rounded-circle border border-2 border-white shadow-sm" style="width: 40px; height: 40px; background-image: url('https://randomuser.me/api/portraits/men/32.jpg'); background-size: cover;"></div>
+                        <div class="bg-white rounded-circle border border-2 border-white shadow-sm ms-n3" style="width: 40px; height: 40px; background-image: url('https://randomuser.me/api/portraits/women/44.jpg'); background-size: cover; margin-left: -15px;"></div>
+                        <div class="bg-white rounded-circle border border-2 border-white shadow-sm ms-n3" style="width: 40px; height: 40px; background-image: url('https://randomuser.me/api/portraits/men/86.jpg'); background-size: cover; margin-left: -15px;"></div>
                     </div>
                     <div>
-                        <p class="mb-0 fw-bold">40+ Students</p>
+                        <p class="mb-0 fw-bold text-dark">40+ Students</p>
                         <small class="text-muted">Trusted by Industry Experts</small>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 hero-image-wrapper">
-                <img src="{% static 'images/intermediate.jpg' %}" alt="Students Learning" class="img-fluid hero-image">
+            <div class="col-lg-6 position-relative z-index-1">
+                <div class="position-relative">
+                    <div class="position-absolute top-0 start-0 translate-middle bg-warning rounded-circle opacity-10 blur-3xl" style="width: 300px; height: 300px; filter: blur(80px); z-index: -1;"></div>
+                    <div class="position-absolute bottom-0 end-0 translate-middle bg-primary rounded-circle opacity-10 blur-3xl" style="width: 300px; height: 300px; filter: blur(80px); z-index: -1;"></div>
+                    <img src="{% static 'images/intermediate.jpg' %}" alt="Students Learning" class="img-fluid rounded-4 shadow-lg rotate-n3 hover-rotate-0 transition-all duration-500">
+                </div>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Features Section -->
-<section id="about" class="section-padding bg-white">
-    <div class="container">
+<section id="about" class="py-6 bg-white">
+    <div class="container py-5">
         <div class="text-center mb-5">
-            <h2 class="section-title">Why Choose Us?</h2>
-            <p class="text-muted w-75 mx-auto">We provide a nurturing environment where students can thrive academically and personally.</p>
+            <h2 class="fw-bold text-dark mb-3">Why Choose Us?</h2>
+            <p class="text-muted w-75 mx-auto lead">We provide a nurturing environment where students can thrive academically and personally.</p>
         </div>
         <div class="row g-4">
             <div class="col-md-4">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i data-feather="users"></i>
+                <div class="card h-100 border-0 shadow-sm hover-lift p-4">
+                    <div class="card-body text-center">
+                        <div class="bg-primary bg-opacity-10 p-3 rounded-circle d-inline-flex mb-4">
+                            <i data-feather="users" class="text-primary" style="width: 32px; height: 32px;"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Expert Faculty</h4>
+                        <p class="text-muted mb-0">Learn from experienced educators dedicated to your success with personalized attention.</p>
                     </div>
-                    <h4>Expert Faculty</h4>
-                    <p class="text-muted">Learn from experienced educators dedicated to your success with personalized attention.</p>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i data-feather="book-open"></i>
+                <div class="card h-100 border-0 shadow-sm hover-lift p-4">
+                    <div class="card-body text-center">
+                        <div class="bg-success bg-opacity-10 p-3 rounded-circle d-inline-flex mb-4">
+                            <i data-feather="book-open" class="text-success" style="width: 32px; height: 32px;"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Comprehensive Material</h4>
+                        <p class="text-muted mb-0">Access high-quality study materials, practice papers, and regular assessments.</p>
                     </div>
-                    <h4>Comprehensive Material</h4>
-                    <p class="text-muted">Access high-quality study materials, practice papers, and regular assessments.</p>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i data-feather="target"></i>
+                <div class="card h-100 border-0 shadow-sm hover-lift p-4">
+                    <div class="card-body text-center">
+                        <div class="bg-warning bg-opacity-10 p-3 rounded-circle d-inline-flex mb-4">
+                            <i data-feather="target" class="text-warning" style="width: 32px; height: 32px;"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Result Oriented</h4>
+                        <p class="text-muted mb-0">Proven track record of excellence in board exams and competitive entrance tests.</p>
                     </div>
-                    <h4>Result Oriented</h4>
-                    <p class="text-muted">Proven track record of excellence in board exams and competitive entrance tests.</p>
                 </div>
             </div>
         </div>
@@ -357,54 +122,60 @@
 </section>
 
 <!-- Featured Courses -->
-<section id="courses" class="section-padding" style="background-color: #f8fafc;">
-    <div class="container">
+<section id="courses" class="py-6 bg-light">
+    <div class="container py-5">
         <div class="text-center mb-5">
-            <h2 class="section-title">Our Courses</h2>
-            <p class="text-muted">Tailored programs for every stage of your academic journey.</p>
+            <h2 class="fw-bold text-dark mb-3">Our Courses</h2>
+            <p class="text-muted lead">Tailored programs for every stage of your academic journey.</p>
         </div>
         <div class="row g-4">
             <!-- Course 1 -->
             <div class="col-md-4">
-                <div class="course-card">
-                    <img src="{% static 'images/class10.jpg' %}" alt="10th Class" class="course-img">
-                    <div class="course-body">
-                        <span class="badge bg-primary mb-2">School Level</span>
-                        <h4>10th Class (CBSE/SSC)</h4>
-                        <p class="text-muted mb-3">Complete coverage of Maths, Science, and Social Studies with weekly tests.</p>
+                <div class="card h-100 border-0 shadow-sm hover-lift overflow-hidden">
+                    <div class="position-relative">
+                        <img src="{% static 'images/class10.jpg' %}" alt="10th Class" class="card-img-top" style="height: 240px; object-fit: cover;">
+                        <span class="badge bg-primary position-absolute top-0 end-0 m-3 rounded-pill px-3 py-2">School Level</span>
+                    </div>
+                    <div class="card-body p-4">
+                        <h4 class="fw-bold mb-2">10th Class (CBSE/SSC)</h4>
+                        <p class="text-muted mb-4">Complete coverage of Maths, Science, and Social Studies with weekly tests.</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="fw-bold text-primary">Admissions Open</span>
-                            <a href="{% url 'register' %}" class="btn btn-sm btn-outline-primary rounded-pill">Enroll Now</a>
+                            <a href="{% url 'register' %}" class="btn btn-sm btn-outline-primary rounded-pill px-3">Enroll Now</a>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- Course 2 -->
             <div class="col-md-4">
-                <div class="course-card">
-                    <img src="{% static 'images/intermediate.jpg' %}" alt="Intermediate" class="course-img">
-                    <div class="course-body">
-                        <span class="badge bg-success mb-2">College Level</span>
-                        <h4>Intermediate (MPC/BiPC)</h4>
-                        <p class="text-muted mb-3">Specialized coaching for Maths, Physics, and Chemistry with competitive focus.</p>
+                <div class="card h-100 border-0 shadow-sm hover-lift overflow-hidden">
+                    <div class="position-relative">
+                        <img src="{% static 'images/intermediate.jpg' %}" alt="Intermediate" class="card-img-top" style="height: 240px; object-fit: cover;">
+                        <span class="badge bg-success position-absolute top-0 end-0 m-3 rounded-pill px-3 py-2">College Level</span>
+                    </div>
+                    <div class="card-body p-4">
+                        <h4 class="fw-bold mb-2">Intermediate (MPC/BiPC)</h4>
+                        <p class="text-muted mb-4">Specialized coaching for Maths, Physics, and Chemistry with competitive focus.</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="fw-bold text-primary">Limited Seats</span>
-                            <a href="{% url 'register' %}" class="btn btn-sm btn-outline-primary rounded-pill">Enroll Now</a>
+                            <a href="{% url 'register' %}" class="btn btn-sm btn-outline-primary rounded-pill px-3">Enroll Now</a>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- Course 3 -->
             <div class="col-md-4">
-                <div class="course-card">
-                    <img src="{% static 'images/diploma.jpg' %}" alt="Diploma" class="course-img">
-                    <div class="course-body">
-                        <span class="badge bg-warning text-dark mb-2">Technical</span>
-                        <h4>Diploma Tuition</h4>
-                        <p class="text-muted mb-3">Engineering Mathematics and core subjects for all semesters and backlogs.</p>
+                <div class="card h-100 border-0 shadow-sm hover-lift overflow-hidden">
+                    <div class="position-relative">
+                        <img src="{% static 'images/diploma.jpg' %}" alt="Diploma" class="card-img-top" style="height: 240px; object-fit: cover;">
+                        <span class="badge bg-warning text-dark position-absolute top-0 end-0 m-3 rounded-pill px-3 py-2">Technical</span>
+                    </div>
+                    <div class="card-body p-4">
+                        <h4 class="fw-bold mb-2">Diploma Tuition</h4>
+                        <p class="text-muted mb-4">Engineering Mathematics and core subjects for all semesters and backlogs.</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="fw-bold text-primary">₹1499/- Only</span>
-                            <a href="{% url 'register' %}" class="btn btn-sm btn-outline-primary rounded-pill">Enroll Now</a>
+                            <a href="{% url 'register' %}" class="btn btn-sm btn-outline-primary rounded-pill px-3">Enroll Now</a>
                         </div>
                     </div>
                 </div>
@@ -414,31 +185,31 @@
 </section>
 
 <!-- Stats Section -->
-<section class="section-padding stats-section">
-    <div class="container">
+<section class="py-5 bg-primary text-white">
+    <div class="container py-4">
         <div class="row text-center g-4">
             <div class="col-md-3">
-                <div class="stat-item">
-                    <h3>500+</h3>
-                    <p class="mb-0 opacity-75">Happy Students</p>
+                <div class="p-3">
+                    <h3 class="display-4 fw-bold mb-1">500+</h3>
+                    <p class="mb-0 opacity-75 fw-medium text-uppercase letter-spacing-1">Happy Students</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="stat-item">
-                    <h3>50+</h3>
-                    <p class="mb-0 opacity-75">Expert Teachers</p>
+                <div class="p-3">
+                    <h3 class="display-4 fw-bold mb-1">50+</h3>
+                    <p class="mb-0 opacity-75 fw-medium text-uppercase letter-spacing-1">Expert Teachers</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="stat-item">
-                    <h3>98%</h3>
-                    <p class="mb-0 opacity-75">Success Rate</p>
+                <div class="p-3">
+                    <h3 class="display-4 fw-bold mb-1">98%</h3>
+                    <p class="mb-0 opacity-75 fw-medium text-uppercase letter-spacing-1">Success Rate</p>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="stat-item">
-                    <h3>10+</h3>
-                    <p class="mb-0 opacity-75">Years Experience</p>
+                <div class="p-3">
+                    <h3 class="display-4 fw-bold mb-1">10+</h3>
+                    <p class="mb-0 opacity-75 fw-medium text-uppercase letter-spacing-1">Years Experience</p>
                 </div>
             </div>
         </div>
@@ -446,108 +217,125 @@
 </section>
 
 <!-- Contact Section -->
-<section id="contact" class="section-padding bg-white">
-    <div class="container">
+<section id="contact" class="py-6 bg-white">
+    <div class="container py-5">
         <div class="row g-5 align-items-center">
             <div class="col-lg-6">
-                <h2 class="section-title mb-4">Get in Touch</h2>
-                <p class="text-muted mb-5">Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+                <h2 class="fw-bold text-dark mb-4">Get in Touch</h2>
+                <p class="text-muted mb-5 lead">Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
                 
-                <div class="d-flex mb-4">
-                    <div class="feature-icon me-3 mb-0" style="width: 50px; height: 50px;">
-                        <i data-feather="map-pin"></i>
+                <div class="d-flex mb-4 align-items-center">
+                    <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                        <i data-feather="map-pin" class="text-primary"></i>
                     </div>
                     <div>
-                        <h5 class="mb-1">Visit Us</h5>
-                        <p class="text-muted">Goutham Nagar, Nizamabad, Telangana 503001</p>
+                        <h5 class="mb-1 fw-bold">Visit Us</h5>
+                        <p class="text-muted mb-0">Goutham Nagar, Nizamabad, Telangana 503001</p>
                     </div>
                 </div>
                 
-                <div class="d-flex mb-4">
-                    <div class="feature-icon me-3 mb-0" style="width: 50px; height: 50px;">
-                        <i data-feather="phone"></i>
+                <div class="d-flex mb-4 align-items-center">
+                    <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                        <i data-feather="phone" class="text-primary"></i>
                     </div>
                     <div>
-                        <h5 class="mb-1">Call Us</h5>
-                        <p class="text-muted">+91 95157 81466</p>
+                        <h5 class="mb-1 fw-bold">Call Us</h5>
+                        <p class="text-muted mb-0">+91 95157 81466</p>
                     </div>
                 </div>
                 
-                <div class="d-flex">
-                    <div class="feature-icon me-3 mb-0" style="width: 50px; height: 50px;">
-                        <i data-feather="mail"></i>
+                <div class="d-flex align-items-center">
+                    <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                        <i data-feather="mail" class="text-primary"></i>
                     </div>
                     <div>
-                        <h5 class="mb-1">Email Us</h5>
-                        <p class="text-muted">mdshoebuddin01@gmail.com</p>
+                        <h5 class="mb-1 fw-bold">Email Us</h5>
+                        <p class="text-muted mb-0">mdshoebuddin01@gmail.com</p>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
-                <form class="contact-form" method="post" action="{% url 'submit_enquiry' %}">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <label class="form-label">Full Name</label>
-                        <input type="text" name="full_name" class="form-control" placeholder="Enter full name" required>
+                <div class="card border-0 shadow-lg rounded-lg">
+                    <div class="card-body p-5">
+                        <form method="post" action="{% url 'submit_enquiry' %}">
+                            {% csrf_token %}
+                            <div class="mb-4">
+                                <label class="form-label fw-medium">Full Name</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0"><i data-feather="user" class="text-muted" style="width: 18px;"></i></span>
+                                    <input type="text" name="full_name" class="form-control bg-light border-start-0 ps-0" placeholder="Enter full name" required>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label fw-medium">Email Address</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0"><i data-feather="mail" class="text-muted" style="width: 18px;"></i></span>
+                                    <input type="email" name="email" class="form-control bg-light border-start-0 ps-0" placeholder="Enter Your Email" required>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label fw-medium">Phone Number</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0"><i data-feather="phone" class="text-muted" style="width: 18px;"></i></span>
+                                    <input type="tel" name="phone_number" class="form-control bg-light border-start-0 ps-0" placeholder="Enter Your Phone Number" required>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label fw-medium">Message</label>
+                                <textarea class="form-control bg-light" name="message" rows="4" placeholder="Enter Your Message" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm">Send Message</button>
+                        </form>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Email Address</label>
-                        <input type="email" name="email" class="form-control" placeholder="Enter Your Email" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Phone Number</label>
-                        <input type="tel" name="phone_number" class="form-control" placeholder="Enter Your Phone Number" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Message</label>
-                        <textarea class="form-control" name="message" rows="4" placeholder="Enter Your Message" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100 rounded-pill py-3 fw-bold">Send Message</button>
-                </form>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Footer -->
-<footer class="footer">
-    <div class="container">
+<footer class="bg-dark text-white py-5">
+    <div class="container pt-4">
         <div class="row g-4">
             <div class="col-lg-4">
-                <h4 class="text-white mb-4">The New Education</h4>
-                <p>Empowering students with knowledge and skills for a better tomorrow. Join us to achieve academic excellence.</p>
-                <div class="d-flex gap-3 mt-4">
-                    <a href="#" class="text-white"><i data-feather="facebook"></i></a>
-                    <a href="#" class="text-white"><i data-feather="instagram"></i></a>
-                    <a href="#" class="text-white"><i data-feather="twitter"></i></a>
-                    <a href="#" class="text-white"><i data-feather="youtube"></i></a>
+                <h4 class="fw-bold mb-4">The New Education</h4>
+                <p class="text-secondary mb-4">Empowering students with knowledge and skills for a better tomorrow. Join us to achieve academic excellence.</p>
+                <div class="d-flex gap-3">
+                    <a href="#" class="btn btn-outline-light btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;"><i data-feather="facebook" style="width: 16px;"></i></a>
+                    <a href="#" class="btn btn-outline-light btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;"><i data-feather="instagram" style="width: 16px;"></i></a>
+                    <a href="#" class="btn btn-outline-light btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;"><i data-feather="twitter" style="width: 16px;"></i></a>
+                    <a href="#" class="btn btn-outline-light btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;"><i data-feather="youtube" style="width: 16px;"></i></a>
                 </div>
             </div>
             <div class="col-lg-2 offset-lg-1">
-                <h5 class="footer-title">Quick Links</h5>
-                <a href="#home" class="footer-link">Home</a>
-                <a href="#about" class="footer-link">About Us</a>
-                <a href="#courses" class="footer-link">Courses</a>
-                <a href="#contact" class="footer-link">Contact</a>
+                <h5 class="fw-bold mb-4">Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="#home" class="text-secondary text-decoration-none hover-text-white transition-colors">Home</a></li>
+                    <li class="mb-2"><a href="#about" class="text-secondary text-decoration-none hover-text-white transition-colors">About Us</a></li>
+                    <li class="mb-2"><a href="#courses" class="text-secondary text-decoration-none hover-text-white transition-colors">Courses</a></li>
+                    <li class="mb-2"><a href="#contact" class="text-secondary text-decoration-none hover-text-white transition-colors">Contact</a></li>
+                </ul>
             </div>
             <div class="col-lg-2">
-                <h5 class="footer-title">Courses</h5>
-                <a href="#" class="footer-link">Class 10</a>
-                <a href="#" class="footer-link">Intermediate</a>
-                <a href="#" class="footer-link">Diploma</a>
-                <a href="#" class="footer-link">Engineering</a>
+                <h5 class="fw-bold mb-4">Courses</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="#" class="text-secondary text-decoration-none hover-text-white transition-colors">Class 10</a></li>
+                    <li class="mb-2"><a href="#" class="text-secondary text-decoration-none hover-text-white transition-colors">Intermediate</a></li>
+                    <li class="mb-2"><a href="#" class="text-secondary text-decoration-none hover-text-white transition-colors">Diploma</a></li>
+                    <li class="mb-2"><a href="#" class="text-secondary text-decoration-none hover-text-white transition-colors">Engineering</a></li>
+                </ul>
             </div>
             <div class="col-lg-3">
-                <h5 class="footer-title">Newsletter</h5>
-                <p>Subscribe to get updates on new batches.</p>
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Email" aria-label="Email">
+                <h5 class="fw-bold mb-4">Newsletter</h5>
+                <p class="text-secondary mb-3">Subscribe to get updates on new batches.</p>
+                <div class="input-group">
+                    <input type="text" class="form-control bg-dark border-secondary text-white" placeholder="Email" aria-label="Email">
                     <button class="btn btn-primary" type="button">Subscribe</button>
                 </div>
             </div>
         </div>
         <div class="border-top border-secondary mt-5 pt-4 text-center">
-            <p class="mb-0">&copy; 2025 The New Education Tuition Center. All rights reserved.</p>
+            <p class="mb-0 text-secondary small">&copy; 2025 The New Education Tuition Center. All rights reserved.</p>
         </div>
     </div>
 </footer>
@@ -588,7 +376,7 @@
                     text: msg.text,
                     icon: icon,
                     confirmButtonText: 'Okay',
-                    confirmButtonColor: '#2563eb'
+                    confirmButtonColor: '#4f46e5'
                 };
             });
 

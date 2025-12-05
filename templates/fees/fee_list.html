@@ -2,57 +2,54 @@
 
 {% block title %}Fees{% endblock %}
 
-{% block header %}Fees{% endblock %}
-
 {% block content %}
-<div class="card shadow-sm">
-    <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Fee Payments</h5>
-        <a href="{% url 'record_payment' %}" class="btn btn-primary btn-sm rounded-pill">
-            <i data-feather="plus" class="me-1"></i> Record Payment
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center pt-4 px-4">
+        <h5 class="mb-0 fw-bold">Fee Payments</h5>
+        <a href="{% url 'record_payment' %}" class="btn btn-primary rounded-pill px-4 shadow-sm">
+            <i data-feather="plus" class="me-2" style="width: 16px;"></i> Record Payment
         </a>
     </div>
     
-    <!-- Due Fees Section -->
     <!-- Student Fee Status Section -->
-    <div class="card-body border-bottom">
-        <h6 class="mb-3">Student Fee Status</h6>
+    <div class="card-body border-bottom px-4">
+        <h6 class="mb-3 fw-bold text-uppercase text-muted small">Student Fee Status</h6>
         <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
-            <table class="table table-sm table-borderless mb-0">
-                <thead>
+            <table class="table table-sm table-borderless table-hover mb-0 align-middle">
+                <thead class="text-muted small text-uppercase">
                     <tr>
-                        <th>Student</th>
-                        <th>Batch</th>
-                        <th>Last Payment</th>
-                        <th>Status</th>
-                        <th>Action</th>
+                        <th class="fw-bold">Student</th>
+                        <th class="fw-bold">Batch</th>
+                        <th class="fw-bold">Last Payment</th>
+                        <th class="fw-bold">Status</th>
+                        <th class="fw-bold text-end">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for item in student_fee_status %}
                     <tr>
-                        <td class="align-middle">{{ item.student.user.get_full_name|default:item.student.user.username }}</td>
-                        <td class="align-middle">{{ item.student.batch.name }}</td>
-                        <td class="align-middle">
+                        <td class="fw-medium text-dark">{{ item.student.user.get_full_name|default:item.student.user.username }}</td>
+                        <td class="text-secondary">{{ item.student.batch.name }}</td>
+                        <td class="text-secondary">
                             {% if item.last_payment %}
                                 {{ item.last_payment.date|date:"M d, Y" }}
                             {% else %}
                                 <span class="text-muted">-</span>
                             {% endif %}
                         </td>
-                        <td class="align-middle">
+                        <td>
                             {% if item.is_due %}
-                                <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill">{{ item.status }}</span>
+                                <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-2 py-1">{{ item.status }}</span>
                             {% else %}
-                                <span class="badge bg-success bg-opacity-10 text-success rounded-pill">{{ item.status }}</span>
+                                <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-2 py-1">{{ item.status }}</span>
                             {% endif %}
                         </td>
-                        <td class="align-middle">
+                        <td class="text-end">
                             {% if item.student.phone_number %}
                             {% with student_name=item.student.user.get_full_name|default:item.student.user.username batch_name=item.student.batch.name due_date=item.due_date|date:"M d, Y" teacher_name=request.user.get_full_name|default:request.user.username %}
                             <a href="https://wa.me/{{ item.student.phone_number }}?text=Hello {{ student_name }},%0a%0aYour fee payment for the batch {{ batch_name }} is overdue.%0aThe due date has already passed, and the payment is still pending.%0a%0aPlease complete the fee payment immediately to avoid access restrictions and further reminders.%0a%0aAmount Due: ₹Pending%0aDue Date: {{ due_date }}%0a%0aIf you have already paid, ignore this message and share the transaction proof.%0a%0a- {{ teacher_name }}, Shoeb Tution Center" 
                                target="_blank" 
-                               class="btn btn-sm btn-success rounded-pill">
+                               class="btn btn-sm btn-success rounded-pill px-3 shadow-sm">
                                 <i data-feather="message-circle" class="me-1" style="width: 14px; height: 14px;"></i> WhatsApp
                             </a>
                             {% endwith %}
@@ -63,7 +60,7 @@
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="5" class="text-center text-muted">No students found.</td>
+                        <td colspan="5" class="text-center text-muted py-3">No students found.</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -73,32 +70,37 @@
 
     <div class="card-body p-0">
         <div class="table-responsive">
-            <table class="table table-hover mb-0">
+            <table class="table table-hover align-middle mb-0">
                 <thead class="bg-light">
                     <tr>
-                        <th class="border-0">Student</th>
-                        <th class="border-0">Amount</th>
-                        <th class="border-0">Date</th>
-                        <th class="border-0">Transaction ID</th>
-                        <th class="border-0">Actions</th>
+                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold">Student</th>
+                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold">Amount</th>
+                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold">Date</th>
+                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold">Transaction ID</th>
+                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold text-end">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for payment in payments %}
                     <tr>
-                        <td class="align-middle">{{ payment.student.get_full_name|default:payment.student.username }}</td>
-                        <td class="align-middle fw-bold text-success">₹{{ payment.amount }}</td>
-                        <td class="align-middle">{{ payment.date|date:"M d, Y" }}</td>
-                        <td class="align-middle small text-muted">{{ payment.transaction_id }}</td>
-                        <td class="align-middle">
-                            <a href="{% url 'fee_receipt' payment.pk %}" class="btn btn-sm btn-outline-secondary rounded-pill" target="_blank">
+                        <td class="px-4 py-3 fw-medium text-dark">{{ payment.student.get_full_name|default:payment.student.username }}</td>
+                        <td class="px-4 py-3 fw-bold text-success">₹{{ payment.amount }}</td>
+                        <td class="px-4 py-3 text-secondary">{{ payment.date|date:"M d, Y" }}</td>
+                        <td class="px-4 py-3 small text-muted font-monospace">{{ payment.transaction_id }}</td>
+                        <td class="px-4 py-3 text-end">
+                            <a href="{% url 'fee_receipt' payment.pk %}" class="btn btn-sm btn-outline-secondary rounded-pill px-3" target="_blank">
                                 <i data-feather="printer" class="me-1" style="width: 14px; height: 14px;"></i> Receipt
                             </a>
                         </td>
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="5" class="text-center py-4 text-muted">No payments found.</td>
+                        <td colspan="5" class="text-center py-5">
+                            <div class="text-muted">
+                                <i data-feather="dollar-sign" style="width: 48px; height: 48px; opacity: 0.5;" class="mb-2"></i>
+                                <p class="mb-0">No payments found.</p>
+                            </div>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>

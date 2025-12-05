@@ -2,23 +2,25 @@
 
 {% block title %}Delete Student{% endblock %}
 
-{% block header %}Delete Student{% endblock %}
-
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card shadow-sm border-danger">
-            <div class="card-header bg-danger bg-opacity-10 border-0 text-danger">
-                <h5 class="mb-0"><i data-feather="alert-triangle" class="me-2"></i>Delete Student</h5>
+    <div class="col-md-6 col-lg-5">
+        <div class="card border-0 shadow-lg rounded-lg">
+            <div class="card-header bg-danger bg-opacity-10 border-0 pt-4 px-4 text-center">
+                <div class="bg-white p-3 rounded-circle d-inline-block mb-2 shadow-sm">
+                    <i data-feather="user-x" class="text-danger" style="width: 32px; height: 32px;"></i>
+                </div>
+                <h5 class="mb-0 fw-bold text-danger mt-2">Delete Student</h5>
             </div>
-            <div class="card-body">
-                <p class="card-text">Are you sure you want to delete student <strong>{{ student.user.get_full_name|default:student.user.username }}</strong>?</p>
-                <p class="card-text text-muted small">This action cannot be undone. All associated data (attendance, marks, fees) will also be deleted.</p>
+            <div class="card-body p-4 text-center">
+                <p class="card-text text-dark mb-1">Are you sure you want to delete student?</p>
+                <h5 class="fw-bold text-dark mb-3">{{ student.user.get_full_name|default:student.user.username }}</h5>
+                <p class="card-text text-muted small bg-light p-3 rounded-3">This action cannot be undone. All associated data (attendance, marks, fees) will also be permanently deleted.</p>
                 
-                <form method="post" class="mt-4 d-flex justify-content-end gap-2">
+                <form method="post" class="mt-4 d-flex justify-content-center gap-2">
                     {% csrf_token %}
-                    <a href="{% url 'student_list' %}" class="btn btn-secondary rounded-pill">Cancel</a>
-                    <button type="submit" class="btn btn-danger rounded-pill px-4">Confirm Delete</button>
+                    <a href="{% url 'student_list' %}" class="btn btn-light rounded-pill px-4 fw-medium text-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-danger rounded-pill px-4 fw-medium shadow-sm">Confirm Delete</button>
                 </form>
             </div>
         </div>

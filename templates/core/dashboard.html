@@ -2,13 +2,20 @@
 
 {% block title %}Dashboard{% endblock %}
 
-{% block header %}Dashboard{% endblock %}
-
 {% block content %}
-<div class="alert alert-info">
-    <h4 class="alert-heading">Welcome!</h4>
-    <p>You are logged in, but your role is not fully configured or you are an admin.</p>
-    <hr>
-    <p class="mb-0">Please contact the administrator if you believe this is an error.</p>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card border-0 shadow-sm rounded-lg">
+            <div class="card-body p-5 text-center">
+                <div class="bg-primary bg-opacity-10 p-3 rounded-circle d-inline-block mb-4">
+                    <i data-feather="user" class="text-primary" style="width: 48px; height: 48px;"></i>
+                </div>
+                <h2 class="fw-bold mb-3">Welcome to the Dashboard</h2>
+                <p class="text-muted mb-4">You are logged in, but your account role is not fully configured or you are an administrator without a specific dashboard view.</p>
+                <hr class="my-4 w-50 mx-auto">
+                <p class="text-secondary small mb-0">Please contact the administrator if you believe this is an error.</p>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

@@ -8,16 +8,16 @@
 <!-- Stats Overview -->
 <div class="row g-4 mb-4">
     <div class="col-md-3">
-        <div class="card h-100 border-start border-4 border-primary shadow-sm">
+        <div class="card h-100 border-0 shadow-sm hover-lift">
             <div class="card-body">
                 <a href="{% url 'student_list' %}" class="text-decoration-none">
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
-                            <p class="text-muted mb-1">Total Students</p>
-                            <h2 class="mb-0 fw-bold text-primary">{{ total_students }}</h2>
+                            <p class="text-muted small text-uppercase fw-bold mb-1">Total Students</p>
+                            <h2 class="mb-0 fw-bold text-dark">{{ total_students }}</h2>
                         </div>
                         <div class="bg-primary bg-opacity-10 p-3 rounded-circle">
-                            <i data-feather="users" class="text-primary"></i>
+                            <i data-feather="users" class="text-primary" style="width: 24px; height: 24px;"></i>
                         </div>
                     </div>
                 </a>
@@ -25,16 +25,16 @@
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card h-100 border-start border-4 border-success shadow-sm">
+        <div class="card h-100 border-0 shadow-sm hover-lift">
             <div class="card-body">
                 <a href="{% url 'batch_list' %}" class="text-decoration-none">
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
-                            <p class="text-muted mb-1">Active Batches</p>
-                            <h2 class="mb-0 fw-bold text-success">{{ active_batches }}</h2>
+                            <p class="text-muted small text-uppercase fw-bold mb-1">Active Batches</p>
+                            <h2 class="mb-0 fw-bold text-dark">{{ active_batches }}</h2>
                         </div>
                         <div class="bg-success bg-opacity-10 p-3 rounded-circle">
-                            <i data-feather="layers" class="text-success"></i>
+                            <i data-feather="layers" class="text-success" style="width: 24px; height: 24px;"></i>
                         </div>
                     </div>
                 </a>
@@ -42,16 +42,16 @@
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card h-100 border-start border-4 border-warning shadow-sm">
+        <div class="card h-100 border-0 shadow-sm hover-lift">
             <div class="card-body">
                 <a href="{% url 'fee_list' %}" class="text-decoration-none">
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
-                            <p class="text-muted mb-1">Fees Collected</p>
-                            <h2 class="mb-0 fw-bold text-warning">₹{{ total_fees }}</h2>
+                            <p class="text-muted small text-uppercase fw-bold mb-1">Fees Collected</p>
+                            <h2 class="mb-0 fw-bold text-dark">₹{{ total_fees }}</h2>
                         </div>
                         <div class="bg-warning bg-opacity-10 p-3 rounded-circle">
-                            <span class="fw-bold text-warning fs-4">₹</span>
+                            <span class="fw-bold text-warning fs-5">₹</span>
                         </div>
                     </div>
                 </a>
@@ -59,16 +59,16 @@
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card h-100 border-start border-4 border-info shadow-sm">
+        <div class="card h-100 border-0 shadow-sm hover-lift">
             <div class="card-body">
                 <a href="{% url 'exam_list' %}" class="text-decoration-none">
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
-                            <p class="text-muted mb-1">Upcoming Exams</p>
-                            <h2 class="mb-0 fw-bold text-info">{{ upcoming_exams.count }}</h2>
+                            <p class="text-muted small text-uppercase fw-bold mb-1">Upcoming Exams</p>
+                            <h2 class="mb-0 fw-bold text-dark">{{ upcoming_exams.count }}</h2>
                         </div>
                         <div class="bg-info bg-opacity-10 p-3 rounded-circle">
-                            <i data-feather="calendar" class="text-info"></i>
+                            <i data-feather="calendar" class="text-info" style="width: 24px; height: 24px;"></i>
                         </div>
                     </div>
                 </a>
@@ -80,25 +80,25 @@
 <!-- Quick Actions -->
 <div class="row mb-4">
     <div class="col-12">
-        <div class="card shadow-sm">
-            <div class="card-header bg-transparent border-0">
-                <h5 class="mb-0">Quick Actions</h5>
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-transparent border-0 pt-4 px-4">
+                <h5 class="mb-0 fw-bold">Quick Actions</h5>
             </div>
-            <div class="card-body d-flex flex-wrap gap-2">
-                <a href="{% url 'student_create' %}" class="btn btn-primary rounded-pill">
-                    <i data-feather="user-plus" class="me-1"></i> Add Student
+            <div class="card-body px-4 pb-4 d-flex flex-wrap gap-2">
+                <a href="{% url 'student_create' %}" class="btn btn-primary rounded-pill px-4">
+                    <i data-feather="user-plus" class="me-2" style="width: 16px;"></i> Add Student
                 </a>
-                <a href="{% url 'batch_create' %}" class="btn btn-success rounded-pill">
-                    <i data-feather="layers" class="me-1"></i> Create Batch
+                <a href="{% url 'batch_create' %}" class="btn btn-success text-white rounded-pill px-4">
+                    <i data-feather="layers" class="me-2" style="width: 16px;"></i> Create Batch
                 </a>
-                <a href="{% url 'announcement_create' %}" class="btn btn-info text-white rounded-pill">
-                    <i data-feather="bell" class="me-1"></i> Post Announcement
+                <a href="{% url 'announcement_create' %}" class="btn btn-info text-white rounded-pill px-4">
+                    <i data-feather="bell" class="me-2" style="width: 16px;"></i> Post Announcement
                 </a>
-                <a href="{% url 'exam_create' %}" class="btn btn-warning text-dark rounded-pill">
-                    <i data-feather="file-text" class="me-1"></i> Schedule Exam
+                <a href="{% url 'exam_create' %}" class="btn btn-warning text-dark rounded-pill px-4">
+                    <i data-feather="file-text" class="me-2" style="width: 16px;"></i> Schedule Exam
                 </a>
-                <a href="{% url 'record_payment' %}" class="btn btn-secondary rounded-pill">
-                    <i data-feather="credit-card" class="me-1"></i> Record Fee
+                <a href="{% url 'record_payment' %}" class="btn btn-secondary rounded-pill px-4">
+                    <i data-feather="credit-card" class="me-2" style="width: 16px;"></i> Record Fee
                 </a>
             </div>
         </div>
@@ -109,19 +109,19 @@
 <div class="row g-4 mb-4">
     <!-- Student Management -->
     <div class="col-md-4">
-        <div class="card h-100 shadow-sm">
-            <div class="card-header bg-transparent border-0">
-                <h5 class="mb-0"><i data-feather="users" class="me-2 text-primary"></i>Student Management</h5>
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-header bg-transparent border-0 pt-4 px-4">
+                <h5 class="mb-0 fw-bold"><i data-feather="users" class="me-2 text-primary"></i>Student Management</h5>
             </div>
             <div class="card-body p-0">
                 <div class="list-group list-group-flush">
-                    <a href="{% url 'student_list' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    <a href="{% url 'student_list' %}" class="list-group-item list-group-item-action border-0 px-4 py-3 d-flex justify-content-between align-items-center">
                         All Students <i data-feather="chevron-right" class="text-muted" style="width: 16px;"></i>
                     </a>
-                    <a href="{% url 'student_create' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    <a href="{% url 'student_create' %}" class="list-group-item list-group-item-action border-0 px-4 py-3 d-flex justify-content-between align-items-center">
                         Add New Student <i data-feather="plus-circle" class="text-muted" style="width: 16px;"></i>
                     </a>
-                    <a href="{% url 'attendance_dashboard' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    <a href="{% url 'attendance_dashboard' %}" class="list-group-item list-group-item-action border-0 px-4 py-3 d-flex justify-content-between align-items-center">
                         Attendance Tracking <i data-feather="check-circle" class="text-muted" style="width: 16px;"></i>
                     </a>
                 </div>
@@ -131,22 +131,22 @@
 
     <!-- Academic Management -->
     <div class="col-md-4">
-        <div class="card h-100 shadow-sm">
-            <div class="card-header bg-transparent border-0">
-                <h5 class="mb-0"><i data-feather="book-open" class="me-2 text-success"></i>Academic Management</h5>
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-header bg-transparent border-0 pt-4 px-4">
+                <h5 class="mb-0 fw-bold"><i data-feather="book-open" class="me-2 text-success"></i>Academic Management</h5>
             </div>
             <div class="card-body p-0">
                 <div class="list-group list-group-flush">
-                    <a href="{% url 'batch_list' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    <a href="{% url 'batch_list' %}" class="list-group-item list-group-item-action border-0 px-4 py-3 d-flex justify-content-between align-items-center">
                         Manage Batches <i data-feather="layers" class="text-muted" style="width: 16px;"></i>
                     </a>
-                    <a href="{% url 'exam_list' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    <a href="{% url 'exam_list' %}" class="list-group-item list-group-item-action border-0 px-4 py-3 d-flex justify-content-between align-items-center">
                         Exams & Marks <i data-feather="file-text" class="text-muted" style="width: 16px;"></i>
                     </a>
-                    <a href="{% url 'material_list' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    <a href="{% url 'material_list' %}" class="list-group-item list-group-item-action border-0 px-4 py-3 d-flex justify-content-between align-items-center">
                         Study Materials <i data-feather="download" class="text-muted" style="width: 16px;"></i>
                     </a>
-                     <a href="{% url 'assignment_list' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                     <a href="{% url 'assignment_list' %}" class="list-group-item list-group-item-action border-0 px-4 py-3 d-flex justify-content-between align-items-center">
                         Assignments <i data-feather="clipboard" class="text-muted" style="width: 16px;"></i>
                     </a>
                 </div>
@@ -156,19 +156,19 @@
 
     <!-- Administration -->
     <div class="col-md-4">
-        <div class="card h-100 shadow-sm">
-            <div class="card-header bg-transparent border-0">
-                <h5 class="mb-0"><i data-feather="settings" class="me-2 text-warning"></i>Administration</h5>
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-header bg-transparent border-0 pt-4 px-4">
+                <h5 class="mb-0 fw-bold"><i data-feather="settings" class="me-2 text-warning"></i>Administration</h5>
             </div>
             <div class="card-body p-0">
                 <div class="list-group list-group-flush">
-                    <a href="{% url 'fee_list' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    <a href="{% url 'fee_list' %}" class="list-group-item list-group-item-action border-0 px-4 py-3 d-flex justify-content-between align-items-center">
                         Fee Management <span class="fw-bold text-muted ms-auto">₹</span>
                     </a>
-                    <a href="{% url 'announcement_list' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    <a href="{% url 'announcement_list' %}" class="list-group-item list-group-item-action border-0 px-4 py-3 d-flex justify-content-between align-items-center">
                         Announcements <i data-feather="bell" class="text-muted" style="width: 16px;"></i>
                     </a>
-                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center disabled">
+                    <a href="#" class="list-group-item list-group-item-action border-0 px-4 py-3 d-flex justify-content-between align-items-center disabled">
                         Reports & Analytics <small class="text-muted">(Coming Soon)</small>
                     </a>
                 </div>
@@ -180,46 +180,46 @@
 <!-- Recent Activity -->
 <div class="row g-4">
     <div class="col-md-6">
-        <div class="card h-100 shadow-sm">
-            <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Upcoming Exams</h5>
-                <a href="{% url 'exam_list' %}" class="btn btn-sm btn-outline-primary rounded-pill">View All</a>
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold">Upcoming Exams</h5>
+                <a href="{% url 'exam_list' %}" class="btn btn-sm btn-light text-primary rounded-pill fw-medium">View All</a>
             </div>
-            <div class="card-body">
+            <div class="card-body px-4 pb-4">
                 <ul class="list-group list-group-flush">
                     {% for exam in upcoming_exams %}
-                    <li class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-0">
+                    <li class="list-group-item bg-transparent border-0 px-0 py-3 d-flex justify-content-between align-items-center border-bottom">
                         <div>
-                            <h6 class="mb-0">{{ exam.title }}</h6>
+                            <h6 class="mb-1 fw-semibold">{{ exam.title }}</h6>
                             <small class="text-muted">{{ exam.batch.name }} • {{ exam.subject.name }}</small>
                         </div>
-                        <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill">{{ exam.date|date:"M d" }}</span>
+                        <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-2">{{ exam.date|date:"M d" }}</span>
                     </li>
                     {% empty %}
-                    <li class="list-group-item bg-transparent text-center text-muted">No upcoming exams.</li>
+                    <li class="list-group-item bg-transparent border-0 text-center text-muted py-4">No upcoming exams.</li>
                     {% endfor %}
                 </ul>
             </div>
         </div>
     </div>
     <div class="col-md-6">
-        <div class="card h-100 shadow-sm">
-            <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Recent Announcements</h5>
-                <a href="{% url 'announcement_list' %}" class="btn btn-sm btn-outline-primary rounded-pill">View All</a>
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold">Recent Announcements</h5>
+                <a href="{% url 'announcement_list' %}" class="btn btn-sm btn-light text-primary rounded-pill fw-medium">View All</a>
             </div>
-            <div class="card-body">
+            <div class="card-body px-4 pb-4">
                 <ul class="list-group list-group-flush">
                     {% for announcement in recent_announcements %}
-                    <li class="list-group-item bg-transparent px-0">
-                        <div class="d-flex justify-content-between mb-1">
-                            <h6 class="mb-0">{{ announcement.title }}</h6>
-                            <small class="text-muted">{{ announcement.created_at|timesince }} ago</small>
+                    <li class="list-group-item bg-transparent border-0 px-0 py-3 border-bottom">
+                        <div class="d-flex justify-content-between mb-2">
+                            <h6 class="mb-0 fw-semibold">{{ announcement.title }}</h6>
+                            <small class="text-muted" style="font-size: 0.75rem;">{{ announcement.created_at|timesince }} ago</small>
                         </div>
                         <p class="text-muted small mb-0">{{ announcement.content|truncatewords:15 }}</p>
                     </li>
                     {% empty %}
-                    <li class="list-group-item bg-transparent text-center text-muted">No announcements.</li>
+                    <li class="list-group-item bg-transparent border-0 text-center text-muted py-4">No announcements.</li>
                     {% endfor %}
                 </ul>
             </div>
