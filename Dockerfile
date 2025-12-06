@@ -28,7 +28,7 @@ COPY . .
 RUN SECRET_KEY=dummy_build_key python manage.py collectstatic --noinput
 
 # Expose the port Cloud Run expects
-EXPOSE 8080
+EXPOSE 8000
 
 # Start Gunicorn
 # Replace 'coaching_system.wsgi:application' with your project's WSGI app
