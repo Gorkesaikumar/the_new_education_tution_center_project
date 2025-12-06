@@ -122,11 +122,16 @@ def announcement_list(request):
         announcements = Announcement.objects.all().order_by('-created_at')
     elif request.user.is_student:
         # Show global announcements and announcements for student's batch
-        student_batch = request.user.student_profile.batch
-        announcements = Announcement.objects.filter(
-            models.Q(target_type='ALL') | 
-            models.Q(target_batches=student_batch)
-        ).distinct().order_by('-created_at')
+        try:
+            student_profile = request.user.student_profile
+            student_batch = student_profile.batch
+            announcements = Announcement.objects.filter(
+                models.Q(target_type='ALL') | 
+                models.Q(target_batches=student_batch)
+            ).distinct().order_by('-created_at')
+        except StudentProfile.DoesNotExist:
+             # Fallback if profile missing: show only ALL
+             announcements = Announcement.objects.filter(target_type='ALL').order_by('-created_at')
     else:
         announcements = Announcement.objects.none()
     
