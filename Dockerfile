@@ -32,4 +32,4 @@ EXPOSE 8080
 
 # Start Gunicorn
 # Replace 'coaching_system.wsgi:application' with your project's WSGI app
-CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "2", "--threads", "8", "--timeout", "120", "coaching_system.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "2", "--threads", "8", "--timeout", "120", "coaching_system.wsgi:application"]
