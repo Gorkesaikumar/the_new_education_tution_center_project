@@ -5,7 +5,7 @@ import dj_database_url
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "[::1]"]
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost").split(",")
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases

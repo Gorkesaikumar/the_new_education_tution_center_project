@@ -5,17 +5,17 @@ import dj_database_url
 DEBUG = False
 
 # Allow all hosts in Cloud Run (or restrict to specific domains)
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1,0.0.0.0").split(",")
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
 
 # Cloud Run CSRF Trust
-CSRF_TRUSTED_ORIGINS = ["https://*.run.app"]
+CSRF_TRUSTED_ORIGINS = ["https://coaching-app-360032159124.asia-south1.run.app"]
 
 # Database (Cloud SQL)
 # Expects DATABASE_URL env var or individual connection params
 DATABASES = {
     "default": dj_database_url.config(
         conn_max_age=600,
-        ssl_require=True
+        ssl_require=False
     )
 }
 
@@ -30,7 +30,7 @@ MEDIA_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/"
 # Security Settings
 SECURE_SSL_REDIRECT = False
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = True
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
