@@ -5,10 +5,10 @@ import dj_database_url
 DEBUG = False
 
 # Allow all hosts in Cloud Run (or restrict to specific domains)
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", ".run.app").split(",")
 
 # Cloud Run CSRF Trust
-CSRF_TRUSTED_ORIGINS = ["https://coaching-app-360032159124.asia-south1.run.app"]
+CSRF_TRUSTED_ORIGINS = ["https://*.run.app"]
 
 # Database (Cloud SQL)
 # Expects DATABASE_URL env var or individual connection params
