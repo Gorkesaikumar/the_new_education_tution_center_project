@@ -15,7 +15,7 @@ CSRF_TRUSTED_ORIGINS = ["https://*.run.app"]
 DATABASES = {
     "default": dj_database_url.config(
         conn_max_age=600,
-        ssl_require=False
+        ssl_require=True
     )
 }
 
@@ -29,6 +29,7 @@ MEDIA_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/"
 
 # Security Settings
 SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 SECURE_BROWSER_XSS_FILTER = True
