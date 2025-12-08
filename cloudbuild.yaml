@@ -5,7 +5,7 @@ steps:
       [
         "build",
         "-t",
-        "asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:$COMMIT_SHA",
+        "asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:${COMMIT_SHA:-latest}",
         "-t",
         "asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:latest",
         "."
@@ -13,7 +13,11 @@ steps:
 
   # 2. Push image
   - name: "gcr.io/cloud-builders/docker"
-    args: ["push", "asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:latest"]
+    args:
+      [
+        "push",
+        "asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:latest"
+      ]
 
   # 3. Deploy to Cloud Run
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
@@ -23,12 +27,9 @@ steps:
         "run",
         "deploy",
         "coaching-app",
-        "--image",
-        "asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:latest",
-        "--region",
-        "asia-south1",
-        "--platform",
-        "managed",
+        "--image=asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:latest",
+        "--region=asia-south1",
+        "--platform=managed",
         "--allow-unauthenticated"
       ]
 
