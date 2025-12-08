@@ -1,3 +1,6 @@
+substitutions:
+  _TAG: "latest"
+
 steps:
   # 1. Build container image
   - name: "gcr.io/cloud-builders/docker"
@@ -5,18 +8,16 @@ steps:
       [
         "build",
         "-t",
-        "asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:${COMMIT_SHA:-latest}",
-        "-t",
-        "asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:latest",
+        "asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:${_TAG}",
         "."
       ]
 
-  # 2. Push image
+  # 2. Push the latest tag
   - name: "gcr.io/cloud-builders/docker"
     args:
       [
         "push",
-        "asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:latest"
+        "asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:${_TAG}"
       ]
 
   # 3. Deploy to Cloud Run
@@ -27,11 +28,11 @@ steps:
         "run",
         "deploy",
         "coaching-app",
-        "--image=asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:latest",
+        "--image=asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:${_TAG}",
         "--region=asia-south1",
         "--platform=managed",
         "--allow-unauthenticated"
       ]
 
 images:
-  - "asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:latest"
+  - "asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:${_TAG}"
