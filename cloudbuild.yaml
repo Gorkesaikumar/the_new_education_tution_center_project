@@ -1,38 +1,37 @@
-substitutions:
-  _TAG: "latest"
-
 steps:
-  # 1. Build container image
-  - name: "gcr.io/cloud-builders/docker"
+  - name: gcr.io/cloud-builders/docker
     args:
       [
         "build",
         "-t",
-        "asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:${_TAG}",
+        "asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:latest",
         "."
       ]
 
-  # 2. Push the latest tag
-  - name: "gcr.io/cloud-builders/docker"
+  - name: gcr.io/cloud-builders/docker
     args:
       [
         "push",
-        "asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:${_TAG}"
+        "asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:latest"
       ]
 
-  # 3. Deploy to Cloud Run
-  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
     entrypoint: gcloud
     args:
       [
         "run",
         "deploy",
         "coaching-app",
-        "--image=asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:${_TAG}",
-        "--region=asia-south1",
-        "--platform=managed",
-        "--allow-unauthenticated"
+        "--image",
+        "asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:latest",
+        "--region",
+        "asia-south1",
+        "--platform",
+        "managed",
+        "--allow-unauthenticated",
+        "--service-account",
+        "360032159124-compute@developer.gserviceaccount.com"
       ]
 
 images:
-  - "asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:${_TAG}"
+  - "asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:latest"
