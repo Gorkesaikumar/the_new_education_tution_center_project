@@ -4,7 +4,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Coaching System{% endblock %}</title>
+    <title>{% block title %}Shoeb Sir Academy - Excellence in Education{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Join Shoeb Sir Academy (The New Education Tuition Center) for expert coaching in CBSE, SSC, Intermediate, and Diploma. We provide comprehensive study materials and personalized guidance for academic success.{% endblock %}">
+    <link rel="canonical" href="https://shoebsiracademy.org{{ request.path }}">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Shoeb Sir Academy">
+    <meta name="language" content="English">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://shoebsiracademy.org{{ request.path }}">
+    <meta property="og:title" content="{% block og_title %}Shoeb Sir Academy - Excellence in Education{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Top-rated tuition center in Nizamabad offering coaching for School, Intermediate, and Diploma students with expert faculty and proven results.{% endblock %}">
+    <meta property="og:image" content="https://shoebsiracademy.org{% static 'images/shoeb.jpg' %}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://shoebsiracademy.org{{ request.path }}">
+    <meta property="twitter:title" content="{% block twitter_title %}Shoeb Sir Academy - Excellence in Education{% endblock %}">
+    <meta property="twitter:description" content="{% block twitter_description %}Top-rated tuition center in Nizamabad offering coaching for School, Intermediate, and Diploma students.{% endblock %}">
+    <meta property="twitter:image" content="https://shoebsiracademy.org{% static 'images/shoeb.jpg' %}">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "EducationalOrganization",
+          "@id": "https://shoebsiracademy.org/#organization",
+          "name": "Shoeb Sir Academy",
+          "alternateName": "The New Education Tuition Center",
+          "url": "https://shoebsiracademy.org/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://shoebsiracademy.org{% static 'images/shoeb.jpg' %}"
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Goutham Nagar",
+            "addressLocality": "Nizamabad",
+            "addressRegion": "Telangana",
+            "postalCode": "503001",
+            "addressCountry": "IN"
+          },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+91-9515781466",
+            "contactType": "customer service",
+            "email": "mdshoebuddin01@gmail.com"
+          },
+          "sameAs": [
+            "https://www.facebook.com/shoebsiracademy",
+            "https://www.instagram.com/shoebsiracademy",
+            "https://www.youtube.com/@shoebsiracademy"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://shoebsiracademy.org/#website",
+          "url": "https://shoebsiracademy.org/",
+          "name": "Shoeb Sir Academy",
+          "description": "Premium Tuition Center for CBSE, SSC, Intermediate & Diploma",
+          "publisher": {
+            "@id": "https://shoebsiracademy.org/#organization"
+          },
+          "inLanguage": "en-US"
+        }
+      ]
+    }
+    </script>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

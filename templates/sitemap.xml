@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <!-- Homepage -->
+    <url>
+        <loc>https://shoebsiracademy.org/</loc>
+        <lastmod>{% now "Y-m-d" %}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    
+    <!-- Main Sections/Pages -->
+    <url>
+        <loc>https://shoebsiracademy.org/about</loc>
+        <lastmod>{% now "Y-m-d" %}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://shoebsiracademy.org/courses</loc>
+        <lastmod>{% now "Y-m-d" %}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://shoebsiracademy.org/contact</loc>
+        <lastmod>{% now "Y-m-d" %}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- Auth Pages (Publicly accessible) -->
+    <url>
+        <loc>https://shoebsiracademy.org/login/</loc>
+        <lastmod>{% now "Y-m-d" %}</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://shoebsiracademy.org/register/</loc>
+        <lastmod>{% now "Y-m-d" %}</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.6</priority>
+    </url>
+</urlset>
