@@ -413,6 +413,40 @@ main {
     font-size: 0.875rem;
 }
 
+/* Back to Home Button */
+.back-to-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--slate-500);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    background: var(--slate-50);
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.back-to-home svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+}
+
+.back-to-home:hover {
+    color: var(--primary-600);
+    background: var(--primary-50);
+    border-color: var(--primary-200);
+    transform: translateX(-3px);
+}
+
+.back-to-home:hover svg {
+    transform: translateX(-3px);
+}
+
 /* Utilities */
 .text-muted { color: var(--slate-500) !important; }
 .bg-light { background-color: var(--slate-50) !important; }

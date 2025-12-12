@@ -1,17 +1,22 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Login - Shoeb Sir Academy{% endblock %}
 
 {% block content_unauth %}
 <div class="auth-wrapper">
     <div class="auth-card">
+        <!-- Back to Home Button -->
+        <a href="{% url 'home' %}" class="back-to-home">
+            <i data-feather="arrow-left"></i>
+            <span>Back to Home</span>
+        </a>
+        
         <div class="auth-header">
-            <div class="d-flex justify-content-center mb-3">
-                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
-                    <i data-feather="book-open" style="width: 24px; height: 24px;"></i>
-                </div>
+            <div class="d-flex justify-content-center mb-4">
+                <img src="{% static 'images/shoeb_sir_academy_logo.jpg' %}" alt="Shoeb Sir Academy Logo" class="rounded-circle shadow" style="width: 80px; height: 80px; object-fit: cover; border: 3px solid rgba(99, 102, 241, 0.2);">
             </div>
-            <h3>Welcome Back</h3>
+            <h3 class="fw-bold text-dark mb-2">Welcome Back</h3>
             <p class="text-muted">Sign in to continue to your dashboard</p>
         </div>
         <form method="post">
