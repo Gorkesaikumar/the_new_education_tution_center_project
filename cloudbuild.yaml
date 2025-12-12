@@ -4,7 +4,7 @@ steps:
       [
         "build",
         "-t",
-        "asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:latest",
+        "us-central1-docker.pkg.dev/neural-reactor-480008-v3/cloud-run-source-deploy/shoebsiracademy",
         "."
       ]
 
@@ -12,7 +12,7 @@ steps:
     args:
       [
         "push",
-        "asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:latest"
+        "us-central1-docker.pkg.dev/neural-reactor-480008-v3/cloud-run-source-deploy/shoebsiracademy"
       ]
 
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
@@ -21,17 +21,15 @@ steps:
       [
         "run",
         "deploy",
-        "coaching-app",
+        "shoebsiracademy",
         "--image",
-        "asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:latest",
+        "us-central1-docker.pkg.dev/neural-reactor-480008-v3/cloud-run-source-deploy/shoebsiracademy",
         "--region",
-        "asia-south1",
+        "us-central1",
         "--platform",
         "managed",
-        "--allow-unauthenticated",
-        "--service-account",
-        "360032159124-compute@developer.gserviceaccount.com"
+        "--allow-unauthenticated"
       ]
 
 images:
-  - "asia-south1-docker.pkg.dev/neural-reactor-480008-v3/coaching-app-repo/coaching-app:latest"
+  - "us-central1-docker.pkg.dev/neural-reactor-480008-v3/cloud-run-source-deploy/shoebsiracademy"
