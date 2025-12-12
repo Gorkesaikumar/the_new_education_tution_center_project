@@ -6,39 +6,75 @@
 {% block body %}
 
 <!-- Navigation (Only for Landing Page) -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+<nav class="navbar navbar-expand-lg landing-nav sticky-top">
     <div class="container">
-        <a class="navbar-brand fw-bold text-primary d-flex align-items-center" href="#">
-            <div class="bg-primary bg-opacity-10 p-2 rounded-circle me-2 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-                <i data-feather="book-open" class="text-primary" style="width: 20px; height: 20px;"></i>
-            </div>
-            The New Education
+        <!-- Brand Logo & Name -->
+        <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+            <img src="{% static 'images/shoeb_sir_academy_logo.jpg' %}" alt="Shoeb Sir's Academy Logo" class="brand-logo">
+            <div class="brand-text">
+                <span class="brand-name">Shoeb Sir's Academy</span>            </div>
         </a>
-        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        
+        <!-- Mobile Menu Toggle -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        
+        <!-- Navigation Links -->
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto align-items-center gap-3">
-                <li class="nav-item"><a class="nav-link fw-medium text-dark" href="#home">Home</a></li>
-                <li class="nav-item"><a class="nav-link fw-medium text-dark" href="#about">About</a></li>
-                <li class="nav-item"><a class="nav-link fw-medium text-dark" href="#courses">Courses</a></li>
-                <li class="nav-item"><a class="nav-link fw-medium text-dark" href="#contact">Contact</a></li>
-                {% if user.is_authenticated %}
-                <li class="nav-item ms-lg-2">
-                    <a href="{% url 'dashboard' %}" class="btn btn-primary rounded-pill px-4 fw-medium shadow-sm">Dashboard</a>
-                </li>
-                {% else %}
-                <li class="nav-item ms-lg-2">
-                    <a href="{% url 'login' %}" class="btn btn-outline-primary rounded-pill px-4 fw-medium">Login</a>
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+                <li class="nav-item">
+                    <a class="nav-link fw-medium" href="#home">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'register' %}" class="btn btn-primary rounded-pill px-4 fw-medium shadow-sm">Join Now</a>
+                    <a class="nav-link fw-medium" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-medium" href="#courses">Courses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-medium" href="#contact">Contact</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
+                    <a href="{% url 'dashboard' %}" class="btn btn-primary rounded-pill px-4 fw-semibold shadow-sm w-100">Dashboard</a>
+                </li>
+                {% else %}
+                <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
+                    <a href="{% url 'login' %}" class="btn btn-outline-primary rounded-pill px-4 fw-semibold w-100">Login</a>
+                </li>
+                <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+                    <a href="{% url 'register' %}" class="btn btn-primary rounded-pill px-4 fw-semibold shadow-sm w-100">Join Now</a>
                 </li>
                 {% endif %}
             </ul>
         </div>
     </div>
 </nav>
+
+<!-- Announcement Ticker Bar -->
+<div class="announcement-bar">
+    <div class="announcement-track">
+        <!-- First set -->
+        <div class="announcement-content">
+            <span class="new-badge">✨ NEW</span>
+            <span class="announcement-text">2026 Admissions Are Open — Limited Seats Available!</span>
+            <span class="announcement-separator">•</span>
+            <span class="new-badge">🚀 ENROLL</span>
+            <span class="announcement-text">Join Shoeb Sir's Academy for Excellence in Education</span>
+            <span class="announcement-separator">•</span>
+        </div>
+        <!-- Duplicate for seamless loop -->
+        <div class="announcement-content">
+            <span class="new-badge">✨ NEW</span>
+            <span class="announcement-text">2026 Admissions Are Open — Limited Seats Available!</span>
+            <span class="announcement-separator">•</span>
+            <span class="new-badge">🚀 ENROLL</span>
+            <span class="announcement-text">Join Shoeb Sir's Academy for Excellence in Education</span>
+            <span class="announcement-separator">•</span>
+        </div>
+    </div>
+</div>
 
 <!-- Hero Section -->
 <section id="home" class="py-5 bg-light position-relative overflow-hidden">
@@ -52,76 +88,179 @@
                     Unlock Your Potential with <span class="text-primary">Expert Guidance</span>
                 </h1>
                 <p class="lead text-muted mb-5 lh-base">
-                    Join "The New Education Tuition Center" for comprehensive coaching in CBSE, SSC, Intermediate, and Diploma. We build foundations for a brighter future.
+                    Join <strong>Shoeb Sir's Academy</strong> for comprehensive coaching in CBSE, SSC, Intermediate, and Diploma. We build foundations for a brighter future.
                 </p>
                 <div class="d-flex gap-3 flex-wrap">
                     <a href="#courses" class="btn btn-primary btn-lg rounded-pill px-5 shadow-sm fw-medium">Explore Courses</a>
                     <a href="#contact" class="btn btn-outline-primary btn-lg rounded-pill px-5 fw-medium">Contact Us</a>
                 </div>
                 
-                <div class="mt-5 d-flex align-items-center gap-4">
-                    <div class="d-flex">
-                        <div class="bg-white rounded-circle border border-2 border-white shadow-sm" style="width: 40px; height: 40px; background-image: url('https://randomuser.me/api/portraits/men/32.jpg'); background-size: cover;"></div>
-                        <div class="bg-white rounded-circle border border-2 border-white shadow-sm ms-n3" style="width: 40px; height: 40px; background-image: url('https://randomuser.me/api/portraits/women/44.jpg'); background-size: cover; margin-left: -15px;"></div>
-                        <div class="bg-white rounded-circle border border-2 border-white shadow-sm ms-n3" style="width: 40px; height: 40px; background-image: url('https://randomuser.me/api/portraits/men/86.jpg'); background-size: cover; margin-left: -15px;"></div>
+                <div class="mt-5 d-flex flex-wrap align-items-center gap-4">
+                    <!-- Students Count Badge -->
+                    <div class="hero-stat-badge">
+                        <div class="hero-stat-icon">
+                            <i data-feather="users"></i>
+                        </div>
+                        <div class="hero-stat-info">
+                            <span class="hero-stat-number">500+</span>
+                            <span class="hero-stat-label">Happy Students</span>
+                        </div>
                     </div>
-                    <div>
-                        <p class="mb-0 fw-bold text-dark">40+ Students</p>
-                        <small class="text-muted">Trusted by Industry Experts</small>
+                    
+                    <!-- Success Rate Badge -->
+                    <div class="hero-stat-badge success">
+                        <div class="hero-stat-icon">
+                            <i data-feather="award"></i>
+                        </div>
+                        <div class="hero-stat-info">
+                            <span class="hero-stat-number">98%</span>
+                            <span class="hero-stat-label">Success Rate</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Rating Badge -->
+                    <div class="hero-stat-badge warning">
+                        <div class="hero-stat-icon">
+                            <i data-feather="star"></i>
+                        </div>
+                        <div class="hero-stat-info">
+                            <span class="hero-stat-number">4.9★</span>
+                            <span class="hero-stat-label">Parent Reviews</span>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6 position-relative z-index-1">
-                <div class="position-relative">
-                    <div class="position-absolute top-0 start-0 translate-middle bg-warning rounded-circle opacity-10 blur-3xl" style="width: 300px; height: 300px; filter: blur(80px); z-index: -1;"></div>
-                    <div class="position-absolute bottom-0 end-0 translate-middle bg-primary rounded-circle opacity-10 blur-3xl" style="width: 300px; height: 300px; filter: blur(80px); z-index: -1;"></div>
-                    <img src="{% static 'images/intermediate.jpg' %}" alt="Students Learning" class="img-fluid rounded-4 shadow-lg rotate-n3 hover-rotate-0 transition-all duration-500">
+                <div class="hero-image-wrapper">
+                    <img src="{% static 'images/shoeb_banner.jpeg' %}" alt="Shoeb Sir's Academy - Students Learning" class="hero-image">
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Features Section -->
-<section id="about" class="py-6 bg-white">
+<!-- Our Key Features Section -->
+<section id="features" class="py-6 bg-white" itemscope itemtype="https://schema.org/ItemList">
     <div class="container py-5">
         <div class="text-center mb-5">
-            <h2 class="fw-bold text-dark mb-3">Why Choose Us?</h2>
-            <p class="text-muted w-75 mx-auto lead">We provide a nurturing environment where students can thrive academically and personally.</p>
+            <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-2 mb-3 fw-medium" data-aos="fade-up">
+                What Makes Us Different
+            </span>
+            <h2 class="fw-bold text-dark mb-3 display-6" data-aos="fade-up" data-aos-delay="100" itemprop="name">Our Key Features</h2>
+            <p class="text-muted lead mx-auto" data-aos="fade-up" data-aos-delay="200" style="max-width: 700px;" itemprop="description">
+                We provide a complete learning environment with experienced teachers, personalized attention, and holistic development for every student.
+            </p>
         </div>
+        
         <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm hover-lift p-4">
-                    <div class="card-body text-center">
-                        <div class="bg-primary bg-opacity-10 p-3 rounded-circle d-inline-flex mb-4">
-                            <i data-feather="users" class="text-primary" style="width: 32px; height: 32px;"></i>
-                        </div>
-                        <h4 class="fw-bold mb-3">Expert Faculty</h4>
-                        <p class="text-muted mb-0">Learn from experienced educators dedicated to your success with personalized attention.</p>
+            <!-- Feature 1: Experienced Teachers -->
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="0" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <meta itemprop="position" content="1">
+                <article class="feature-card h-100" itemprop="item" itemscope itemtype="https://schema.org/Service">
+                    <div class="feature-icon bg-primary">
+                        <i data-feather="award"></i>
                     </div>
-                </div>
+                    <h3 class="feature-title" itemprop="name">Experienced & Well-Trained Teachers</h3>
+                    <p class="feature-description" itemprop="description">
+                        Highly skilled teachers who make difficult concepts easy and understandable for every child. Our faculty undergoes regular training to stay updated with modern teaching methods.
+                    </p>
+                    <div class="feature-check">
+                        <i data-feather="check-circle" class="text-success"></i>
+                        <span>Qualified & Certified</span>
+                    </div>
+                </article>
             </div>
-            <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm hover-lift p-4">
-                    <div class="card-body text-center">
-                        <div class="bg-success bg-opacity-10 p-3 rounded-circle d-inline-flex mb-4">
-                            <i data-feather="book-open" class="text-success" style="width: 32px; height: 32px;"></i>
-                        </div>
-                        <h4 class="fw-bold mb-3">Comprehensive Material</h4>
-                        <p class="text-muted mb-0">Access high-quality study materials, practice papers, and regular assessments.</p>
+            
+            <!-- Feature 2: Homework Support -->
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <meta itemprop="position" content="2">
+                <article class="feature-card h-100" itemprop="item" itemscope itemtype="https://schema.org/Service">
+                    <div class="feature-icon bg-success">
+                        <i data-feather="edit-3"></i>
                     </div>
-                </div>
+                    <h3 class="feature-title" itemprop="name">Daily Homework Support</h3>
+                    <p class="feature-description" itemprop="description">
+                        Daily guidance and help with homework to ensure students stay confident and stress-free. We make sure every student completes their assignments on time.
+                    </p>
+                    <div class="feature-check">
+                        <i data-feather="check-circle" class="text-success"></i>
+                        <span>Doubt Clearing Sessions</span>
+                    </div>
+                </article>
             </div>
-            <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm hover-lift p-4">
-                    <div class="card-body text-center">
-                        <div class="bg-warning bg-opacity-10 p-3 rounded-circle d-inline-flex mb-4">
-                            <i data-feather="target" class="text-warning" style="width: 32px; height: 32px;"></i>
-                        </div>
-                        <h4 class="fw-bold mb-3">Result Oriented</h4>
-                        <p class="text-muted mb-0">Proven track record of excellence in board exams and competitive entrance tests.</p>
+            
+            <!-- Feature 3: One-to-One Teaching -->
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <meta itemprop="position" content="3">
+                <article class="feature-card h-100" itemprop="item" itemscope itemtype="https://schema.org/Service">
+                    <div class="feature-icon bg-info">
+                        <i data-feather="user-check"></i>
                     </div>
-                </div>
+                    <h3 class="feature-title" itemprop="name">One-to-One Teaching</h3>
+                    <p class="feature-description" itemprop="description">
+                        Individual attention for students who need extra help, ensuring no child is left behind. Personalized learning plans tailored to each student's pace.
+                    </p>
+                    <div class="feature-check">
+                        <i data-feather="check-circle" class="text-success"></i>
+                        <span>Personal Attention</span>
+                    </div>
+                </article>
+            </div>
+            
+            <!-- Feature 4: Weekly Tests -->
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <meta itemprop="position" content="4">
+                <article class="feature-card h-100" itemprop="item" itemscope itemtype="https://schema.org/Service">
+                    <div class="feature-icon bg-warning">
+                        <i data-feather="clipboard"></i>
+                    </div>
+                    <h3 class="feature-title" itemprop="name">Weekly Tests & Assessments</h3>
+                    <p class="feature-description" itemprop="description">
+                        Regular tests to track progress, improve accuracy, and boost exam performance. Detailed feedback and analysis help students identify and improve weak areas.
+                    </p>
+                    <div class="feature-check">
+                        <i data-feather="check-circle" class="text-success"></i>
+                        <span>Performance Tracking</span>
+                    </div>
+                </article>
+            </div>
+            
+            <!-- Feature 5: Digital Classes -->
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <meta itemprop="position" content="5">
+                <article class="feature-card h-100" itemprop="item" itemscope itemtype="https://schema.org/Service">
+                    <div class="feature-icon bg-danger">
+                        <i data-feather="monitor"></i>
+                    </div>
+                    <h3 class="feature-title" itemprop="name">Digital Classes</h3>
+                    <p class="feature-description" itemprop="description">
+                        Engaging digital learning with videos, animations, and smart explanations. Modern teaching tools make complex topics simple and interesting.
+                    </p>
+                    <div class="feature-check">
+                        <i data-feather="check-circle" class="text-success"></i>
+                        <span>Smart Learning</span>
+                    </div>
+                </article>
+            </div>
+            
+            <!-- Feature 6: Extra Activities -->
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <meta itemprop="position" content="6">
+                <article class="feature-card h-100" itemprop="item" itemscope itemtype="https://schema.org/Service">
+                    <div class="feature-icon bg-purple">
+                        <i data-feather="star"></i>
+                    </div>
+                    <h3 class="feature-title" itemprop="name">Extra Activities for Development</h3>
+                    <p class="feature-description" itemprop="description">
+                        Fun and knowledgeable activities that build confidence and skills beyond academics.
+                    </p>
+                    <ul class="activity-list">
+                        <li><i data-feather="play-circle"></i> Games & Competitions</li>
+                        <li><i data-feather="zap"></i> Science Fairs & Projects</li>
+                        <li><i data-feather="map-pin"></i> Field Trips</li>
+                        <li><i data-feather="mic"></i> Public Speaking & Reading</li>
+                    </ul>
+                </article>
             </div>
         </div>
     </div>
@@ -139,7 +278,7 @@
             <div class="col-md-4">
                 <div class="card h-100 border-0 shadow-sm hover-lift overflow-hidden">
                     <div class="position-relative">
-                        <img src="{% static 'images/class10.jpg' %}" alt="10th Class" class="card-img-top" style="height: 240px; object-fit: cover;">
+                        <img src="{% static 'images/Shoeb_ssc.jpeg' %}" alt="10th Class" class="card-img-top course-card-img">
                         <span class="badge bg-primary position-absolute top-0 end-0 m-3 rounded-pill px-3 py-2">School Level</span>
                     </div>
                     <div class="card-body p-4">
@@ -147,7 +286,7 @@
                         <p class="text-muted mb-4">Complete coverage of Maths, Science, and Social Studies with weekly tests.</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="fw-bold text-primary">Admissions Open</span>
-                            <a href="{% url 'register' %}" class="btn btn-sm btn-outline-primary rounded-pill px-3">Enroll Now</a>
+                            <a href="https://forms.gle/UhUPRG6jpMCtaDfQ6" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3">Enroll Now</a>
                         </div>
                     </div>
                 </div>
@@ -156,7 +295,7 @@
             <div class="col-md-4">
                 <div class="card h-100 border-0 shadow-sm hover-lift overflow-hidden">
                     <div class="position-relative">
-                        <img src="{% static 'images/intermediate.jpg' %}" alt="Intermediate" class="card-img-top" style="height: 240px; object-fit: cover;">
+                        <img src="{% static 'images/shoeb_inter.jpeg' %}" alt="Intermediate" class="card-img-top course-card-img">
                         <span class="badge bg-success position-absolute top-0 end-0 m-3 rounded-pill px-3 py-2">College Level</span>
                     </div>
                     <div class="card-body p-4">
@@ -164,7 +303,7 @@
                         <p class="text-muted mb-4">Specialized coaching for Maths, Physics, and Chemistry with competitive focus.</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="fw-bold text-primary">Limited Seats</span>
-                            <a href="{% url 'register' %}" class="btn btn-sm btn-outline-primary rounded-pill px-3">Enroll Now</a>
+                            <a href="https://forms.gle/UhUPRG6jpMCtaDfQ6" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3">Enroll Now</a>
                         </div>
                     </div>
                 </div>
@@ -173,15 +312,15 @@
             <div class="col-md-4">
                 <div class="card h-100 border-0 shadow-sm hover-lift overflow-hidden">
                     <div class="position-relative">
-                        <img src="{% static 'images/diploma.jpg' %}" alt="Diploma" class="card-img-top" style="height: 240px; object-fit: cover;">
+                        <img src="{% static 'images/shoeb_diploma.jpg' %}" alt="Diploma" class="card-img-top course-card-img">
                         <span class="badge bg-warning text-dark position-absolute top-0 end-0 m-3 rounded-pill px-3 py-2">Technical</span>
                     </div>
                     <div class="card-body p-4">
                         <h4 class="fw-bold mb-2">Diploma Tuition</h4>
                         <p class="text-muted mb-4">Engineering Mathematics and core subjects for all semesters and backlogs.</p>
                         <div class="d-flex justify-content-between align-items-center">
-                            <span class="fw-bold text-primary">₹1499/- Only</span>
-                            <a href="{% url 'register' %}" class="btn btn-sm btn-outline-primary rounded-pill px-3">Enroll Now</a>
+                            <span class="fw-bold text-primary">Limited Seats</span>
+                            <a href="https://forms.gle/UhUPRG6jpMCtaDfQ6" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3">Enroll Now</a>
                         </div>
                     </div>
                 </div>
@@ -190,33 +329,290 @@
     </div>
 </section>
 
-<!-- Stats Section -->
-<section class="py-5 bg-primary text-white">
-    <div class="container py-4">
-        <div class="row text-center g-4">
-            <div class="col-md-3">
-                <div class="p-3">
-                    <h3 class="display-4 fw-bold mb-1">500+</h3>
-                    <p class="mb-0 opacity-75 fw-medium text-uppercase letter-spacing-1">Happy Students</p>
+<!-- How It Works Section -->
+<section id="how-it-works" class="py-6 bg-gradient-subtle position-relative overflow-hidden">
+    <div class="container py-4 position-relative">
+        <div class="text-center mb-5">
+            <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-2 mb-3 fw-medium" data-aos="fade-up">
+                Simple Process
+            </span>
+            <h2 class="fw-bold text-dark mb-3 display-6" data-aos="fade-up" data-aos-delay="100">How It Works</h2>
+            <p class="text-muted lead mx-auto" data-aos="fade-up" data-aos-delay="200" style="max-width: 550px;">
+                Getting started is easy — just 4 simple steps to begin your learning journey.
+            </p>
+        </div>
+        
+        <!-- Horizontal Steps Layout -->
+        <div class="row g-4 justify-content-center">
+            <!-- Step 1 -->
+            <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="0">
+                <div class="step-card text-center">
+                    <div class="step-number-circle">
+                        <span>1</span>
+                    </div>
+                    <div class="step-connector d-none d-md-block"></div>
+                    <h5 class="step-title">Register</h5>
+                    <p class="step-desc">Fill out our simple form or visit our center</p>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="p-3">
-                    <h3 class="display-4 fw-bold mb-1">50+</h3>
-                    <p class="mb-0 opacity-75 fw-medium text-uppercase letter-spacing-1">Expert Teachers</p>
+            
+            <!-- Step 2 -->
+            <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="step-card text-center">
+                    <div class="step-number-circle">
+                        <span>2</span>
+                    </div>
+                    <div class="step-connector d-none d-md-block"></div>
+                    <h5 class="step-title">Assessment</h5>
+                    <p class="step-desc">Take a free test to know your level</p>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="p-3">
-                    <h3 class="display-4 fw-bold mb-1">98%</h3>
-                    <p class="mb-0 opacity-75 fw-medium text-uppercase letter-spacing-1">Success Rate</p>
+            
+            <!-- Step 3 -->
+            <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="step-card text-center">
+                    <div class="step-number-circle">
+                        <span>3</span>
+                    </div>
+                    <div class="step-connector d-none d-md-block"></div>
+                    <h5 class="step-title">Start Learning</h5>
+                    <p class="step-desc">Join your batch with expert teachers</p>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="p-3">
-                    <h3 class="display-4 fw-bold mb-1">10+</h3>
-                    <p class="mb-0 opacity-75 fw-medium text-uppercase letter-spacing-1">Years Experience</p>
+            
+            <!-- Step 4 -->
+            <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="step-card text-center">
+                    <div class="step-number-circle success">
+                        <span>✓</span>
+                    </div>
+                    <h5 class="step-title">Succeed!</h5>
+                    <p class="step-desc">Achieve your academic goals</p>
                 </div>
+            </div>
+        </div>
+    </div>
+</section>
+</section>
+
+
+
+<!-- Testimonials Section -->
+<section id="testimonials" class="py-6 bg-white position-relative overflow-hidden">
+    <div class="testimonial-bg-element"></div>
+    <div class="container py-5 position-relative">
+        <div class="text-center mb-5">
+            <span class="badge bg-warning bg-opacity-20 text-warning rounded-pill px-3 py-2 mb-3 fw-medium">
+                ⭐ Student Reviews
+            </span>
+            <h2 class="fw-bold text-dark mb-3 display-6">What Students Say</h2>
+            <p class="text-muted lead mx-auto" style="max-width: 600px;">
+                Hear from our students and parents about their experience at Shoeb Sir's Academy.
+            </p>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Testimonial 1 -->
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
+                <div class="testimonial-card h-100">
+                    <div class="testimonial-quote">
+                        <i data-feather="message-circle" class="quote-icon"></i>
+                    </div>
+                    <p class="testimonial-text mb-4">
+                        "The teaching methodology here is excellent. Shoeb Sir explains complex concepts in a very simple way. I scored 95% in my class 10 board exams!"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">RS</div>
+                        <div>
+                            <h6 class="mb-0 fw-bold">Rahul Sharma</h6>
+                            <small class="text-muted">Class 10 - SSC Board</small>
+                        </div>
+                    </div>
+                    <div class="testimonial-rating mt-3">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Testimonial 2 -->
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="testimonial-card featured h-100">
+                    <div class="testimonial-quote">
+                        <i data-feather="message-circle" class="quote-icon"></i>
+                    </div>
+                    <p class="testimonial-text mb-4">
+                        "I was struggling with Mathematics in Inter, but after joining here, my understanding improved dramatically. The practice tests really helped me during exams."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">PK</div>
+                        <div>
+                            <h6 class="mb-0 fw-bold">Priya Kumari</h6>
+                            <small class="text-muted">Intermediate - MPC</small>
+                        </div>
+                    </div>
+                    <div class="testimonial-rating mt-3">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Testimonial 3 -->
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="testimonial-card h-100">
+                    <div class="testimonial-quote">
+                        <i data-feather="message-circle" class="quote-icon"></i>
+                    </div>
+                    <p class="testimonial-text mb-4">
+                        "As a parent, I'm very satisfied with the progress my child has made. The teachers are dedicated and the regular updates about performance are helpful."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MR</div>
+                        <div>
+                            <h6 class="mb-0 fw-bold">Mohammed Rafi</h6>
+                            <small class="text-muted">Parent</small>
+                        </div>
+                    </div>
+                    <div class="testimonial-rating mt-3">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star-half-alt text-warning"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section id="faq" class="py-6 bg-light">
+    <div class="container py-5">
+        <div class="row g-5 align-items-start">
+            <div class="col-lg-5" data-aos="fade-right">
+                <span class="badge bg-info bg-opacity-10 text-info rounded-pill px-3 py-2 mb-3 fw-medium">
+                    Have Questions?
+                </span>
+                <h2 class="fw-bold text-dark mb-4 display-6">Frequently Asked Questions</h2>
+                <p class="text-muted lead mb-4">
+                    Find answers to common questions about our courses, fees, and admission process.
+                </p>
+                <div class="d-flex gap-3">
+                    <a href="#contact" class="btn btn-primary rounded-pill px-4">
+                        <i data-feather="message-circle" class="me-2" style="width: 18px; height: 18px;"></i>
+                        Ask a Question
+                    </a>
+                    <a href="tel:+919515781466" class="btn btn-outline-dark rounded-pill px-4">
+                        <i data-feather="phone" class="me-2" style="width: 18px; height: 18px;"></i>
+                        Call Us
+                    </a>
+                </div>
+            </div>
+            
+            <div class="col-lg-7" data-aos="fade-left">
+                <div class="accordion faq-accordion" id="faqAccordion">
+                    <!-- FAQ 1 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                What courses do you offer?
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                We offer comprehensive coaching for Class 10 (CBSE & SSC), Intermediate (MPC & BiPC), and Diploma Engineering. All major subjects including Mathematics, Science, Physics, and Chemistry are covered.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 2 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                What are the class timings?
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                We have flexible batch timings to accommodate school schedules. Morning batches run from 6 AM to 8 AM, and evening batches from 4 PM to 8 PM. Weekend special classes are also available.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 3 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                How can I enroll my child?
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                You can enroll by visiting our center at Goutham Nagar, Nizamabad, or by registering online through our website. A free assessment test will be conducted to understand your child's current level.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 4 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                Do you provide study materials?
+                            </button>
+                        </h2>
+                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Yes, we provide comprehensive study materials including notes, practice papers, previous year question papers, and model tests. All materials are updated according to the latest syllabus.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 5 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                What are your fees?
+                            </button>
+                        </h2>
+                        <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Our fees are very reasonable and vary by course. Diploma tuition starts at just ₹1499/- per subject. Please contact us or visit our center for detailed fee structure and any available discounts.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Banner Section -->
+<section class="cta-section position-relative overflow-hidden">
+    <div class="cta-particles">
+        <div class="particle particle-1"></div>
+        <div class="particle particle-2"></div>
+        <div class="particle particle-3"></div>
+        <div class="particle particle-4"></div>
+    </div>
+    <div class="container py-5 position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-8 text-center text-lg-start mb-4 mb-lg-0">
+                <h2 class="text-white fw-bold display-6 mb-2">Ready to Start Your Journey?</h2>
+                <p class="text-white-50 lead mb-0">Join thousands of successful students. Admissions open for 2025-26!</p>
+            </div>
+            <div class="col-lg-4 text-center text-lg-end">
+                <a href="https://forms.gle/UhUPRG6jpMCtaDfQ6" class="btn btn-light btn-lg rounded-pill px-5 fw-semibold shadow-lg cta-btn">
+                    <i data-feather="user-plus" class="me-2" style="width: 20px; height: 20px;"></i>
+                    Enroll Now
+                </a>
             </div>
         </div>
     </div>
@@ -304,8 +700,11 @@
     <div class="container pt-4">
         <div class="row g-4">
             <div class="col-lg-4">
-                <h4 class="fw-bold mb-4 text-white">The New Education</h4>
-                <p class="text-white mb-4">Empowering students with knowledge and skills for a better tomorrow. Join us to achieve academic excellence.</p>
+                <div class="d-flex align-items-center gap-3 mb-4">
+                    <img src="{% static 'images/shoeb_sir_academy_logo.jpg' %}" alt="Shoeb Sir's Academy" class="rounded-circle" style="width: 60px; height: 60px; object-fit: cover; border: 2px solid rgba(255,255,255,0.3);">
+                    <h4 class="fw-bold mb-0 text-white">Shoeb Sir's Academy</h4>
+                </div>
+                <p class="text-white-50 mb-4">Empowering students with knowledge and skills for a better tomorrow. Smart Learning Hub since 2017.</p>
                 <div class="d-flex gap-3">
                     <a href="#" class="btn btn-outline-light btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;"><i class="fa-brands fa-facebook-f" style="width: 20px; height: 20px;"></i></a>
                     <a href="#" class="btn btn-outline-light btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;"><i class="fa-brands fa-instagram" style="width: 20px; height: 20px;"></i></a>
@@ -341,7 +740,7 @@
             </div>
         </div>
         <div class="border-top border-secondary mt-5 pt-4 text-center">
-            <p class="mb-0 text-white small">&copy; 2025 The New Education Tuition Center. All rights reserved.</p>
+            <p class="mb-0 text-white-50 small">&copy; 2025 Shoeb Sir's Academy. All rights reserved. | Smart Learning Hub</p>
         </div>
     </div>
 </footer>
@@ -349,6 +748,10 @@
 {% endblock %}
 
 {% block extra_js %}
+<!-- AOS Animation Library -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script id="django-messages-data" type="application/json">
     [
@@ -362,6 +765,41 @@
 </script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Initialize AOS (Animate on Scroll)
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 50
+        });
+
+        // Navbar scroll effect
+        const navbar = document.querySelector('.landing-nav');
+        if (navbar) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // SweetAlert for Django messages
         const messagesData = JSON.parse(document.getElementById('django-messages-data').textContent);
         
         if (messagesData.length > 0) {
@@ -392,7 +830,11 @@
                 }
             })();
         }
-    });
 
+        // Re-initialize feather icons for dynamically loaded content
+        if (typeof feather !== 'undefined') {
+            feather.replace();
+        }
+    });
 </script>
 {% endblock %}
