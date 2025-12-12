@@ -198,7 +198,189 @@ main {
     
     main {
         margin-left: 0;
-        padding: 1.5rem 1rem;
+        padding: 1rem 0.75rem;
+    }
+}
+
+/* ========================================
+   DASHBOARD RESPONSIVE FIXES
+   ======================================== */
+
+/* Dashboard header */
+@media (max-width: 767.98px) {
+    main h1, main .h1 {
+        font-size: 1.5rem;
+    }
+    
+    main h2, main .h2 {
+        font-size: 1.25rem;
+    }
+}
+
+/* Dashboard stat cards - Mobile */
+@media (max-width: 575.98px) {
+    .row.g-4 {
+        --bs-gutter-y: 0.75rem;
+        --bs-gutter-x: 0.75rem;
+    }
+    
+    .card-body {
+        padding: 1rem !important;
+    }
+    
+    .card-body h2 {
+        font-size: 1.5rem;
+    }
+    
+    .card-body p.small {
+        font-size: 0.7rem;
+    }
+    
+    /* Stat card icon circle */
+    .card-body .bg-opacity-10.p-3 {
+        padding: 0.625rem !important;
+    }
+    
+    .card-body .bg-opacity-10 svg,
+    .card-body .bg-opacity-10 i {
+        width: 20px !important;
+        height: 20px !important;
+    }
+    
+    .card-body .bg-opacity-10 .fs-5 {
+        font-size: 1rem !important;
+    }
+}
+
+/* Tablet adjustments */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .col-md-3 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    
+    .col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+/* Quick action buttons - Mobile */
+@media (max-width: 575.98px) {
+    .card-body.d-flex.flex-wrap.gap-2 {
+        gap: 0.5rem !important;
+    }
+    
+    .card-body .btn.rounded-pill {
+        padding: 0.5rem 0.875rem;
+        font-size: 0.8rem;
+        flex: 1 1 calc(50% - 0.25rem);
+        min-width: 0;
+        text-align: center;
+    }
+    
+    .card-body .btn.rounded-pill i,
+    .card-body .btn.rounded-pill svg {
+        display: none;
+    }
+    
+    .card-header h5 {
+        font-size: 1rem;
+    }
+    
+    .list-group-item {
+        padding: 0.75rem 1rem !important;
+        font-size: 0.875rem;
+    }
+}
+
+/* Management module cards - Mobile */
+@media (max-width: 767.98px) {
+    .col-md-6 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
+    .card-header {
+        padding: 0.75rem 1rem !important;
+    }
+    
+    .card-header h5 {
+        font-size: 0.95rem;
+    }
+    
+    .badge.rounded-pill {
+        font-size: 0.7rem;
+        padding: 0.35rem 0.6rem;
+    }
+}
+
+/* Navbar dropdown fix for mobile */
+.navbar .dropdown-menu {
+    z-index: 1060;
+    position: absolute;
+    right: 0;
+    left: auto;
+}
+
+/* Fixed navbar to ensure dropdown stays in header */
+.navbar.fixed-top {
+    z-index: 1040;
+}
+
+.navbar.fixed-top .dropdown {
+    position: static;
+}
+
+.navbar.fixed-top .dropdown-menu {
+    position: fixed;
+    top: auto;
+    right: 1rem;
+    left: auto;
+    z-index: 1060;
+    margin-top: 0.25rem;
+}
+
+@media (max-width: 767.98px) {
+    .navbar.fixed-top .dropdown-menu {
+        position: fixed;
+        top: 56px; /* Below navbar height */
+        right: 0.5rem;
+        left: auto;
+        min-width: 160px;
+        max-width: calc(100vw - 1rem);
+        margin-top: 0;
+        border-radius: 0.75rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    .navbar .dropdown-toggle {
+        padding: 0.25rem;
+    }
+    
+    .navbar .dropdown-toggle .me-2 {
+        margin-right: 0 !important;
+    }
+    
+    /* User avatar circle - smaller on mobile */
+    .navbar .bg-light.rounded-circle {
+        width: 32px !important;
+        height: 32px !important;
+    }
+    
+    .navbar .bg-light.rounded-circle span {
+        font-size: 0.8rem;
+    }
+    
+    /* Dropdown items compact */
+    .navbar .dropdown-menu .dropdown-header {
+        font-size: 0.75rem;
+        padding: 0.5rem 1rem;
+    }
+    
+    .navbar .dropdown-menu .dropdown-item {
+        font-size: 0.875rem;
+        padding: 0.5rem 1rem;
     }
 }
 
