@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Page Not Found - Shoeb Sir Academy{% endblock %}
+
+{% block content %}
+<div class="row w-100 justify-content-center align-items-center" style="min-height: 60vh;">
+    <div class="col-md-6 text-center">
+        <div class="display-1 fw-bold text-primary mb-3">404</div>
+        <h1 class="h3 fw-bold mb-3">Oops! Page not found.</h1>
+        <p class="text-muted mb-4 lead">The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
+        <a href="{% url 'dashboard' %}" class="btn btn-primary rounded-pill px-4 py-2">
+            <i data-feather="home" class="me-2"></i> Back to Dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -4,6 +4,10 @@ from django.contrib import messages
 from django.contrib.auth import login
 from django.db import models
 from django.db.models import Sum
+from django.views.decorators.cache import never_cache
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from django.conf import settings
 from .models import Announcement
 from .forms import AnnouncementForm
 from students.models import StudentProfile
@@ -136,3 +140,19 @@ def announcement_list(request):
         announcements = Announcement.objects.none()
     
     return render(request, 'core/announcement_list.html', {'announcements': announcements})
+
+@never_cache
+def service_worker(request):
+    """
+    Serve the service worker with correct content type and scope.
+    This allows the SW to be scoped to domain root (/)
+    """
+    sw_path = settings.BASE_DIR / 'static' / 'sw.js'
+    try:
+        with open(sw_path, 'r') as f:
+            content = f.read()
+    except FileNotFoundError:
+        content = ""
+        
+    response = HttpResponse(content, content_type='application/javascript')
+    return response

@@ -104,6 +104,44 @@ a {
 
 /* --- Layout Components --- */
 
+/* Navbar Branding */
+.navbar-brand .brand-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.navbar-brand .brand-text {
+    line-height: 1.2;
+}
+
+.navbar-brand .brand-name {
+    font-weight: 700;
+    color: var(--slate-900);
+    font-size: 1.1rem;
+    display: block;
+    white-space: nowrap; /* Prevent wrapping */
+}
+
+/* Mobile responsive branding */
+/* Mobile responsive branding */
+@media (max-width: 767.98px) {
+    .navbar-brand .brand-name {
+        font-size: 1rem; /* Slightly smaller to fit better */
+        white-space: normal; /* Allow wrapping */
+        max-width: 200px; /* Restrict width to force wrap before overflow */
+    }
+    .navbar-brand .brand-logo {
+        width: 35px;
+        height: 35px;
+    }
+}
+@media (max-width: 400px) {
+    .navbar-brand .brand-name {
+        font-size: 0.9rem; /* Even smaller for very small screens */
+    }
+}
 /* Navbar */
 .navbar {
     background-color: var(--bg-surface);
@@ -888,19 +926,9 @@ main {
 }
 
 /* Tiny Mobile (< 576px) */
+/* Tiny Mobile (< 576px) */
 @media (max-width: 575.98px) {
-    .landing-nav .brand-logo {
-        height: 40px;
-        width: 40px;
-    }
-    
-    .landing-nav .brand-name {
-        font-size: 1rem;
-    }
-    
-    .landing-nav .brand-text {
-        max-width: 140px;
-    }
+    /* Branding handled by global .navbar-brand rules */
 }
 
 /* Hero Section Enhancements */
@@ -2304,6 +2332,7 @@ footer {
 }
 
 /* Card containing table - mobile adjustments */
+/* Card containing table - mobile adjustments handled by generic styles now */
 @media (max-width: 767.98px) {
     /* Card header - stack title and button on small screens */
     .card .card-header.d-flex {
@@ -2321,18 +2350,6 @@ footer {
     .card .card-body.p-0 {
         margin: 0;
         overflow: visible;
-    }
-    
-    /* Table cells - compact padding */
-    .table thead th {
-        padding: 0.625rem 0.75rem !important;
-        font-size: 0.7rem !important;
-        white-space: nowrap;
-    }
-    
-    .table tbody td {
-        padding: 0.75rem !important;
-        font-size: 0.85rem;
     }
 }
 
@@ -2468,6 +2485,45 @@ footer {
     
     .table tbody td[colspan] p {
         font-size: 0.85rem;
+    }
+}
+
+/* ========================================
+   PWA STANDALONE MODE STYLES
+   ======================================== */
+
+/* Adjustments for installed app mode (standalone) */
+@media all and (display-mode: standalone) {
+    /* Safe area insets for notched phones (iPhone X+) */
+    body {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+    }
+
+    /* Ensure fixed header respects top notch */
+    .navbar.fixed-top {
+        padding-top: max(0.5rem, env(safe-area-inset-top));
+        height: auto;
+        min-height: var(--header-height);
+    }
+    
+    /* Adjust sidebar top position */
+    .sidebar {
+        top: calc(var(--header-height) + env(safe-area-inset-top));
+    }
+    
+    /* Adjust install prompt to sit above bottom gesture bar */
+    #pwa-install-container {
+        bottom: max(1rem, env(safe-area-inset-bottom)) !important;
+    }
+}
+
+/* Ensure install banner is never shown on desktop/large screens */
+@media (min-width: 768px) {
+    #pwa-install-container {
+        display: none !important;
     }
 }
 

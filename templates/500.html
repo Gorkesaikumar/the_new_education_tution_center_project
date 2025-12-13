@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Server Error - Shoeb Sir Academy{% endblock %}
+
+{% block content %}
+<div class="row w-100 justify-content-center align-items-center" style="min-height: 60vh;">
+    <div class="col-md-6 text-center">
+        <div class="display-1 fw-bold text-danger mb-3">500</div>
+        <h1 class="h3 fw-bold mb-3">Something went wrong!</h1>
+        <p class="text-muted mb-4 lead">Our server encountered an internal error. We're working on fixing it. Please try again later.</p>
+        <a href="{% url 'dashboard' %}" class="btn btn-primary rounded-pill px-4 py-2">
+            <i data-feather="refresh-cw" class="me-2"></i> Return to Dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}

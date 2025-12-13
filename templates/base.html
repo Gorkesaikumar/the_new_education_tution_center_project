@@ -11,6 +11,14 @@
     <meta name="author" content="Shoeb Sir Academy">
     <meta name="language" content="English">
 
+    <!-- PWA Configuration -->
+    <link rel="manifest" href="{% static 'manifest.json' %}">
+    <meta name="theme-color" content="#4f46e5">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Academy">
+    <link rel="apple-touch-icon" href="{% static 'images/apple-touch-icon.png' %}">
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://shoebsiracademy.org{{ request.path }}">
@@ -292,7 +300,27 @@
     <script>
         // Initialize Feather Icons
         feather.replace();
-        
+    </script>
+
+    <!-- PWA Install Banner (Mobile Only) -->
+    <div id="pwa-install-container" class="position-fixed bottom-0 start-0 end-0 p-3 m-3 rounded-4 shadow-lg" style="display: none; background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%); z-index: 9999; color: white;">
+        <div class="d-flex align-items-center gap-3">
+            <img src="{% static 'images/icon-192x192.png' %}" alt="App Icon" class="rounded-3 shadow-sm" style="width: 48px; height: 48px;">
+            <div class="flex-grow-1">
+                <h6 class="mb-0 fw-bold">Install Academy App</h6>
+                <small class="text-white-50">Add to Home Screen for better experience</small>
+            </div>
+            <button id="pwa-install-btn" class="btn btn-sm btn-light fw-bold rounded-pill px-3 py-2 shadow-sm">Install</button>
+            <button onclick="document.getElementById('pwa-install-container').style.display='none'" class="btn btn-link text-white-50 p-1 ms-1">
+                <i data-feather="x" style="width: 20px; height: 20px;"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- PWA Script -->
+    <script src="{% static 'js/pwa.js' %}"></script>
+    
+    <script>
         // Mobile Sidebar Toggle
         const sidebarToggle = document.getElementById('sidebarToggle');
         const sidebar = document.getElementById('sidebarMenu');

@@ -13,4 +13,5 @@ urlpatterns = [
     path('announcements/create/', views.announcement_create, name='announcement_create'),
     path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
     path('sitemap.xml', TemplateView.as_view(template_name="sitemap.xml", content_type="application/xml")),
+    path('service-worker.js', views.service_worker, name='service_worker'),
 ]
