@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ assignment.title }}{% endblock %}
+{% block title %}{{ assignment.title }} - Shoeb Sir's Academy{% endblock %}
+
+{% block header %}Assignment Details{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-8">
         <div class="card border-0 shadow-sm rounded-lg mb-4">
             <div class="card-header bg-transparent border-0 pt-4 px-4">
-                <div class="d-flex justify-content-between align-items-start">
+                <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start gap-3">
                     <div>
                         <h4 class="mb-1 fw-bold">{{ assignment.title }}</h4>
                         <span class="badge bg-info bg-opacity-10 text-info rounded-pill px-2 py-1 fw-medium">{{ assignment.batch.name }}</span>
@@ -19,17 +21,19 @@
                 <h6 class="text-secondary text-uppercase small fw-bold mb-3">Description</h6>
                 <p class="card-text text-dark">{{ assignment.description|linebreaks }}</p>
                 {% if assignment.file %}
-                    <div class="mt-4">
-                        <a href="{{ assignment.file.url }}" class="btn btn-outline-primary rounded-pill px-4 shadow-sm" target="_blank">
-                            <i data-feather="download" class="me-2" style="width: 16px;"></i> Download Attachment
-                        </a>
-                    </div>
+                <div class="mt-4">
+                    <a href="{{ assignment.file.url }}" class="btn btn-outline-primary rounded-pill px-4 shadow-sm" target="_blank" rel="noopener noreferrer" aria-label="Download attachment">
+                        <i data-feather="download" class="me-2" style="width: 16px; height: 16px;"></i>
+                        <span>Download Attachment</span>
+                    </a>
+                </div>
                 {% endif %}
                 {% if user.is_teacher %}
-                    <hr class="my-4">
-                    <a href="{% url 'view_submissions' assignment.pk %}" class="btn btn-info text-white rounded-pill px-4 shadow-sm fw-medium">
-                        <i data-feather="users" class="me-2" style="width: 16px;"></i> View Submissions
-                    </a>
+                <hr class="my-4">
+                <a href="{% url 'view_submissions' assignment.pk %}" class="btn btn-info text-white rounded-pill px-4 shadow-sm fw-medium" aria-label="View student submissions">
+                    <i data-feather="users" class="me-2" style="width: 16px; height: 16px;"></i>
+                    <span>View Submissions</span>
+                </a>
                 {% endif %}
             </div>
         </div>
@@ -41,41 +45,41 @@
             </div>
             <div class="card-body p-4">
                 {% if submission %}
-                    <div class="alert alert-success d-flex align-items-center border-0 shadow-sm rounded-3 p-3">
-                        <i data-feather="check-circle" class="me-3" style="width: 24px; height: 24px;"></i>
-                        <div>
-                            <div class="fw-bold">Submitted on: {{ submission.submitted_at|date:"M d, Y H:i" }}</div>
-                            {% if submission.file %}
-                                <a href="{{ submission.file.url }}" target="_blank" class="text-success fw-bold text-decoration-none mt-1 d-inline-block border-bottom border-success">View Submitted File</a>
-                            {% endif %}
-                        </div>
+                <div class="alert alert-success d-flex align-items-center border-0 shadow-sm rounded-3 p-3">
+                    <i data-feather="check-circle" class="me-3" style="width: 24px; height: 24px;"></i>
+                    <div>
+                        <div class="fw-bold">Submitted on: {{ submission.submitted_at|date:"M d, Y H:i" }}</div>
+                        {% if submission.file %}
+                        <a href="{{ submission.file.url }}" target="_blank" rel="noopener noreferrer" class="text-success fw-bold text-decoration-none mt-1 d-inline-block border-bottom border-success">View Submitted File</a>
+                        {% endif %}
                     </div>
-                    <p class="text-muted small mb-0">You have already submitted this assignment.</p>
+                </div>
+                <p class="text-muted small mb-0">You have already submitted this assignment.</p>
                 {% else %}
-                    <form method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        
-                        {% for field in form %}
-                        <div class="mb-3">
-                            <label for="{{ field.id_for_label }}" class="form-label fw-medium text-secondary small text-uppercase">{{ field.label }}</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light border-end-0"><i data-feather="file" class="text-muted" style="width: 16px;"></i></span>
-                                {{ field }}
-                            </div>
-                            {% if field.errors %}
-                                <div class="text-danger small mt-1">
-                                    {% for error in field.errors %}
-                                        <div class="d-flex align-items-center"><i data-feather="alert-circle" class="me-1" style="width: 12px;"></i> {{ error }}</div>
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    {% for field in form %}
+                    <div class="mb-3">
+                        <label for="{{ field.id_for_label }}" class="form-label fw-medium text-secondary small text-uppercase">{{ field.label }}</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i data-feather="file" class="text-muted" style="width: 16px; height: 16px;"></i></span>
+                            {{ field }}
                         </div>
-                        {% endfor %}
+                        {% if field.errors %}
+                        <div class="text-danger small mt-1">
+                            {% for error in field.errors %}
+                            <div class="d-flex align-items-center"><i data-feather="alert-circle" class="me-1" style="width: 12px; height: 12px;"></i> {{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
 
-                        <div class="d-grid gap-2 mt-4">
-                            <button type="submit" class="btn btn-primary rounded-pill shadow-sm fw-medium">Submit Assignment</button>
-                        </div>
-                    </form>
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary rounded-pill shadow-sm fw-medium">Submit Assignment</button>
+                    </div>
+                </form>
                 {% endif %}
             </div>
         </div>
@@ -86,15 +90,22 @@
         </div>
     </div>
 </div>
+{% endblock %}
 
+{% block extra_js %}
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var inputs = document.querySelectorAll('input[type="file"]');
-        inputs.forEach(function(input) {
-            input.classList.add('form-control');
-            input.classList.add('bg-light');
-            input.classList.add('border-0');
-        });
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize feather icons
+    if (typeof feather !== 'undefined') {
+        feather.replace();
+    }
+    
+    // Style file inputs
+    var inputs = document.querySelectorAll('input[type="file"]');
+    inputs.forEach(function(input) {
+        input.classList.add('form-control', 'bg-light', 'border-0');
     });
+});
 </script>
 {% endblock %}
+

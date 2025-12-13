@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
-{% block title %}Enquiries | Coaching System{% endblock %}
+{% block title %}Enquiries - Shoeb Sir's Academy{% endblock %}
+
+{% block header %}Enquiries{% endblock %}
 
 {% block content %}
 <div class="card border-0 shadow-sm">
@@ -12,11 +14,11 @@
             <table class="table table-hover align-middle mb-0">
                 <thead class="bg-light">
                     <tr>
-                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold">Date</th>
-                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold">Name</th>
-                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold">Email</th>
-                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold">Phone</th>
-                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold text-end">Action</th>
+                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold" style="min-width: 120px;">Date</th>
+                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold" style="min-width: 120px;">Name</th>
+                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold" style="min-width: 140px;">Email</th>
+                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold" style="min-width: 100px;">Phone</th>
+                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold text-end" style="min-width: 100px;">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,25 +27,25 @@
                         <td class="px-4 py-3 text-secondary">{{ enquiry.created_at|date:"M d, Y H:i" }}</td>
                         <td class="px-4 py-3 fw-medium text-dark">{{ enquiry.full_name }}</td>
                         <td class="px-4 py-3">
-                            <a href="mailto:{{ enquiry.email }}" class="text-decoration-none text-primary">
+                            <a href="mailto:{{ enquiry.email }}" class="text-decoration-none text-primary" title="Send email">
                                 {{ enquiry.email }}
                             </a>
                         </td>
                         <td class="px-4 py-3">
-                            <a href="tel:{{ enquiry.phone_number }}" class="text-decoration-none text-secondary">
+                            <a href="tel:{{ enquiry.phone_number }}" class="text-decoration-none text-secondary" title="Call">
                                 {{ enquiry.phone_number }}
                             </a>
                         </td>
                         <td class="px-4 py-3 text-end">
-                            <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3 shadow-sm" data-bs-toggle="modal" data-bs-target="#messageModal{{ enquiry.id }}">
-                                <i data-feather="message-square" class="me-1" style="width: 14px; height: 14px;"></i> View Message
+                            <button type="button" class="btn btn-sm btn-outline-primary rounded-pill action-btn" data-bs-toggle="modal" data-bs-target="#messageModal{{ enquiry.id }}" title="View Message" aria-label="View message from {{ enquiry.full_name }}">
+                                <i data-feather="message-square" style="width: 16px; height: 16px;"></i>
                             </button>
                         </td>
                     </tr>
                     {% empty %}
                     <tr>
                         <td colspan="5" class="text-center py-5">
-                            <div class="text-muted">
+                            <div class="text-muted d-flex flex-column align-items-center">
                                 <i data-feather="inbox" style="width: 48px; height: 48px; opacity: 0.5;" class="mb-2"></i>
                                 <p class="mb-0">No enquiries found.</p>
                             </div>
@@ -77,3 +79,14 @@
 </div>
 {% endfor %}
 {% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof feather !== 'undefined') {
+        feather.replace();
+    }
+});
+</script>
+{% endblock %}
+

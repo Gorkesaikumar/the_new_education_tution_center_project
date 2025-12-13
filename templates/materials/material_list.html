@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 
-{% block title %}Study Materials{% endblock %}
+{% block title %}Study Materials - Shoeb Sir's Academy{% endblock %}
+
+{% block header %}Study Materials{% endblock %}
 
 {% block content %}
 <div class="card border-0 shadow-sm">
-    <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center pt-4 px-4">
+    <div class="card-header bg-transparent border-0 d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 pt-4 px-4">
         <h5 class="mb-0 fw-bold">Study Materials</h5>
-        <a href="{% url 'material_upload' %}" class="btn btn-primary rounded-pill px-4 shadow-sm">
-            <i data-feather="upload" class="me-2" style="width: 16px;"></i> Upload Material
+        <a href="{% url 'material_upload' %}" class="btn btn-primary rounded-pill px-4 shadow-sm" aria-label="Upload new material">
+            <i data-feather="upload" class="me-2" style="width: 16px; height: 16px;"></i>
+            <span>Upload Material</span>
         </a>
     </div>
     <div class="card-body p-0">
@@ -15,19 +18,19 @@
             <table class="table table-hover align-middle mb-0">
                 <thead class="bg-light">
                     <tr>
-                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold">Title</th>
-                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold">Batch</th>
-                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold">Subject</th>
-                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold">Uploaded By</th>
-                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold">Date</th>
-                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold text-end">Actions</th>
+                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold" style="min-width: 140px;">Title</th>
+                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold" style="min-width: 100px;">Batch</th>
+                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold" style="min-width: 100px;">Subject</th>
+                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold" style="min-width: 100px;">Uploaded By</th>
+                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold" style="min-width: 100px;">Date</th>
+                        <th class="border-0 px-4 py-3 text-muted small text-uppercase fw-bold text-end" style="min-width: 80px;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for material in materials %}
                     <tr>
                         <td class="px-4 py-3">
-                            <a href="{{ material.file.url }}" target="_blank" class="text-decoration-none fw-medium text-dark d-flex align-items-center">
+                            <a href="{{ material.file.url }}" target="_blank" rel="noopener noreferrer" class="text-decoration-none fw-medium text-dark d-flex align-items-center" aria-label="Download {{ material.title }}">
                                 <i data-feather="file-text" class="me-2 text-primary" style="width: 16px; height: 16px;"></i>
                                 {{ material.title }}
                             </a>
@@ -37,13 +40,15 @@
                         <td class="px-4 py-3 small text-muted">{{ material.uploaded_by.username }}</td>
                         <td class="px-4 py-3 small text-muted">{{ material.uploaded_at|date:"M d, Y" }}</td>
                         <td class="px-4 py-3 text-end">
-                            <a href="{% url 'material_delete' material.pk %}" class="btn btn-sm btn-outline-danger rounded-pill px-3">Delete</a>
+                            <a href="{% url 'material_delete' material.pk %}" class="btn btn-sm btn-outline-danger rounded-pill action-btn" title="Delete" aria-label="Delete {{ material.title }}">
+                                <i data-feather="trash-2" style="width: 16px; height: 16px;"></i>
+                            </a>
                         </td>
                     </tr>
                     {% empty %}
                     <tr>
                         <td colspan="6" class="text-center py-5">
-                            <div class="text-muted">
+                            <div class="text-muted d-flex flex-column align-items-center">
                                 <i data-feather="folder" style="width: 48px; height: 48px; opacity: 0.5;" class="mb-2"></i>
                                 <p class="mb-0">No materials found.</p>
                             </div>
@@ -56,3 +61,14 @@
     </div>
 </div>
 {% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof feather !== 'undefined') {
+        feather.replace();
+    }
+});
+</script>
+{% endblock %}
+

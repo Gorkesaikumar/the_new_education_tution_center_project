@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}{% if is_update %}Update{% else %}Add{% endif %} Student{% endblock %}
+{% block title %}{% if is_update %}Update{% else %}Add{% endif %} Student - Shoeb Sir's Academy{% endblock %}
 
 {% block header %}{% if is_update %}Update{% else %}Add{% endif %} Student{% endblock %}
 
@@ -25,29 +25,29 @@
                         {% endif %}
                         {% if field.errors %}
                         <div class="text-danger small mt-1">
-                            <i data-feather="alert-circle" style="width: 12px;"></i> {{ field.errors.0 }}
+                            <i data-feather="alert-circle" style="width: 12px; height: 12px;"></i> {{ field.errors.0 }}
                         </div>
                         {% endif %}
                     </div>
                     {% endfor %}
                     
                     {% if profile_form %}
-                        <hr class="my-4 border-light">
-                        <h6 class="text-uppercase text-muted small fw-bold mb-3">Profile Details</h6>
-                        {% for field in profile_form %}
-                        <div class="mb-3">
-                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                            {{ field }}
-                            {% if field.errors %}
-                            <div class="text-danger small mt-1">
-                                <i data-feather="alert-circle" style="width: 12px;"></i> {{ field.errors.0 }}
-                            </div>
-                            {% endif %}
+                    <hr class="my-4 border-light">
+                    <h6 class="text-uppercase text-muted small fw-bold mb-3">Profile Details</h6>
+                    {% for field in profile_form %}
+                    <div class="mb-3">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                        <div class="text-danger small mt-1">
+                            <i data-feather="alert-circle" style="width: 12px; height: 12px;"></i> {{ field.errors.0 }}
                         </div>
-                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    {% endfor %}
                     {% endif %}
 
-                    <div class="d-flex justify-content-end gap-3 mt-4">
+                    <div class="d-flex flex-column flex-sm-row justify-content-end gap-3 mt-4">
                         <a href="{% url 'student_list' %}" class="btn btn-light text-secondary rounded-pill px-4 fw-medium">Cancel</a>
                         <button type="submit" class="btn btn-primary rounded-pill px-4 shadow-sm fw-medium">Save Student</button>
                     </div>
@@ -57,3 +57,14 @@
     </div>
 </div>
 {% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof feather !== 'undefined') {
+        feather.replace();
+    }
+});
+</script>
+{% endblock %}
+
