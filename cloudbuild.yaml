@@ -4,7 +4,7 @@ steps:
       [
         "build",
         "-t",
-        "us-central1-docker.pkg.dev/neural-reactor-480008-v3/cloud-run-source-deploy/shoebsiracademy",
+        "us-central1-docker.pkg.dev/neural-reactor-480008-v3/cloud-run-source-deploy/shoebsiracademy:$SHORT_SHA",
         "."
       ]
 
@@ -12,7 +12,7 @@ steps:
     args:
       [
         "push",
-        "us-central1-docker.pkg.dev/neural-reactor-480008-v3/cloud-run-source-deploy/shoebsiracademy"
+        "us-central1-docker.pkg.dev/neural-reactor-480008-v3/cloud-run-source-deploy/shoebsiracademy:$SHORT_SHA"
       ]
 
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
@@ -23,7 +23,7 @@ steps:
         "deploy",
         "shoebsiracademy",
         "--image",
-        "us-central1-docker.pkg.dev/neural-reactor-480008-v3/cloud-run-source-deploy/shoebsiracademy",
+        "us-central1-docker.pkg.dev/neural-reactor-480008-v3/cloud-run-source-deploy/shoebsiracademy:$SHORT_SHA",
         "--region",
         "us-central1",
         "--platform",
@@ -32,4 +32,4 @@ steps:
       ]
 
 images:
-  - "us-central1-docker.pkg.dev/neural-reactor-480008-v3/cloud-run-source-deploy/shoebsiracademy"
+  - "us-central1-docker.pkg.dev/neural-reactor-480008-v3/cloud-run-source-deploy/shoebsiracademy:$SHORT_SHA"
