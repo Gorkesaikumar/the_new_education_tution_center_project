@@ -1,4 +1,5 @@
 FROM python:3.10-slim
+ARG CACHEBUST=1
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1

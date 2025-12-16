@@ -3,6 +3,8 @@ steps:
     args:
       [
         "build",
+        "--build-arg",
+        "CACHEBUST=$BUILD_ID",
         "-t",
         "us-central1-docker.pkg.dev/neural-reactor-480008-v3/cloud-run-source-deploy/shoebsiracademy:$BUILD_ID",
         "."
