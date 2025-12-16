@@ -30,15 +30,35 @@
                     {% for material in materials %}
                     <tr>
                         <td class="px-4 py-3">
+                            {% if material.file %}
                             <a href="{{ material.file.url }}" target="_blank" rel="noopener noreferrer" class="text-decoration-none fw-medium text-dark d-flex align-items-center" aria-label="Download {{ material.title }}">
                                 <i data-feather="file-text" class="me-2 text-primary" style="width: 16px; height: 16px;"></i>
                                 {{ material.title }}
                             </a>
+                            {% else %}
+                            <span class="fw-medium text-muted d-flex align-items-center">
+                                <i data-feather="file-x" class="me-2 text-secondary" style="width: 16px; height: 16px;"></i>
+                                {{ material.title }}
+                                <span class="badge bg-warning bg-opacity-10 text-warning ms-2 small">No file</span>
+                            </span>
+                            {% endif %}
                         </td>
-                        <td class="px-4 py-3"><span class="badge bg-info bg-opacity-10 text-info rounded-pill px-2 py-1 fw-medium">{{ material.batch.name }}</span></td>
-                        <td class="px-4 py-3 text-secondary">{{ material.subject.name|default:"-" }}</td>
-                        <td class="px-4 py-3 small text-muted">{{ material.uploaded_by.username }}</td>
-                        <td class="px-4 py-3 small text-muted">{{ material.uploaded_at|date:"M d, Y" }}</td>
+                        <td class="px-4 py-3">
+                            {% if material.batch %}
+                            <span class="badge bg-info bg-opacity-10 text-info rounded-pill px-2 py-1 fw-medium">{{ material.batch.name }}</span>
+                            {% else %}
+                            <span class="text-muted">—</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-4 py-3 text-secondary">
+                            {% if material.subject %}{{ material.subject.name }}{% else %}—{% endif %}
+                        </td>
+                        <td class="px-4 py-3 small text-muted">
+                            {% if material.uploaded_by %}{{ material.uploaded_by.username }}{% else %}—{% endif %}
+                        </td>
+                        <td class="px-4 py-3 small text-muted">
+                            {% if material.uploaded_at %}{{ material.uploaded_at|date:"M d, Y" }}{% else %}—{% endif %}
+                        </td>
                         <td class="px-4 py-3 text-end">
                             <a href="{% url 'material_delete' material.pk %}" class="btn btn-sm btn-outline-danger rounded-pill action-btn" title="Delete" aria-label="Delete {{ material.title }}">
                                 <i data-feather="trash-2" style="width: 16px; height: 16px;"></i>
@@ -71,4 +91,3 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 {% endblock %}
-

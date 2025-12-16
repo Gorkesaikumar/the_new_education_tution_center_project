@@ -34,12 +34,22 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="px-4 py-3 text-secondary">{{ material.subject.name|default:"-" }}</td>
-                        <td class="px-4 py-3 small text-muted">{{ material.uploaded_at|date:"M d, Y" }}</td>
+                        <td class="px-4 py-3 text-secondary">
+                            {% if material.subject %}{{ material.subject.name }}{% else %}—{% endif %}
+                        </td>
+                        <td class="px-4 py-3 small text-muted">
+                            {% if material.uploaded_at %}{{ material.uploaded_at|date:"M d, Y" }}{% else %}—{% endif %}
+                        </td>
                         <td class="px-4 py-3 text-end">
-                            <a href="{{ material.file.url }}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3 shadow-sm">
+                            {% if material.file %}
+                            <a href="{{ material.file.url }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-primary rounded-pill px-3 shadow-sm">
                                 <i data-feather="download" class="me-1" style="width: 14px; height: 14px;"></i> Download
                             </a>
+                            {% else %}
+                            <span class="btn btn-sm btn-outline-secondary rounded-pill px-3 disabled" title="File unavailable">
+                                <i data-feather="alert-circle" class="me-1" style="width: 14px; height: 14px;"></i> Unavailable
+                            </span>
+                            {% endif %}
                         </td>
                     </tr>
                     {% empty %}
@@ -57,4 +67,14 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof feather !== 'undefined') {
+        feather.replace();
+    }
+});
+</script>
 {% endblock %}

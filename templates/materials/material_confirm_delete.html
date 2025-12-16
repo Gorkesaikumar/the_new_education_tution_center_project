@@ -13,8 +13,20 @@
                 <h5 class="mb-0 fw-bold text-danger mt-2">Delete Material</h5>
             </div>
             <div class="card-body p-4 text-center">
-                <p class="card-text text-dark mb-1">Are you sure you want to delete material?</p>
-                <h5 class="fw-bold text-dark mb-3">{{ material.title }}</h5>
+                <p class="card-text text-dark mb-1">Are you sure you want to delete this material?</p>
+                <h5 class="fw-bold text-dark mb-3">{% if material.title %}{{ material.title }}{% else %}Untitled Material{% endif %}</h5>
+                
+                {% if material.batch or material.subject %}
+                <div class="mb-3">
+                    {% if material.batch %}
+                    <span class="badge bg-info bg-opacity-10 text-info rounded-pill px-2 py-1 me-1">{{ material.batch.name }}</span>
+                    {% endif %}
+                    {% if material.subject %}
+                    <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2 py-1">{{ material.subject.name }}</span>
+                    {% endif %}
+                </div>
+                {% endif %}
+                
                 <p class="card-text text-muted small bg-light p-3 rounded-3">This action cannot be undone. The file will be permanently removed.</p>
                 
                 <form method="post" class="mt-4 d-flex justify-content-center gap-2">
@@ -26,4 +38,14 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof feather !== 'undefined') {
+        feather.replace();
+    }
+});
+</script>
 {% endblock %}

@@ -8,14 +8,22 @@ DEBUG = False
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", ".run.app").split(",")
 
 # Cloud Run CSRF Trust
-CSRF_TRUSTED_ORIGINS = ["https://*.run.app"]
-
+CSRF_TRUSTED_ORIGINS = [
+    "https://shoebsiracademy.org",
+    "https://www.shoebsiracademy.org",
+]
 # Database (Cloud SQL)
 # Expects DATABASE_URL env var or individual connection params
-DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL = os.environ.get("DATABASE_URL")
+DATABASES = {
+    "default": dj_database_url.config(
+        default=DATABASE_URL,
+        conn_max_age=600,
+        ssl_require=True,
+    )
+}
 
-# Only crash at RUNTIME, not BUILD TIME
-if not DATABASE_URL and os.getenv("DJANGO_ALLOW_NO_DB") != "1":
+if not DATABASE_URL:
     raise RuntimeError("DATABASE_URL is not set")
 
 
