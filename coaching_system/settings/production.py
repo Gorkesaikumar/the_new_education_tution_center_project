@@ -23,7 +23,19 @@ DATABASES = {
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Google Cloud Storage for Media
-DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
+        "OPTIONS": {
+            "bucket_name": os.environ.get("GS_BUCKET_NAME"),
+        },
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
+
+
 GS_BUCKET_NAME = os.environ.get("GS_BUCKET_NAME")
 MEDIA_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/"
 
