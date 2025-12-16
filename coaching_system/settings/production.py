@@ -12,18 +12,11 @@ CSRF_TRUSTED_ORIGINS = ["https://*.run.app"]
 
 # Database (Cloud SQL)
 # Expects DATABASE_URL env var or individual connection params
-DATABASE_URL = os.environ.get("DATABASE_URL")
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-if not DATABASE_URL:
+# Only crash at RUNTIME, not BUILD TIME
+if not DATABASE_URL and os.getenv("DJANGO_ALLOW_NO_DB") != "1":
     raise RuntimeError("DATABASE_URL is not set")
-
-DATABASES = {
-    "default": dj_database_url.parse(
-        DATABASE_URL,
-        conn_max_age=600,
-        ssl_require=True,
-    )
-}
 
 
 # Static Files (WhiteNoise)

@@ -26,7 +26,9 @@ COPY . .
 
 # Run collectstatic during build (requires dummy env vars if settings rely on them)
 # We set a dummy SECRET_KEY to allow collectstatic to run without the real one
-RUN SECRET_KEY=dummy_build_key python manage.py collectstatic --noinput
+RUN SECRET_KEY=dummy_build_key \
+    DJANGO_ALLOW_NO_DB=1 \
+    python manage.py collectstatic --noinput
 
 # Expose the port Cloud Run expects
 EXPOSE 8080
