@@ -13,7 +13,14 @@ def main():
     except ImportError:
         pass
         
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'coaching_system.settings.base')
+    os.environ.setdefault(
+    'DJANGO_SETTINGS_MODULE',
+    os.getenv(
+        "DJANGO_SETTINGS_MODULE",
+        "coaching_system.settings.production"
+    )
+)
+
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
