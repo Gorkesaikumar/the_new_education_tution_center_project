@@ -12,12 +12,19 @@ CSRF_TRUSTED_ORIGINS = ["https://*.run.app"]
 
 # Database (Cloud SQL)
 # Expects DATABASE_URL env var or individual connection params
+DATABASE_URL = os.environ.get("DATABASE_URL")
+
+if not DATABASE_URL:
+    raise RuntimeError("DATABASE_URL is not set")
+
 DATABASES = {
-    "default": dj_database_url.config(
+    "default": dj_database_url.parse(
+        DATABASE_URL,
         conn_max_age=600,
-        ssl_require=True
+        ssl_require=True,
     )
 }
+
 
 # Static Files (WhiteNoise)
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
