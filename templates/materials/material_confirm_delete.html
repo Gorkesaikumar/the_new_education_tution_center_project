@@ -8,31 +8,52 @@
         <div class="card border-0 shadow-lg rounded-lg">
             <div class="card-header bg-danger bg-opacity-10 border-0 pt-4 px-4 text-center">
                 <div class="bg-white p-3 rounded-circle d-inline-block mb-2 shadow-sm">
-                    <i data-feather="alert-triangle" class="text-danger" style="width: 32px; height: 32px;"></i>
+                    <i data-feather="alert-triangle"
+                       class="text-danger"
+                       style="width:32px;height:32px;"></i>
                 </div>
-                <h5 class="mb-0 fw-bold text-danger mt-2">Delete Material</h5>
+                <h5 class="mb-0 fw-bold text-danger mt-2">
+                    Delete Material
+                </h5>
             </div>
             <div class="card-body p-4 text-center">
-                <p class="card-text text-dark mb-1">Are you sure you want to delete this material?</p>
-                <h5 class="fw-bold text-dark mb-3">{% if material.title %}{{ material.title }}{% else %}Untitled Material{% endif %}</h5>
-                
+                <p class="text-dark mb-1">
+                    Are you sure you want to delete this material?
+                </p>
+
+                <h5 class="fw-bold text-dark mb-3">
+                    {{ material.title|default:"Untitled Material" }}
+                </h5>
+
                 {% if material.batch or material.subject %}
                 <div class="mb-3">
                     {% if material.batch %}
-                    <span class="badge bg-info bg-opacity-10 text-info rounded-pill px-2 py-1 me-1">{{ material.batch.name }}</span>
+                        <span class="badge bg-info bg-opacity-10 text-info rounded-pill px-2 py-1 me-1">
+                            {{ material.batch.name }}
+                        </span>
                     {% endif %}
                     {% if material.subject %}
-                    <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2 py-1">{{ material.subject.name }}</span>
+                        <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2 py-1">
+                            {{ material.subject.name }}
+                        </span>
                     {% endif %}
                 </div>
                 {% endif %}
-                
-                <p class="card-text text-muted small bg-light p-3 rounded-3">This action cannot be undone. The file will be permanently removed.</p>
-                
+
+                <p class="text-muted small bg-light p-3 rounded-3">
+                    This action cannot be undone. The file will be permanently removed.
+                </p>
+
                 <form method="post" class="mt-4 d-flex justify-content-center gap-2">
                     {% csrf_token %}
-                    <a href="{% url 'material_list' %}" class="btn btn-light rounded-pill px-4 fw-medium text-secondary">Cancel</a>
-                    <button type="submit" class="btn btn-danger rounded-pill px-4 fw-medium shadow-sm">Confirm Delete</button>
+                    <a href="{% url 'material_list' %}"
+                       class="btn btn-light rounded-pill px-4">
+                        Cancel
+                    </a>
+                    <button type="submit"
+                            class="btn btn-danger rounded-pill px-4 shadow-sm">
+                        Confirm Delete
+                    </button>
                 </form>
             </div>
         </div>
@@ -42,10 +63,8 @@
 
 {% block extra_js %}
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    if (typeof feather !== 'undefined') {
-        feather.replace();
-    }
+document.addEventListener('DOMContentLoaded', () => {
+    if (window.feather) feather.replace();
 });
 </script>
 {% endblock %}
