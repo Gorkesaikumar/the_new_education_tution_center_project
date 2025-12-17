@@ -4,11 +4,15 @@ import dj_database_url
 
 DEBUG = False
 
-# ---- HOSTS & CSRF ----
+# -------------------------------------------------
+# HOSTS & CSRF
+# -------------------------------------------------
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split()
 CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", "").split()
 
-# ---- DATABASE 
+# -------------------------------------------------
+# DATABASE (BUILD-SAFE + RUNTIME-STRICT)
+# -------------------------------------------------
 DATABASE_URL = os.environ.get("DATABASE_URL")
 
 if DATABASE_URL:
@@ -27,7 +31,9 @@ else:
         }
     }
 
-# ---- STATIC FILES (WhiteNoise ONLY) ----
+# -------------------------------------------------
+# STATIC FILES (WHITENOISE)
+# -------------------------------------------------
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
@@ -35,34 +41,49 @@ STATICFILES_STORAGE = (
     "whitenoise.storage.CompressedManifestStaticFilesStorage"
 )
 
-# ---- MEDIA FILES (GCS ONLY) ----
+# -------------------------------------------------
+# MEDIA FILES (GCS – BUILD SAFE)
+# -------------------------------------------------
 GS_BUCKET_NAME = os.environ.get("GS_BUCKET_NAME")
-if not GS_BUCKET_NAME:
-    raise RuntimeError("GS_BUCKET_NAME is not set")
 
-STORAGES = {
-    # MEDIA files → Google Cloud Storage
-    "default": {
-        "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
-        "OPTIONS": {
-            "bucket_name": GS_BUCKET_NAME,
+if GS_BUCKET_NAME:
+    # Runtime: Google Cloud Storage
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
+            "OPTIONS": {
+                "bucket_name": GS_BUCKET_NAME,
+            },
         },
-    },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
 
-    # STATIC files → WhiteNoise
-    "staticfiles": {
-        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
-    },
-}
+    MEDIA_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/"
 
+else:
+    # Build-time fallback (NO GCS AVAILABLE)
+    STORAGES = {
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
 
-MEDIA_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/"
+    MEDIA_URL = "/media/"
 
-# ---- PROXY / HTTPS (Cloud Run) ----
+# -------------------------------------------------
+# CLOUD RUN / PROXY
+# -------------------------------------------------
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 USE_X_FORWARDED_HOST = True
 
-# ---- SECURITY ----
+# -------------------------------------------------
+# SECURITY
+# -------------------------------------------------
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
