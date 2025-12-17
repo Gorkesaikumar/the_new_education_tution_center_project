@@ -8,18 +8,24 @@ DEBUG = False
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split()
 CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", "").split()
 
-# ---- DATABASE (NO DUMMY FALLBACK IN PROD) ----
+# ---- DATABASE 
 DATABASE_URL = os.environ.get("DATABASE_URL")
-if not DATABASE_URL:
-    raise RuntimeError("DATABASE_URL is not set in production")
 
-DATABASES = {
-    "default": dj_database_url.parse(
-        DATABASE_URL,
-        conn_max_age=600,
-        ssl_require=True,
-    )
-}
+if DATABASE_URL:
+    DATABASES = {
+        "default": dj_database_url.parse(
+            DATABASE_URL,
+            conn_max_age=600,
+            ssl_require=True,
+        )
+    }
+else:
+    # Build-time safe dummy DB (Cloud Run build step)
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.dummy"
+        }
+    }
 
 # ---- STATIC FILES (WhiteNoise ONLY) ----
 STATIC_URL = "/static/"
