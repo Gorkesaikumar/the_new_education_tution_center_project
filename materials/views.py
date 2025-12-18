@@ -65,28 +65,28 @@ def material_upload(request):
     Upload new study material.
     """
     if request.method == "POST":
-        form = StudyMaterialForm(request.POST, request.FILES)
+        form = StudyMaterialForm(
+            request.POST,
+            request.FILES,
+            user=request.user
+        )
 
         if form.is_valid():
-            try:
-                material = form.save(commit=False)
-                material.uploaded_by = request.user
-                material.save()
+            material = form.save(commit=False)
+            material.uploaded_by = request.user
+            material.save()
 
-                messages.success(
-                    request,
-                    "Study material uploaded successfully."
-                )
-                return redirect("material_list")
+            messages.success(
+                request,
+                "Study material uploaded successfully."
+            )
+            return redirect("material_list")
+        else:
+            # IMPORTANT: log form errors
+            logger.error("Material upload form errors: %s", form.errors)
 
-            except Exception:
-                logger.exception("Failed to upload study material")
-                messages.error(
-                    request,
-                    "Upload failed. Please try again."
-                )
     else:
-        form = StudyMaterialForm()
+        form = StudyMaterialForm(user=request.user)
 
     return render(
         request,
@@ -99,7 +99,7 @@ def material_upload(request):
 @user_passes_test(is_teacher, login_url="dashboard")
 def material_delete(request, pk):
     """
-    Delete study material + file from GCS.
+    Delete study material + file from storage.
     """
     material = get_object_or_404(
         StudyMaterial.objects.select_related("batch", "subject"),
@@ -114,7 +114,7 @@ def material_delete(request, pk):
                 material.file.delete(save=False)
             except Exception:
                 logger.exception(
-                    "Failed to delete GCS file for material pk=%s",
+                    "Failed to delete file for material pk=%s",
                     material.pk
                 )
 

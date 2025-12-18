@@ -1,4 +1,5 @@
-const CACHE_NAME = 'shoeb-academy-v2';
+const CACHE_NAME = 'shoeb-academy-static-v3';
+
 const STATIC_ASSETS = [
   '/static/css/style.css',
   '/static/images/shoeb_sir_academy_logo.jpg',
@@ -6,84 +7,48 @@ const STATIC_ASSETS = [
   '/static/images/icon-512x512.png'
 ];
 
-// Install Event - Cache Static Assets
-self.addEventListener('install', (event) => {
+/* INSTALL */
+self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(STATIC_ASSETS).catch(error => {
-        console.error('Failed to cache assets:', error);
-        // We do NOT re-throw here to prevent the SW from becoming "redundant"
-        // But in production, you might want to know if critical assets failed.
-        // For now, let it pass so the worker at least installs.
-      });
-    })
+    caches.open(CACHE_NAME).then(cache => cache.addAll(STATIC_ASSETS))
   );
   self.skipWaiting();
 });
 
-// Activate Event - Clean Old Caches
-self.addEventListener('activate', (event) => {
+/* ACTIVATE */
+self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cache) => {
-          if (cache !== CACHE_NAME) {
-            return caches.delete(cache);
-          }
-        })
-      );
-    })
+    caches.keys().then(keys =>
+      Promise.all(keys.map(k => k !== CACHE_NAME && caches.delete(k)))
+    )
   );
   self.clients.claim();
 });
 
-// Fetch Event - Dynamic Caching Strategy
-self.addEventListener('fetch', (event) => {
-  // Check if request is POST or non-GET (don't cache)
-  if (event.request.method !== 'GET') {
+/* FETCH */
+self.addEventListener('fetch', event => {
+  const req = event.request;
+  const url = new URL(req.url);
+
+  // 🚫 NEVER cache POST / PUT / DELETE
+  if (req.method !== 'GET') return;
+
+  // ✅ HTML → ALWAYS NETWORK FIRST
+  if (req.mode === 'navigate') {
+    event.respondWith(fetch(req));
     return;
   }
 
-  const url = new URL(event.request.url);
-
-  // Strategy 1: Cache First for Static Assets (CSS, JS, Images, Fonts)
-  if (url.pathname.startsWith('/static/') || 
-      url.href.includes('fonts.googleapis.com') || 
-      url.href.includes('fonts.gstatic.com') ||
-      url.href.includes('cdn.jsdelivr.net') ||
-      url.href.includes('unpkg.com')) {
-    
+  // ✅ STATIC FILES → CACHE FIRST
+  if (
+    url.pathname.startsWith('/static/') ||
+    url.hostname.includes('fonts.googleapis.com') ||
+    url.hostname.includes('fonts.gstatic.com') ||
+    url.hostname.includes('cdn.jsdelivr.net') ||
+    url.hostname.includes('unpkg.com')
+  ) {
     event.respondWith(
-      caches.match(event.request).then((cachedResponse) => {
-        if (cachedResponse) {
-          return cachedResponse;
-        }
-        return fetch(event.request).then((networkResponse) => {
-          // Check for valid response
-          if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic' && networkResponse.type !== 'cors') {
-            return networkResponse;
-          }
-          // Clone and cache
-          const responseToCache = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache);
-          });
-          return networkResponse;
-        });
-      })
+      caches.match(req).then(res => res || fetch(req))
     );
-    return;
-  }
-
-  // Strategy 2: Network First for HTML/Navigation (Core App Logic)
-  // This ensures users always get fresh data (dashboard, marks, etc.)
-  if (event.request.mode === 'navigate' || url.pathname.startsWith('/')) {
-    event.respondWith(
-      fetch(event.request)
-        .catch(() => {
-          return caches.match('/offline.html'); // Optional offline page
-        })
-    );
-    return;
   }
 });

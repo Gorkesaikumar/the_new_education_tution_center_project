@@ -1,97 +1,116 @@
 /**
  * PWA Handling Script for Shoeb Sir's Academy
- * Handles Service Worker registration and "Add to Home Screen" prompts
+ * SAFE for Django + Cloud Run
+ * - Registers Service Worker at ROOT scope
+ * - Forces SW update on each load
+ * - Shows install prompt ONLY on mobile
+ * - Avoids desktop spam
  */
 
-// 1. Register Service Worker (Safe for all devices)
-// Register from ROOT to ensure correct scope (/)
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        // UNREGISTER old static scope if it exists (Fix for "deleted" state)
-        navigator.serviceWorker.getRegistration('/static/').then(registration => {
-            if (registration) {
-                registration.unregister();
-                console.log('Old static ServiceWorker unregistered');
-            }
-        });
+/* -------------------------------------------------
+   1. SERVICE WORKER REGISTRATION (ROOT SCOPE)
+-------------------------------------------------- */
 
-        // Register new ROOT scope
-        navigator.serviceWorker.register('/service-worker.js')
-            .then(registration => {
-                console.log('ServiceWorker registration successful with scope: ', registration.scope);
-            })
-            .catch(err => {
-                console.log('ServiceWorker registration failed: ', err);
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+
+    // Unregister any OLD static-scoped service worker (important)
+    navigator.serviceWorker.getRegistration('/static/')
+      .then(oldReg => {
+        if (oldReg) {
+          oldReg.unregister();
+          console.log('Old static Service Worker unregistered');
+        }
+      });
+
+    // Register ROOT service worker
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(reg => {
+        console.log('Service Worker registered:', reg.scope);
+
+        // 🔥 FORCE UPDATE (important for Cloud Run + cache busting)
+        reg.update();
+
+        // Optional: reload page when new SW activates
+        reg.addEventListener('updatefound', () => {
+          const newWorker = reg.installing;
+          if (newWorker) {
+            newWorker.addEventListener('statechange', () => {
+              if (newWorker.state === 'activated') {
+                console.log('New Service Worker activated');
+              }
             });
-    });
+          }
+        });
+      })
+      .catch(err => {
+        console.error('Service Worker registration failed:', err);
+      });
+  });
 }
 
-// 2. Install Prompt Logic (Mobile Only)
-let deferredPrompt;
-const installBtn = document.getElementById('pwa-install-btn');
-const installContainer = document.getElementById('pwa-install-container');
+/* -------------------------------------------------
+   2. INSTALL PROMPT LOGIC (MOBILE ONLY)
+-------------------------------------------------- */
 
-// Check if device is mobile (simple user agent check)
-const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+let deferredPrompt = null;
+
+const installContainer = document.getElementById('pwa-install-container');
+const installBtn = document.getElementById('pwa-install-btn');
+
+// Device detection
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
+  .test(navigator.userAgent);
+
 const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) && !window.MSStream;
 
+// Capture install prompt
 window.addEventListener('beforeinstallprompt', (e) => {
-    // Prevent Chrome 67 and earlier from automatically showing the prompt
-    e.preventDefault();
-    // Stash the event so it can be triggered later.
-    deferredPrompt = e;
+  e.preventDefault();
+  deferredPrompt = e;
 
-    // ONLY show custom install button on mobile devices
-    // Desktop users should NOT see this
-    if (isMobile) {
-        showInstallPromotion();
-    } else {
-        console.log('PWA: Desktop detected, suppressing install prompt');
-    }
+  // Show install UI ONLY on mobile
+  if (isMobile && installContainer) {
+    installContainer.style.display = 'flex';
+  }
 });
 
-function showInstallPromotion() {
-    // Show your custom install button/banner here
-    if (installContainer) {
-        installContainer.style.display = 'flex';
-    }
-    
-    // Add click listener
-    if (installBtn) {
-        installBtn.addEventListener('click', async () => {
-            // Hide the promotion UI
-            installContainer.style.display = 'none';
-            
-            // Show the install prompt
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                
-                // Wait for the user to respond to the prompt
-                const { outcome } = await deferredPrompt.userChoice;
-                console.log(`User response to the install prompt: ${outcome}`);
-                
-                // We've used the prompt, and can't use it again, throw it away
-                deferredPrompt = null;
-            }
-        });
-    }
-}
+// Install button click
+if (installBtn) {
+  installBtn.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
 
-// 3. iOS Safari Manual Instructions (Since no beforeinstallprompt)
-if (isIOS && !window.navigator.standalone) {
-    // Ideally, show a toast or banner specifically for iOS users
-    // instructing them to tap Share -> Add to Home Screen
-    console.log('PWA: iOS detected, consider showing manual install instructions');
-    // Logic for iOS specific banner can be added here
-}
+    installContainer.style.display = 'none';
+    deferredPrompt.prompt();
 
-// 4. App Installed Event
-window.addEventListener('appinstalled', () => {
-    // Hide the app-provided install promotion
-    if (installContainer) {
-        installContainer.style.display = 'none';
-    }
-    // Clear the deferredPrompt so it can be garbage collected
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log('Install prompt outcome:', outcome);
+
     deferredPrompt = null;
-    console.log('PWA was installed');
+  });
+}
+
+/* -------------------------------------------------
+   3. iOS SAFARI (NO AUTO PROMPT)
+-------------------------------------------------- */
+
+if (isIOS && !window.navigator.standalone) {
+  console.log(
+    'iOS detected: show manual Add to Home Screen instructions'
+  );
+  // Optional: show custom banner here
+}
+
+/* -------------------------------------------------
+   4. APP INSTALLED EVENT
+-------------------------------------------------- */
+
+window.addEventListener('appinstalled', () => {
+  console.log('PWA installed successfully');
+
+  if (installContainer) {
+    installContainer.style.display = 'none';
+  }
+
+  deferredPrompt = null;
 });
