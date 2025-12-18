@@ -85,6 +85,10 @@
                                     <i data-feather="download" style="width:14px;height:14px;"></i>
                                 </a>
                                 {% endif %}
+                                <a href="{% url 'material_edit' material.pk %}"
+                                   class="btn btn-sm btn-light rounded-circle shadow-sm" title="Edit">
+                                    <i data-feather="edit-2" style="width:14px;height:14px;"></i>
+                                </a>
                                 <a href="{% url 'material_delete' material.pk %}"
                                    class="btn btn-sm btn-outline-danger rounded-circle" title="Delete">
                                     <i data-feather="trash-2" style="width:14px;height:14px;"></i>

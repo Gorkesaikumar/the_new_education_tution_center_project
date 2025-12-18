@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
-{% block title %}Upload Material - Shoeb Sir's Academy{% endblock %}
-{% block header %}Upload Material{% endblock %}
+{% block title %}{% if editing %}Edit Material{% else %}Upload Material{% endif %} - Shoeb Sir's Academy{% endblock %}
+{% block header %}{% if editing %}Edit Material{% else %}Upload Material{% endif %}{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-8 col-lg-6">
         <div class="card border-0 shadow-sm rounded-lg">
             <div class="card-header bg-transparent border-0 pt-4 px-4">
-                <h5 class="mb-0 fw-bold">Upload Material</h5>
+                <h5 class="mb-0 fw-bold">{% if editing %}Edit Material{% else %}Upload Material{% endif %}</h5>
             </div>
 
             <div class="card-body p-4">
@@ -53,7 +53,7 @@
                         </a>
                         <button type="submit"
                                 class="btn btn-primary rounded-pill px-4">
-                            Upload
+                            {% if editing %}Save Changes{% else %}Upload{% endif %}
                         </button>
                     </div>
                 </form>

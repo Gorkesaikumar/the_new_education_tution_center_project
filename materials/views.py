@@ -112,6 +112,43 @@ def material_upload(request):
 
 @login_required
 @user_passes_test(is_teacher, login_url='/login/')
+def material_edit(request, pk):
+    """
+    Handle material editing for teachers.
+    """
+    material = get_object_or_404(StudyMaterial, pk=pk)
+    
+    if request.method == "POST":
+        form = StudyMaterialForm(
+            request.POST,
+            request.FILES,
+            instance=material,
+            user=request.user
+        )
+
+        if form.is_valid():
+            try:
+                form.save()
+                messages.success(request, "Study material updated successfully.")
+                return redirect("material_list")
+            except Exception:
+                logger.exception("Failed to save material during edit")
+                messages.error(request, "Failed to update material. Please try again.")
+        else:
+            logger.error("Material edit form errors: %s", form.errors)
+
+    else:
+        form = StudyMaterialForm(instance=material, user=request.user)
+
+    return render(
+        request,
+        "materials/material_form.html",
+        {"form": form, "editing": True, "material": material}
+    )
+
+
+@login_required
+@user_passes_test(is_teacher, login_url='/login/')
 def material_delete(request, pk):
     """
     Delete study material + file from storage.
