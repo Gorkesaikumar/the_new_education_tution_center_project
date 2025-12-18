@@ -33,14 +33,12 @@
                     <tr>
                         <td class="px-4 py-3">
                             {% if material.file and material.file.name %}
-                                {% with file_url=material.file.url %}
-                                <a href="{{ file_url }}" target="_blank"
+                                <a href="{{ material.file.url }}" target="_blank" rel="noopener noreferrer"
                                    class="text-decoration-none fw-medium text-dark d-flex align-items-center">
                                     <i data-feather="file-text" class="me-2 text-primary"
                                        style="width:16px;height:16px;"></i>
                                     {{ material.title }}
                                 </a>
-                                {% endwith %}
                             {% else %}
                                 <span class="text-muted d-flex align-items-center">
                                     <i data-feather="file-x" class="me-2"
@@ -52,19 +50,19 @@
                         </td>
 
                         <td class="px-4 py-3">
-                            {{ material.batch.name|default:"—" }}
+                            {% if material.batch %}{{ material.batch.name }}{% else %}—{% endif %}
                         </td>
 
                         <td class="px-4 py-3">
-                            {{ material.subject.name|default:"—" }}
+                            {% if material.subject %}{{ material.subject.name }}{% else %}—{% endif %}
                         </td>
 
                         <td class="px-4 py-3">
-                            {{ material.uploaded_by.username|default:"—" }}
+                            {% if material.uploaded_by %}{{ material.uploaded_by.username }}{% else %}—{% endif %}
                         </td>
 
                         <td class="px-4 py-3">
-                            {{ material.uploaded_at|date:"M d, Y" }}
+                            {% if material.uploaded_at %}{{ material.uploaded_at|date:"M d, Y" }}{% else %}—{% endif %}
                         </td>
 
                         <td class="px-4 py-3 text-end">
@@ -92,8 +90,10 @@
 
 {% block extra_js %}
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    if (window.feather) feather.replace();
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof feather !== 'undefined') {
+        feather.replace();
+    }
 });
 </script>
 {% endblock %}

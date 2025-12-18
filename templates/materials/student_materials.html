@@ -33,24 +33,22 @@
                         </td>
 
                         <td class="px-4 py-3">
-                            {{ material.subject.name|default:"—" }}
+                            {% if material.subject %}{{ material.subject.name }}{% else %}—{% endif %}
                         </td>
 
                         <td class="px-4 py-3">
-                            {{ material.uploaded_at|date:"M d, Y" }}
+                            {% if material.uploaded_at %}{{ material.uploaded_at|date:"M d, Y" }}{% else %}—{% endif %}
                         </td>
 
                         <td class="px-4 py-3 text-end">
                             {% if material.file and material.file.name %}
-                                {% with file_url=material.file.url %}
-                                <a href="{{ file_url }}" target="_blank"
+                                <a href="{{ material.file.url }}" target="_blank" rel="noopener noreferrer"
                                    class="btn btn-sm btn-outline-primary rounded-pill">
                                     <i data-feather="download"
                                        class="me-1"
                                        style="width:14px;height:14px;"></i>
                                     Download
                                 </a>
-                                {% endwith %}
                             {% else %}
                                 <span class="btn btn-sm btn-outline-secondary rounded-pill disabled">
                                     Unavailable
@@ -75,8 +73,10 @@
 
 {% block extra_js %}
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    if (window.feather) feather.replace();
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof feather !== 'undefined') {
+        feather.replace();
+    }
 });
 </script>
 {% endblock %}
