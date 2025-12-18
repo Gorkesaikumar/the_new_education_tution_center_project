@@ -1,20 +1,7 @@
-// FIREBASE CONFIGURATION
-// Replace these with your project's configuration
-const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
-};
-
 // VAPID KEY - Get this from Firebase Console -> Cloud Messaging -> Web Configuration -> Web Push certificates
 const VAPID_KEY = "YOUR_PUBLIC_VAPID_KEY";
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const messaging = firebase.messaging();
+// Note: firebase and messaging are initialized in base.html
 
 /**
  * Handle FCM Token Retrieval and Server Sync
