@@ -62,6 +62,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'notifications.context_processors.firebase_settings',
             ],
         },
     },
@@ -109,3 +110,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'home'
+
+# FIREBASE CONFIGURATION (FOR FRONTEND)
+FIREBASE_API_KEY = os.environ.get("FIREBASE_API_KEY", "")
+FIREBASE_AUTH_DOMAIN = os.environ.get("FIREBASE_AUTH_DOMAIN", "")
+FIREBASE_PROJECT_ID = os.environ.get("FIREBASE_PROJECT_ID", "")
+FIREBASE_STORAGE_BUCKET = os.environ.get("FIREBASE_STORAGE_BUCKET", "")
+FIREBASE_MESSAGING_SENDER_ID = os.environ.get("FIREBASE_MESSAGING_SENDER_ID", "")
+FIREBASE_APP_ID = os.environ.get("FIREBASE_APP_ID", "")
+FIREBASE_VAPID_KEY = os.environ.get("FIREBASE_VAPID_KEY", "")
+FIREBASE_MEASUREMENT_ID = os.environ.get("FIREBASE_MEASUREMENT_ID", "")

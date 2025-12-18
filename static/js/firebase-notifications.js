@@ -1,13 +1,23 @@
 // VAPID KEY - Get this from Firebase Console -> Cloud Messaging -> Web Configuration -> Web Push certificates
-const VAPID_KEY = "YOUR_PUBLIC_VAPID_KEY";
+const VAPID_KEY = (typeof firebaseConfig !== 'undefined') ? firebaseConfig.vapidKey : "YOUR_PUBLIC_VAPID_KEY";
 
 // Note: firebase and messaging are initialized in base.html
+// We use window.fcm_messaging to access the initialized instance
+const getMessaging = () => {
+    return window.fcm_messaging || null;
+};
 
 /**
  * Handle FCM Token Retrieval and Server Sync
  */
 async function setupPushNotifications() {
     try {
+        const messaging = getMessaging();
+        if (!messaging) {
+            console.warn('Messaging not initialized. Check Firebase config.');
+            return;
+        }
+
         // Request Permission
         const permission = await Notification.requestPermission();
         if (permission === 'granted') {
@@ -63,19 +73,22 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
 }
 
 // Handle Foreground Messages
-messaging.onMessage((payload) => {
-    console.log('Message received in foreground:', payload);
-    const { title, body } = payload.notification;
-    
-    // Show a browser notification (since the browser won't show it automatically in foreground)
-    const notificationTitle = title;
-    const notificationOptions = {
-        body: body,
-        icon: '/static/images/icon-192x192.png',
-        data: payload.data
-    };
+const messaging = getMessaging();
+if (messaging) {
+    messaging.onMessage((payload) => {
+        console.log('Message received in foreground:', payload);
+        const { title, body } = payload.notification;
+        
+        // Show a browser notification (since the browser won't show it automatically in foreground)
+        const notificationTitle = title;
+        const notificationOptions = {
+            body: body,
+            icon: '/static/images/icon-192x192.png',
+            data: payload.data
+        };
 
-    if (Notification.permission === 'granted') {
-        new Notification(notificationTitle, notificationOptions);
-    }
-});
+        if (Notification.permission === 'granted') {
+            new Notification(notificationTitle, notificationOptions);
+        }
+    });
+}

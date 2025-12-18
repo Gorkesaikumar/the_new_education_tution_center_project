@@ -192,10 +192,15 @@ def service_worker(request):
 def fcm_service_worker(request):
     """
     Serve the Firebase Messaging Service Worker from the root.
+    Rendered as a template to support environment variables.
     """
-    sw_path = settings.BASE_DIR / 'static' / 'firebase-messaging-sw.js'
-    try:
-        with open(sw_path, 'rb') as f:
-            return HttpResponse(f.read(), content_type='application/javascript')
-    except IOError:
-        return HttpResponse(status=404)
+    context = {
+        'FIREBASE_API_KEY': settings.FIREBASE_API_KEY,
+        'FIREBASE_AUTH_DOMAIN': settings.FIREBASE_AUTH_DOMAIN,
+        'FIREBASE_PROJECT_ID': settings.FIREBASE_PROJECT_ID,
+        'FIREBASE_STORAGE_BUCKET': settings.FIREBASE_STORAGE_BUCKET,
+        'FIREBASE_MESSAGING_SENDER_ID': settings.FIREBASE_MESSAGING_SENDER_ID,
+        'FIREBASE_APP_ID': settings.FIREBASE_APP_ID,
+        'FIREBASE_MEASUREMENT_ID': settings.FIREBASE_MEASUREMENT_ID,
+    }
+    return render(request, 'firebase-messaging-sw.js', context, content_type='application/javascript')
