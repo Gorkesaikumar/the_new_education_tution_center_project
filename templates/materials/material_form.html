@@ -28,17 +28,7 @@
                                 {{ field.label }}
                             </label>
 
-                            {# FILE FIELD (DO NOT MANUALLY WRITE <input>) #}
-                            {% if field.name == "file" %}
-                                {{ field.as_widget(attrs={
-                                    "class": "form-control bg-light border-0",
-                                    "accept": ".pdf,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png"
-                                }) }}
-                            {% else %}
-                                {{ field.as_widget(attrs={
-                                    "class": "form-control bg-light border-0"
-                                }) }}
-                            {% endif %}
+                            {{ field }}
 
                             {% if field.help_text %}
                                 <div class="form-text text-muted small">
