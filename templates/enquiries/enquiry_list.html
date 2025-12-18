@@ -6,8 +6,12 @@
 
 {% block content %}
 <div class="card border-0 shadow-sm">
-    <div class="card-header bg-transparent border-0 pt-4 px-4">
+    <div class="card-header bg-transparent border-0 d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 pt-4 px-4">
         <h5 class="mb-0 fw-bold">Enquiries</h5>
+        <a href="{% url 'export_enquiries' %}" class="btn btn-success rounded-pill px-4 shadow-sm" aria-label="Export to Excel">
+            <i data-feather="download" class="me-2" style="width: 16px; height: 16px;"></i>
+            <span>Export to Excel</span>
+        </a>
     </div>
     <div class="card-body p-0">
         <div class="table-responsive">
@@ -37,9 +41,14 @@
                             </a>
                         </td>
                         <td class="px-4 py-3 text-end">
-                            <button type="button" class="btn btn-sm btn-outline-primary rounded-pill action-btn" data-bs-toggle="modal" data-bs-target="#messageModal{{ enquiry.id }}" title="View Message" aria-label="View message from {{ enquiry.full_name }}">
-                                <i data-feather="message-square" style="width: 16px; height: 16px;"></i>
-                            </button>
+                            <div class="d-flex gap-2 justify-content-end">
+                                <button type="button" class="btn btn-sm btn-light rounded-pill" data-bs-toggle="modal" data-bs-target="#messageModal{{ enquiry.id }}" title="View Message" aria-label="View message from {{ enquiry.full_name }}">
+                                    <i data-feather="message-square" style="width: 14px; height: 14px;"></i>
+                                </button>
+                                <a href="{% url 'enquiry_delete' enquiry.pk %}" class="btn btn-sm btn-outline-danger rounded-pill" title="Delete Enquiry" aria-label="Delete enquiry from {{ enquiry.full_name }}">
+                                    <i data-feather="trash-2" style="width: 14px; height: 14px;"></i>
+                                </a>
+                            </div>
                         </td>
                     </tr>
                     {% empty %}

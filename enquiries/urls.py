@@ -5,4 +5,6 @@ urlpatterns = [
     path('submit/', views.submit_enquiry, name='submit_enquiry'),
     path('list/', views.enquiry_list, name='enquiry_list'),
     path('unread-count/', views.get_unread_count, name='unread_enquiry_count'),
+    path('<int:pk>/delete/', views.enquiry_delete, name='enquiry_delete'),
+    path('export/', views.export_enquiries, name='export_enquiries'),
 ]
