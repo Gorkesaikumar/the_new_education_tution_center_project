@@ -5,7 +5,7 @@ steps:
         "build",
         "--no-cache",
         "-t",
-        "us-central1-docker.pkg.dev/neural-reactor-480008-v3/cloud-run-source-deploy/shoebsiracademy:$BUILD_ID",
+        "us-central1-docker.pkg.dev/neural-reactor-480008-v3/app/shoebsiracademy:$BUILD_ID",
         "."
       ]
 
@@ -13,7 +13,7 @@ steps:
     args:
       [
         "push",
-        "us-central1-docker.pkg.dev/neural-reactor-480008-v3/cloud-run-source-deploy/shoebsiracademy:$BUILD_ID"
+        "us-central1-docker.pkg.dev/neural-reactor-480008-v3/app/shoebsiracademy:$BUILD_ID"
       ]
 
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
@@ -24,15 +24,13 @@ steps:
         "deploy",
         "shoebsiracademy",
         "--image",
-        "us-central1-docker.pkg.dev/neural-reactor-480008-v3/cloud-run-source-deploy/shoebsiracademy:$BUILD_ID",
+        "us-central1-docker.pkg.dev/neural-reactor-480008-v3/app/shoebsiracademy:$BUILD_ID",
         "--region",
         "us-central1",
         "--platform",
         "managed",
-        "--allow-unauthenticated",
-        "--revision-suffix",
-        "$BUILD_ID"
+        "--allow-unauthenticated"
       ]
 
 images:
-  - "us-central1-docker.pkg.dev/neural-reactor-480008-v3/cloud-run-source-deploy/shoebsiracademy:$BUILD_ID"
+  - "us-central1-docker.pkg.dev/neural-reactor-480008-v3/app/shoebsiracademy:$BUILD_ID"
