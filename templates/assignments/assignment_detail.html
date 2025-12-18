@@ -22,7 +22,7 @@
                 <p class="card-text text-dark">{{ assignment.description|linebreaks }}</p>
                 {% if assignment.file %}
                 <div class="mt-4">
-                    <a href="{{ assignment.file.url }}" class="btn btn-outline-primary rounded-pill px-4 shadow-sm" target="_blank" rel="noopener noreferrer" aria-label="Download attachment">
+                    <a href="{{ assignment.file_url }}" class="btn btn-outline-primary rounded-pill px-4 shadow-sm" target="_blank" rel="noopener noreferrer" aria-label="Download attachment">
                         <i data-feather="download" class="me-2" style="width: 16px; height: 16px;"></i>
                         <span>Download Attachment</span>
                     </a>
@@ -50,7 +50,7 @@
                     <div>
                         <div class="fw-bold">Submitted on: {{ submission.submitted_at|date:"M d, Y H:i" }}</div>
                         {% if submission.file %}
-                        <a href="{{ submission.file.url }}" target="_blank" rel="noopener noreferrer" class="text-success fw-bold text-decoration-none mt-1 d-inline-block border-bottom border-success">View Submitted File</a>
+                        <a href="{{ submission.file_url }}" target="_blank" rel="noopener noreferrer" class="text-success fw-bold text-decoration-none mt-1 d-inline-block border-bottom border-success">View Submitted File</a>
                         {% endif %}
                     </div>
                 </div>

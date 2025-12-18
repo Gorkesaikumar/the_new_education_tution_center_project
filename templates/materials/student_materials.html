@@ -3,72 +3,86 @@
 {% block title %}Study Materials{% endblock %}
 
 {% block content %}
-<div class="card border-0 shadow-sm">
-    <div class="card-header bg-transparent border-0 pt-4 px-4">
-        <h5 class="mb-0 fw-bold">My Study Materials</h5>
-    </div>
-
-    <div class="card-body p-0">
-        <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-                <thead class="bg-light">
-                    <tr>
-                        <th class="px-4 py-3 text-muted small fw-bold">Title</th>
-                        <th class="px-4 py-3 text-muted small fw-bold">Subject</th>
-                        <th class="px-4 py-3 text-muted small fw-bold">Date</th>
-                        <th class="px-4 py-3 text-muted small fw-bold text-end">Action</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                {% for material in materials %}
-                    <tr>
-                        <td class="px-4 py-3">
-                            <div class="fw-bold">{{ material.title }}</div>
-                            {% if material.description %}
-                                <small class="text-muted">
-                                    {{ material.description|truncatechars:50 }}
-                                </small>
-                            {% endif %}
-                        </td>
-
-                        <td class="px-4 py-3">
-                            {% if material.subject %}{{ material.subject.name }}{% else %}—{% endif %}
-                        </td>
-
-                        <td class="px-4 py-3">
-                            {% if material.uploaded_at %}{{ material.uploaded_at|date:"M d, Y" }}{% else %}—{% endif %}
-                        </td>
-
-                        <td class="px-4 py-3 text-end">
-                            {% if material.has_file %}
-                                <a href="{{ material.file_url }}" target="_blank" rel="noopener noreferrer"
-                                   class="btn btn-sm btn-outline-primary rounded-pill">
-                                    <i data-feather="download"
-                                       class="me-1"
-                                       style="width:14px;height:14px;"></i>
-                                    Download
-                                </a>
-                            {% else %}
-                                <span class="btn btn-sm btn-outline-secondary rounded-pill disabled">
-                                    Unavailable
-                                </span>
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% empty %}
-                    <tr>
-                        <td colspan="4" class="text-center py-5 text-muted">
-                            No study materials available.
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-
-            </table>
+<div class="container-fluid px-0">
+    <div class="row g-4">
+        {% for material in materials %}
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm material-card">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="icon-box bg-primary bg-opacity-10 text-primary rounded-3 p-3">
+                            <i data-feather="file-text" style="width: 24px; height: 24px;"></i>
+                        </div>
+                        {% if material.subject %}
+                        <span class="badge bg-info-soft rounded-pill px-3 py-2">
+                            {{ material.subject.name }}
+                        </span>
+                        {% endif %}
+                    </div>
+                    
+                    <h5 class="card-title fw-bold text-dark mb-2">{{ material.title }}</h5>
+                    
+                    {% if material.description %}
+                    <p class="card-text text-muted small mb-4">
+                        {{ material.description|truncatechars:100 }}
+                    </p>
+                    {% endif %}
+                    
+                    <div class="mt-auto d-flex align-items-center justify-content-between pt-3 border-top">
+                        <div class="text-muted small">
+                            <i data-feather="calendar" class="me-1" style="width: 14px;"></i>
+                            {{ material.uploaded_at|date:"M d, Y" }}
+                        </div>
+                        
+                        {% if material.has_file %}
+                        <a href="{{ material.file_url }}" target="_blank" rel="noopener noreferrer"
+                           class="btn btn-primary rounded-pill px-4 shadow-sm btn-sm d-flex align-items-center gap-2">
+                            <i data-feather="download" style="width: 14px; height: 14px;"></i>
+                            Download
+                        </a>
+                        {% else %}
+                        <span class="text-muted small">
+                            Unavailable
+                        </span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
         </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="card border-0 shadow-sm py-5">
+                <div class="card-body text-center">
+                    <div class="mb-4">
+                        <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <i data-feather="folder-minus" class="text-muted" style="width: 40px; height: 40px;"></i>
+                        </div>
+                    </div>
+                    <h4 class="fw-bold">No Materials Yet</h4>
+                    <p class="text-muted mx-auto" style="max-width: 400px;">
+                        Your teachers haven't uploaded any study materials for your batch yet. Check back soon for updates!
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
+
+<style>
+.material-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.material-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+}
+.icon-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+</style>
 {% endblock %}
 
 {% block extra_js %}

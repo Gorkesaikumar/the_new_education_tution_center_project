@@ -66,6 +66,8 @@ if GS_BUCKET_NAME:
             "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
             "OPTIONS": {
                 "bucket_name": GS_BUCKET_NAME,
+                "querystring_auth": False,
+                "default_acl": "publicRead",
             },
         },
         "staticfiles": {

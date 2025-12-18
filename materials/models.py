@@ -46,7 +46,7 @@ class StudyMaterial(models.Model):
                 return self.file.url
         except (ValueError, AttributeError):
             pass
-        return None
+        return ""
 
     @property
     def has_file(self):

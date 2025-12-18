@@ -28,7 +28,7 @@
                         <td class="px-4 py-3 text-secondary">{{ submission.submitted_at|date:"M d, Y H:i" }}</td>
                         <td class="px-4 py-3 text-end">
                             {% if submission.file %}
-                            <a href="{{ submission.file.url }}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3 shadow-sm">
+                            <a href="{{ submission.file_url }}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3 shadow-sm">
                                 <i data-feather="download" class="me-1" style="width: 14px; height: 14px;"></i> View File
                             </a>
                             {% else %}

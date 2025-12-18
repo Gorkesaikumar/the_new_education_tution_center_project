@@ -13,6 +13,15 @@ class Assignment(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def file_url(self):
+        try:
+            if self.file and self.file.name:
+                return self.file.url
+        except (ValueError, AttributeError):
+            pass
+        return ""
+
 class Submission(models.Model):
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE, related_name='submissions')
     student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, limit_choices_to={'is_student': True})
@@ -26,3 +35,12 @@ class Submission(models.Model):
 
     def __str__(self):
         return f"{self.student.username} - {self.assignment.title}"
+
+    @property
+    def file_url(self):
+        try:
+            if self.file and self.file.name:
+                return self.file.url
+        except (ValueError, AttributeError):
+            pass
+        return ""
