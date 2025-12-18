@@ -67,7 +67,6 @@ if GS_BUCKET_NAME:
             "OPTIONS": {
                 "bucket_name": GS_BUCKET_NAME,
                 "querystring_auth": False,
-                "default_acl": "public-read",
             },
         },
         "staticfiles": {
