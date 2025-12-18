@@ -1,37 +1,41 @@
 steps:
+  # ----------------------------
+  # Build Docker image
+  # ----------------------------
   - name: gcr.io/cloud-builders/docker
     args:
-      [
-        "build",
-        "--build-arg",
-        "CACHEBUST=$BUILD_ID",
-        "-t",
-        "us-central1-docker.pkg.dev/neural-reactor-480008-v3/cloud-run-source-deploy/shoebsiracademy:$BUILD_ID",
-        "."
-      ]
+      - build
+      - "--build-arg"
+      - "CACHEBUST=$BUILD_ID"
+      - "-t"
+      - "us-central1-docker.pkg.dev/neural-reactor-480008-v3/cloud-run-source-deploy/shoebsiracademy:latest"
+      - "."
 
+  # ----------------------------
+  # Push Docker image
+  # ----------------------------
   - name: gcr.io/cloud-builders/docker
     args:
-      [
-        "push",
-        "us-central1-docker.pkg.dev/neural-reactor-480008-v3/cloud-run-source-deploy/shoebsiracademy:$BUILD_ID"
-      ]
+      - push
+      - "us-central1-docker.pkg.dev/neural-reactor-480008-v3/cloud-run-source-deploy/shoebsiracademy:latest"
 
+  # ----------------------------
+  # Deploy to Cloud Run
+  # ----------------------------
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
     entrypoint: gcloud
     args:
-      [
-        "run",
-        "deploy",
-        "shoebsiracademy",
-        "--image",
-        "us-central1-docker.pkg.dev/neural-reactor-480008-v3/cloud-run-source-deploy/shoebsiracademy:$BUILD_ID",
-        "--region",
-        "us-central1",
-        "--platform",
-        "managed",
-        "--allow-unauthenticated"
-      ]
+      - run
+      - deploy
+      - shoebsiracademy
+      - "--image"
+      - "us-central1-docker.pkg.dev/neural-reactor-480008-v3/cloud-run-source-deploy/shoebsiracademy:latest"
+      - "--region"
+      - "us-central1"
+      - "--platform"
+      - "managed"
+      - "--allow-unauthenticated"
+      - "--quiet"
 
 images:
-  - "us-central1-docker.pkg.dev/neural-reactor-480008-v3/cloud-run-source-deploy/shoebsiracademy:$BUILD_ID"
+  - "us-central1-docker.pkg.dev/neural-reactor-480008-v3/cloud-run-source-deploy/shoebsiracademy:latest"
