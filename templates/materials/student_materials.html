@@ -41,8 +41,8 @@
                         </td>
 
                         <td class="px-4 py-3 text-end">
-                            {% if material.file and material.file.name %}
-                                <a href="{{ material.file.url }}" target="_blank" rel="noopener noreferrer"
+                            {% if material.has_file %}
+                                <a href="{{ material.file_url }}" target="_blank" rel="noopener noreferrer"
                                    class="btn btn-sm btn-outline-primary rounded-pill">
                                     <i data-feather="download"
                                        class="me-1"

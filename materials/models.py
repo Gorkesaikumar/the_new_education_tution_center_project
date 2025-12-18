@@ -41,6 +41,17 @@ class StudyMaterial(models.Model):
         Safe access for templates.
         Prevents 500 errors if file is missing.
         """
-        if self.file:
-            return self.file.url
+        try:
+            if self.file and self.file.name:
+                return self.file.url
+        except (ValueError, AttributeError):
+            pass
         return None
+
+    @property
+    def has_file(self):
+        """Check if material has a valid file attached."""
+        try:
+            return bool(self.file and self.file.name)
+        except (ValueError, AttributeError):
+            return False

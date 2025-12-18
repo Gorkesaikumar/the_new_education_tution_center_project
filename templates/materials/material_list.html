@@ -32,8 +32,8 @@
                 {% for material in materials %}
                     <tr>
                         <td class="px-4 py-3">
-                            {% if material.file and material.file.name %}
-                                <a href="{{ material.file.url }}" target="_blank" rel="noopener noreferrer"
+                            {% if material.has_file %}
+                                <a href="{{ material.file_url }}" target="_blank" rel="noopener noreferrer"
                                    class="text-decoration-none fw-medium text-dark d-flex align-items-center">
                                     <i data-feather="file-text" class="me-2 text-primary"
                                        style="width:16px;height:16px;"></i>
