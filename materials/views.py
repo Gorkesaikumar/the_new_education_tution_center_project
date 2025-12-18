@@ -39,24 +39,39 @@ def is_student(user):
 def material_list(request):
     """
     List all study materials for teachers/admins.
-    Production-safe with try/except wrapper.
+    Production-safe with comprehensive error logging.
     """
+    import traceback
+    import sys
+    
     try:
+        logger.info("material_list: Starting view for user=%s", request.user.username)
+        
         materials = (
             StudyMaterial.objects
             .select_related("batch", "subject", "uploaded_by")
             .order_by("-uploaded_at")
         )
-    except Exception:
-        logger.exception("Failed to fetch materials in material_list view")
-        materials = StudyMaterial.objects.none()
-        messages.error(request, "Unable to load materials. Please try again.")
-
-    return render(
-        request,
-        "materials/material_list.html",
-        {"materials": materials}
-    )
+        
+        # Force query evaluation to catch DB errors here
+        material_count = materials.count()
+        logger.info("material_list: Found %d materials", material_count)
+        
+        return render(
+            request,
+            "materials/material_list.html",
+            {"materials": materials}
+        )
+        
+    except Exception as e:
+        # Log the full traceback
+        exc_type, exc_value, exc_tb = sys.exc_info()
+        tb_str = ''.join(traceback.format_exception(exc_type, exc_value, exc_tb))
+        logger.error("material_list FAILED:\n%s", tb_str)
+        print(f"material_list ERROR: {tb_str}", file=sys.stderr)
+        
+        # Re-raise to see in Cloud Run logs
+        raise
 
 
 @login_required
