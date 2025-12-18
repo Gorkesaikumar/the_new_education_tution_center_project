@@ -9,7 +9,7 @@
     <div class="col-md-8 col-lg-6">
         <div class="card border-0 shadow-sm rounded-lg">
             <div class="card-header bg-transparent border-0 pt-4 px-4">
-                <h5 class="mb-0 fw-bold">Post Announcement</h5>
+                <h5 class="mb-0 fw-bold">{% if editing %}Edit Announcement{% else %}Post Announcement{% endif %}</h5>
             </div>
             <div class="card-body p-4">
                 <form method="post">
@@ -47,7 +47,9 @@
 
                     <div class="d-flex flex-column flex-sm-row justify-content-end gap-2 mt-4 pt-2 border-top">
                         <a href="{% url 'announcement_list' %}" class="btn btn-light rounded-pill px-4 fw-medium text-secondary">Cancel</a>
-                        <button type="submit" class="btn btn-primary rounded-pill px-4 fw-medium shadow-sm">Post</button>
+                        <button type="submit" class="btn btn-primary rounded-pill px-4 fw-medium shadow-sm">
+                            {% if editing %}Update{% else %}Post{% endif %}
+                        </button>
                     </div>
                 </form>
             </div>

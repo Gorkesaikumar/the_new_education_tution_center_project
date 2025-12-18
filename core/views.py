@@ -141,6 +141,40 @@ def announcement_list(request):
     
     return render(request, 'core/announcement_list.html', {'announcements': announcements})
 
+@login_required
+@user_passes_test(is_teacher)
+def announcement_edit(request, pk):
+    """
+    Allow teachers to edit announcements.
+    """
+    announcement = Announcement.objects.get(pk=pk)
+    
+    if request.method == 'POST':
+        form = AnnouncementForm(request.POST, instance=announcement)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Announcement updated successfully.')
+            return redirect('announcement_list')
+    else:
+        form = AnnouncementForm(instance=announcement)
+    
+    return render(request, 'core/announcement_form.html', {'form': form, 'editing': True})
+
+@login_required
+@user_passes_test(is_teacher)
+def announcement_delete(request, pk):
+    """
+    Allow teachers to delete announcements.
+    """
+    announcement = Announcement.objects.get(pk=pk)
+    
+    if request.method == 'POST':
+        announcement.delete()
+        messages.success(request, 'Announcement deleted successfully.')
+        return redirect('announcement_list')
+    
+    return render(request, 'core/announcement_confirm_delete.html', {'announcement': announcement})
+
 @never_cache
 def service_worker(request):
     """
