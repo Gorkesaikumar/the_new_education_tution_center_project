@@ -23,7 +23,8 @@
             </div>
         </form>
 
-        <div class="table-responsive">
+        <!-- Desktop Table View -->
+        <div class="table-responsive d-none d-lg-block">
             <table class="table table-hover align-middle mb-0">
                 <thead class="bg-light">
                     <tr>
@@ -55,6 +56,29 @@
                     {% endfor %}
                 </tbody>
             </table>
+        </div>
+
+        <!-- Mobile Card View -->
+        <div class="d-lg-none">
+            <div class="row g-2">
+                {% for record in attendance_records %}
+                <div class="col-12">
+                    <div class="border rounded-3 p-3 d-flex justify-content-between align-items-center shadow-sm">
+                        <span class="fw-medium text-dark">{{ record.student.get_full_name|default:record.student.username }}</span>
+                        {% if record.status == 'PRESENT' %}
+                            <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-1 fw-medium small">Present</span>
+                        {% else %}
+                            <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-3 py-1 fw-medium small">Absent</span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center py-5 text-muted">
+                    <i data-feather="calendar" style="width: 48px; height: 48px; opacity: 0.5;" class="mb-2"></i>
+                    <p class="mb-0">No records found for this date.</p>
+                </div>
+                {% endfor %}
+            </div>
         </div>
         <div class="d-flex justify-content-end mt-4 pt-2 border-top">
             <a href="{% url 'attendance_dashboard' %}" class="btn btn-secondary rounded-pill px-4 fw-medium">Back to Dashboard</a>

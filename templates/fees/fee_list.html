@@ -17,7 +17,8 @@
     <!-- Student Fee Status Section -->
     <div class="card-body border-bottom px-4">
         <h6 class="mb-3 fw-bold text-uppercase text-muted small">Student Fee Status</h6>
-        <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+        <!-- Desktop Table View -->
+        <div class="table-responsive d-none d-lg-block" style="max-height: 300px; overflow-y: auto;">
             <table class="table table-sm table-borderless table-hover mb-0 align-middle">
                 <thead class="text-muted small text-uppercase">
                     <tr>
@@ -60,7 +61,7 @@
                             </a>
                             {% endwith %}
                             {% else %}
-                            <span class="text-muted small">No phone</span>
+                            <span class="text-muted small">-</span>
                             {% endif %}
                         </td>
                     </tr>
@@ -72,10 +73,39 @@
                 </tbody>
             </table>
         </div>
+
+        <!-- Mobile View -->
+        <div class="d-lg-none">
+            <div class="row g-2">
+                {% for item in student_fee_status %}
+                <div class="col-12">
+                    <div class="border rounded-3 p-2 d-flex justify-content-between align-items-center shadow-sm">
+                        <div class="small">
+                            <div class="fw-bold">{{ item.student.user.get_full_name|default:item.student.user.username }}</div>
+                            <div class="text-muted extra-small">{{ item.student.batch.name }}</div>
+                        </div>
+                        <div class="text-end">
+                            {% if item.is_due %}
+                            <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-2 py-1 extra-small mb-1 d-inline-block">Due</span>
+                            {% if item.student.phone_number %}
+                            <a href="https://wa.me/{{ item.student.phone_number }}" target="_blank" class="btn btn-xs btn-success rounded-pill d-block p-1">
+                                <i data-feather="message-circle" style="width: 10px; height: 10px;"></i>
+                            </a>
+                            {% endif %}
+                            {% else %}
+                            <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-2 py-1 extra-small">Paid</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 
     <div class="card-body p-0">
-        <div class="table-responsive">
+        <!-- Desktop Table View -->
+        <div class="table-responsive d-none d-lg-block">
             <table class="table table-hover align-middle mb-0">
                 <thead class="bg-light">
                     <tr>
@@ -111,6 +141,39 @@
                     {% endfor %}
                 </tbody>
             </table>
+        </div>
+
+        <!-- Mobile Card View -->
+        <div class="d-lg-none p-3">
+            <div class="row g-3">
+                {% for payment in payments %}
+                <div class="col-12 col-md-6">
+                    <div class="card border shadow-sm rounded-lg h-100">
+                        <div class="card-body p-3">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h6 class="fw-bold text-dark mb-0">{{ payment.student.get_full_name|default:payment.student.username }}</h6>
+                                <span class="fw-bold text-success small">₹{{ payment.amount }}</span>
+                            </div>
+                            <div class="small text-muted mb-3">
+                                <div><i data-feather="calendar" style="width: 12px; height: 12px;" class="me-1"></i> {{ payment.date|date:"M d, Y" }}</div>
+                                <div class="text-truncate"><i data-feather="hash" style="width: 12px; height: 12px;" class="me-1"></i> {{ payment.transaction_id|default:"-" }}</div>
+                            </div>
+                            <div class="d-grid">
+                                <a href="{% url 'fee_receipt' payment.pk %}" target="_blank" class="btn btn-sm btn-outline-secondary rounded-pill d-flex align-items-center justify-content-center">
+                                    <i data-feather="printer" class="me-2" style="width: 14px; height: 14px;"></i>
+                                    View Receipt
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center py-5 text-muted">
+                    <span class="fw-bold mb-2 d-inline-block" style="font-size: 48px; opacity: 0.5;">₹</span>
+                    <p class="mb-0">No payments found.</p>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </div>

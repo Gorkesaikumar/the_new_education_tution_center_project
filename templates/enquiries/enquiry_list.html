@@ -14,7 +14,8 @@
         </a>
     </div>
     <div class="card-body p-0">
-        <div class="table-responsive">
+        <!-- Desktop Table View -->
+        <div class="table-responsive d-none d-lg-block">
             <table class="table table-hover align-middle mb-0">
                 <thead class="bg-light">
                     <tr>
@@ -63,6 +64,43 @@
                     {% endfor %}
                 </tbody>
             </table>
+        </div>
+
+        <!-- Mobile Card View -->
+        <div class="d-lg-none p-3">
+            <div class="row g-3">
+                {% for enquiry in enquiries %}
+                <div class="col-12 col-md-6">
+                    <div class="card border shadow-sm rounded-lg h-100">
+                        <div class="card-body p-3">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h6 class="fw-bold text-dark mb-0">{{ enquiry.full_name }}</h6>
+                                <small class="text-muted">{{ enquiry.created_at|date:"M d, H:i" }}</small>
+                            </div>
+                            <div class="small mb-3">
+                                <div class="mb-1"><i data-feather="mail" style="width: 12px; height: 12px;" class="me-1"></i> <a href="mailto:{{ enquiry.email }}" class="text-decoration-none">{{ enquiry.email }}</a></div>
+                                <div><i data-feather="phone" style="width: 12px; height: 12px;" class="me-1"></i> <a href="tel:{{ enquiry.phone_number }}" class="text-decoration-none text-secondary">{{ enquiry.phone_number }}</a></div>
+                            </div>
+                            <div class="d-flex flex-column gap-2">
+                                <button type="button" class="btn btn-sm btn-light rounded-pill d-flex align-items-center justify-content-center" data-bs-toggle="modal" data-bs-target="#messageModal{{ enquiry.id }}">
+                                    <i data-feather="message-square" class="me-2" style="width: 14px; height: 14px;"></i>
+                                    View Message
+                                </button>
+                                <a href="{% url 'enquiry_delete' enquiry.pk %}" class="btn btn-sm btn-outline-danger rounded-pill d-flex align-items-center justify-content-center">
+                                    <i data-feather="trash-2" class="me-2" style="width: 14px; height: 14px;"></i>
+                                    Delete
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center py-5 text-muted">
+                    <i data-feather="inbox" style="width: 48px; height: 48px; opacity: 0.5;" class="mb-2"></i>
+                    <p class="mb-0">No enquiries found.</p>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </div>

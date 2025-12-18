@@ -405,20 +405,20 @@
     </script>
     <script src="{% static 'js/firebase-notifications.js' %}"></script>
     
+    {% if user.is_authenticated and user.is_student %}
     <script>
         // Initialize notifications for students
-        {% if user.is_authenticated and user.is_student %}
-            (function() {
-                if ('Notification' in window) {
-                    if (Notification.permission === 'granted') {
-                        setupPushNotifications();
-                    } else if (Notification.permission !== 'denied') {
-                        setTimeout(setupPushNotifications, 2000);
-                    }
+        (function() {
+            if ('Notification' in window) {
+                if (Notification.permission === 'granted') {
+                    setupPushNotifications();
+                } else if (Notification.permission !== 'denied') {
+                    setTimeout(setupPushNotifications, 2000);
                 }
-            })();
-        {% endif %}
+            }
+        })();
     </script>
+    {% endif %}
 
     {% block extra_js %}{% endblock %}
 </body>

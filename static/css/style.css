@@ -323,11 +323,9 @@ main {
         flex: 1 1 calc(50% - 0.25rem);
         min-width: 0;
         text-align: center;
-    }
-    
-    .card-body .btn.rounded-pill i,
-    .card-body .btn.rounded-pill svg {
-        display: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
     .card-header h5 {
