@@ -68,3 +68,37 @@ def view_submissions(request, pk):
     assignment = get_object_or_404(Assignment, pk=pk)
     submissions = assignment.submissions.all()
     return render(request, 'assignments/view_submissions.html', {'assignment': assignment, 'submissions': submissions})
+
+@login_required
+@user_passes_test(is_teacher)
+def assignment_edit(request, pk):
+    """
+    Allow teachers to edit assignments.
+    """
+    assignment = get_object_or_404(Assignment, pk=pk)
+    
+    if request.method == 'POST':
+        form = AssignmentForm(request.POST, request.FILES, instance=assignment)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Assignment updated successfully.')
+            return redirect('assignment_list')
+    else:
+        form = AssignmentForm(instance=assignment)
+    
+    return render(request, 'assignments/assignment_form.html', {'form': form, 'editing': True})
+
+@login_required
+@user_passes_test(is_teacher)
+def assignment_delete(request, pk):
+    """
+    Allow teachers to delete assignments.
+    """
+    assignment = get_object_or_404(Assignment, pk=pk)
+    
+    if request.method == 'POST':
+        assignment.delete()
+        messages.success(request, 'Assignment deleted successfully.')
+        return redirect('assignment_list')
+    
+    return render(request, 'assignments/assignment_confirm_delete.html', {'assignment': assignment})

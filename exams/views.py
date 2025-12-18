@@ -62,3 +62,37 @@ def student_marks(request):
     
     marks = Mark.objects.filter(student=request.user).order_by('-exam__date')
     return render(request, 'exams/student_marks.html', {'marks': marks})
+
+@login_required
+@user_passes_test(is_teacher)
+def exam_edit(request, pk):
+    """
+    Allow teachers to edit exams.
+    """
+    exam = get_object_or_404(Exam, pk=pk)
+    
+    if request.method == 'POST':
+        form = ExamForm(request.POST, instance=exam)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Exam updated successfully.')
+            return redirect('exam_list')
+    else:
+        form = ExamForm(instance=exam)
+    
+    return render(request, 'exams/exam_form.html', {'form': form, 'editing': True})
+
+@login_required
+@user_passes_test(is_teacher)
+def exam_delete(request, pk):
+    """
+    Allow teachers to delete exams.
+    """
+    exam = get_object_or_404(Exam, pk=pk)
+    
+    if request.method == 'POST':
+        exam.delete()
+        messages.success(request, 'Exam deleted successfully.')
+        return redirect('exam_list')
+    
+    return render(request, 'exams/exam_confirm_delete.html', {'exam': exam})

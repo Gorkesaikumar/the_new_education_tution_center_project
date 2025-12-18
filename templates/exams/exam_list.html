@@ -35,9 +35,17 @@
                         <td class="px-4 py-3 text-secondary">{{ exam.date|date:"M d, Y" }}</td>
                         <td class="px-4 py-3 text-secondary">{{ exam.total_marks }}</td>
                         <td class="px-4 py-3 text-end">
-                            <a href="{% url 'exam_marks' exam.pk %}" class="btn btn-sm btn-outline-primary rounded-pill action-btn" title="Enter Marks" aria-label="Enter marks for {{ exam.title }}">
-                                <i data-feather="edit-2" style="width: 16px; height: 16px;"></i>
-                            </a>
+                            <div class="d-flex gap-2 justify-content-end">
+                                <a href="{% url 'exam_marks' exam.pk %}" class="btn btn-sm btn-light rounded-pill" title="Enter Marks" aria-label="Enter marks for {{ exam.title }}">
+                                    <i data-feather="file-text" style="width: 14px; height: 14px;"></i>
+                                </a>
+                                <a href="{% url 'exam_edit' exam.pk %}" class="btn btn-sm btn-light rounded-pill" title="Edit Exam" aria-label="Edit {{ exam.title }}">
+                                    <i data-feather="edit-2" style="width: 14px; height: 14px;"></i>
+                                </a>
+                                <a href="{% url 'exam_delete' exam.pk %}" class="btn btn-sm btn-outline-danger rounded-pill" title="Delete Exam" aria-label="Delete {{ exam.title }}">
+                                    <i data-feather="trash-2" style="width: 14px; height: 14px;"></i>
+                                </a>
+                            </div>
                         </td>
                     </tr>
                     {% empty %}

@@ -26,6 +26,22 @@
                 </div>
                 <h5 class="card-title fw-bold mb-2 text-truncate" title="{{ assignment.title }}">{{ assignment.title }}</h5>
                 <p class="card-text text-muted small mb-4">{{ assignment.description|truncatewords:15 }}</p>
+                
+                {% if user.is_teacher %}
+                <div class="d-flex gap-2 mb-3">
+                    <a href="{% url 'assignment_edit' assignment.pk %}" 
+                       class="btn btn-sm btn-light rounded-pill px-3 flex-fill"
+                       aria-label="Edit assignment">
+                        <i data-feather="edit-2" style="width:14px;height:14px;"></i>
+                    </a>
+                    <a href="{% url 'assignment_delete' assignment.pk %}" 
+                       class="btn btn-sm btn-outline-danger rounded-pill px-3 flex-fill"
+                       aria-label="Delete assignment">
+                        <i data-feather="trash-2" style="width:14px;height:14px;"></i>
+                    </a>
+                </div>
+                {% endif %}
+                
                 <a href="{% url 'assignment_detail' assignment.pk %}" class="btn btn-outline-primary w-100 rounded-pill fw-medium" aria-label="View {{ assignment.title }}">View Details</a>
             </div>
         </div>
