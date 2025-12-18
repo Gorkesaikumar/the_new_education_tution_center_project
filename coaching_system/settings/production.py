@@ -7,8 +7,21 @@ DEBUG = False
 # -------------------------------------------------
 # HOSTS & CSRF
 # -------------------------------------------------
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split()
-CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", "").split()
+_allowed_hosts = os.environ.get("ALLOWED_HOSTS", "")
+ALLOWED_HOSTS = [h.strip() for h in _allowed_hosts.split() if h.strip()]
+# Default to allowing Cloud Run domains if no hosts specified
+if not ALLOWED_HOSTS:
+    ALLOWED_HOSTS = ["*"]  # Cloud Run handles host validation at ingress
+
+_csrf_origins = os.environ.get("CSRF_TRUSTED_ORIGINS", "")
+CSRF_TRUSTED_ORIGINS = [o.strip() for o in _csrf_origins.split() if o.strip()]
+# Add Cloud Run pattern if not set
+if not CSRF_TRUSTED_ORIGINS:
+    CSRF_TRUSTED_ORIGINS = [
+        "https://*.run.app",
+        "https://shoebsiracademy.org",
+        "https://www.shoebsiracademy.org",
+    ]
 
 # -------------------------------------------------
 # DATABASE (BUILD-SAFE + RUNTIME-STRICT)

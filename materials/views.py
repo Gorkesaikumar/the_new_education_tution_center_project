@@ -35,7 +35,7 @@ def is_student(user):
 # --------------------------------------------------
 
 @login_required
-@user_passes_test(is_teacher, login_url='/accounts/login/')
+@user_passes_test(is_teacher, login_url='/login/')
 def material_list(request):
     """
     List all study materials for teachers/admins.
@@ -60,7 +60,7 @@ def material_list(request):
 
 
 @login_required
-@user_passes_test(is_teacher, login_url='/accounts/login/')
+@user_passes_test(is_teacher, login_url='/login/')
 def material_upload(request):
     """
     Handle material upload for teachers.
@@ -96,7 +96,7 @@ def material_upload(request):
 
 
 @login_required
-@user_passes_test(is_teacher, login_url='/accounts/login/')
+@user_passes_test(is_teacher, login_url='/login/')
 def material_delete(request, pk):
     """
     Delete study material + file from storage.
