@@ -85,9 +85,9 @@ def export_enquiries(request):
     for enquiry in enquiries:
         ws.append([
             enquiry.id,
-            enquiry.name,
+            enquiry.full_name,
             enquiry.email,
-            enquiry.phone,
+            enquiry.phone_number,
             enquiry.message,
             enquiry.created_at.strftime('%Y-%m-%d %H:%M:%S'),
             'Read' if enquiry.is_read else 'Unread'

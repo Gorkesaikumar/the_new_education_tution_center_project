@@ -20,7 +20,7 @@
                 </div>
 
                 <div class="bg-light rounded-3 p-3 mb-4">
-                    <h6 class="fw-bold mb-2">{{ enquiry.name }}</h6>
+                    <h6 class="fw-bold mb-2">{{ enquiry.full_name }}</h6>
                     <div class="mb-2">
                         <small class="text-muted d-block">
                             <i data-feather="mail" style="width: 14px; height: 14px;"></i>
@@ -28,7 +28,7 @@
                         </small>
                         <small class="text-muted d-block mt-1">
                             <i data-feather="phone" style="width: 14px; height: 14px;"></i>
-                            {{ enquiry.phone }}
+                            {{ enquiry.phone_number }}
                         </small>
                     </div>
                     <p class="text-muted small mb-2">{{ enquiry.message|truncatewords:30 }}</p>
