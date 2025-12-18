@@ -62,11 +62,7 @@ def material_list(request):
 @user_passes_test(is_teacher, login_url="dashboard")
 def material_upload(request):
     if request.method == "POST":
-        form = StudyMaterialForm(
-            request.POST,
-            request.FILES,
-            user=request.user
-        )
+        form = StudyMaterialForm(request.POST, request.FILES)
 
         if form.is_valid():
             material = form.save(commit=False)
@@ -79,7 +75,7 @@ def material_upload(request):
         logger.error("Material upload form errors: %s", form.errors)
 
     else:
-        form = StudyMaterialForm(user=request.user)
+        form = StudyMaterialForm()
 
     return render(
         request,
