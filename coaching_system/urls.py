@@ -28,6 +28,7 @@ urlpatterns = [
     path('assignments/', include('assignments.urls')),
     path('fees/', include('fees.urls')),
     path('enquiries/', include('enquiries.urls')),
+    path('notifications/', include('notifications.urls')),
 ]
 
 from django.conf import settings

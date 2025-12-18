@@ -178,8 +178,7 @@ def announcement_delete(request, pk):
 @never_cache
 def service_worker(request):
     """
-    Serve the service worker with correct content type and scope.
-    This allows the SW to be scoped to domain root (/)
+    Serve the main service worker with correct content type and scope.
     """
     sw_path = settings.BASE_DIR / 'static' / 'sw.js'
     try:
@@ -187,6 +186,16 @@ def service_worker(request):
             content = f.read()
     except FileNotFoundError:
         content = ""
-        
-    response = HttpResponse(content, content_type='application/javascript')
-    return response
+    return HttpResponse(content, content_type='application/javascript')
+
+@never_cache
+def fcm_service_worker(request):
+    """
+    Serve the Firebase Messaging Service Worker from the root.
+    """
+    sw_path = settings.BASE_DIR / 'static' / 'firebase-messaging-sw.js'
+    try:
+        with open(sw_path, 'rb') as f:
+            return HttpResponse(f.read(), content_type='application/javascript')
+    except IOError:
+        return HttpResponse(status=404)

@@ -366,6 +366,27 @@
         });
     </script>
 
+    <!-- Firebase Scripts (compat version for easier integration) -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js"></script>
+    <script src="{% static 'js/firebase-notifications.js' %}"></script>
+    
+    <script>
+        // Initialize notifications for students
+        {% if user.is_authenticated and user.is_student %}
+            if ('Notification' in window) {
+                // If permission is already granted, setup; otherwise user can trigger it
+                if (Notification.permission === 'granted') {
+                    setupPushNotifications();
+                } else if (Notification.permission !== 'denied') {
+                    // We could show a custom UI toast first to ask, 
+                    // or just call setupPushNotifications() after a small delay
+                    setTimeout(setupPushNotifications, 2000);
+                }
+            }
+        {% endif %}
+    </script>
+
     {% block extra_js %}{% endblock %}
 </body>
 </html>

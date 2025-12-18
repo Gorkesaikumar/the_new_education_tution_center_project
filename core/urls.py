@@ -16,4 +16,5 @@ urlpatterns = [
     path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
     path('sitemap.xml', TemplateView.as_view(template_name="sitemap.xml", content_type="application/xml")),
     path('service-worker.js', views.service_worker, name='service_worker'),
+    path('firebase-messaging-sw.js', views.fcm_service_worker, name='fcm_service_worker'),
 ]

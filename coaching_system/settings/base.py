@@ -30,9 +30,11 @@ INSTALLED_APPS = [
     'assignments',
     'fees',
     'enquiries',
+    'notifications',
     
     # Third party apps (common)
     'storages',
+    'django_apscheduler',
 ]
 
 MIDDLEWARE = [
