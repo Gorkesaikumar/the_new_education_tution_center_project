@@ -1,7 +1,18 @@
 from django import forms
 from .models import StudyMaterial
 
+
 class StudyMaterialForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop("user", None)
+        super().__init__(*args, **kwargs)
+
+        # OPTIONAL: example filtering (keep or remove)
+        # if self.user and not self.user.is_superuser:
+        #     self.fields["batch"].queryset = Batch.objects.filter(
+        #         teachers=self.user
+        #     )
+
     class Meta:
         model = StudyMaterial
         fields = ["title", "description", "file", "batch", "subject"]

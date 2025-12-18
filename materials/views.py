@@ -61,9 +61,6 @@ def material_list(request):
 @login_required
 @user_passes_test(is_teacher, login_url="dashboard")
 def material_upload(request):
-    """
-    Upload new study material.
-    """
     if request.method == "POST":
         form = StudyMaterialForm(
             request.POST,
@@ -76,14 +73,10 @@ def material_upload(request):
             material.uploaded_by = request.user
             material.save()
 
-            messages.success(
-                request,
-                "Study material uploaded successfully."
-            )
+            messages.success(request, "Study material uploaded successfully.")
             return redirect("material_list")
-        else:
-            # IMPORTANT: log form errors
-            logger.error("Material upload form errors: %s", form.errors)
+
+        logger.error("Material upload form errors: %s", form.errors)
 
     else:
         form = StudyMaterialForm(user=request.user)
