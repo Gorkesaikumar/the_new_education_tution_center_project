@@ -65,7 +65,7 @@ def send_push_notification(user_ids, title, body, data=None, click_action=None):
             android=messaging.AndroidConfig(
                 priority='high',
                 notification=messaging.AndroidNotification(
-                    status_bar_icon='stock_ticker_update',
+                    icon='stock_ticker_update',
                     color='#4f46e5',
                     sound='default',
                     tag='academy_update'
