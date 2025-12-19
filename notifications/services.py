@@ -61,7 +61,27 @@ def send_push_notification(user_ids, title, body, data=None, click_action=None):
                 body=body,
             ),
             data=message_data,
-            tokens=batch
+            tokens=batch,
+            android=messaging.AndroidConfig(
+                priority='high',
+                notification=messaging.AndroidNotification(
+                    status_bar_icon='stock_ticker_update',
+                    color='#4f46e5',
+                    sound='default',
+                    tag='academy_update'
+                ),
+            ),
+            webpush=messaging.WebpushConfig(
+                headers={
+                    'Urgency': 'high'
+                },
+                notification=messaging.WebpushNotification(
+                    icon='/static/images/icon-192x192.png',
+                    badge='/static/images/icon-192x192.png',
+                    tag='academy_update',
+                    renotify=True,
+                )
+            )
         )
 
         try:
