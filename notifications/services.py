@@ -46,12 +46,21 @@ def send_push_notification(user_ids, title, body, data=None, click_action=None):
         batch = tokens_list[i:i + batch_size]
         
         # Prepare message
+        # We include notification info in BOTH 'notification' and 'data' blocks
+        # to ensure maximum compatibility with different mobile browsers and background states.
+        message_data = data or {}
+        message_data.update({
+            'title': title,
+            'body': body,
+            'url': click_action or "/"
+        })
+
         message = messaging.MulticastMessage(
             notification=messaging.Notification(
                 title=title,
                 body=body,
             ),
-            data=data or {},
+            data=message_data,
             tokens=batch,
             webpush=messaging.WebpushConfig(
                 fcm_options=messaging.WebpushFCMOptions(

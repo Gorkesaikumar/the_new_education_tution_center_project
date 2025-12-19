@@ -93,10 +93,20 @@ async function sendTokenToServer(token) {
 
 // Automatically try to setup on login/load if supported
 if ('serviceWorker' in navigator && 'PushManager' in window) {
-    // We wait for the page to load and the SW to be ready
+    // Listen for our custom sw-ready event from pwa.js
+    window.addEventListener('sw-ready', () => {
+        console.log('Detected sw-ready event, setting up push...');
+        setupPushNotifications();
+    });
+
+    // Fallback: If registration already happened
     window.addEventListener('load', () => {
-        // We assume the service worker is already registered in pwa.js
-        // setupPushNotifications();
+        setTimeout(() => {
+            if (window.sw_registration) {
+                console.log('SW already registered on load, setting up push...');
+                setupPushNotifications();
+            }
+        }, 1000);
     });
 }
 

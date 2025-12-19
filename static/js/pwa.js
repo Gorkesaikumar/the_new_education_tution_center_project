@@ -27,10 +27,10 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/service-worker.js')
       .then(reg => {
         console.log('Unified Service Worker registered:', reg.scope);
-        window.sw_registration = reg; // Store for FCM
+        window.sw_registration = reg; 
 
-        // 🔥 FORCE UPDATE
-        reg.update();
+        // Let firebase-notifications.js know we are ready
+        window.dispatchEvent(new Event('sw-ready'));
       })
       .catch(err => {
         console.error('Service Worker registration failed:', err);
