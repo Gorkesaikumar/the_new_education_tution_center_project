@@ -120,3 +120,9 @@ FIREBASE_MESSAGING_SENDER_ID = os.environ.get("FIREBASE_MESSAGING_SENDER_ID", ""
 FIREBASE_APP_ID = os.environ.get("FIREBASE_APP_ID", "")
 FIREBASE_VAPID_KEY = os.environ.get("FIREBASE_VAPID_KEY", "")
 FIREBASE_MEASUREMENT_ID = os.environ.get("FIREBASE_MEASUREMENT_ID", "")
+
+# FIREBASE ADMIN SDK (FOR BACKEND PUSH)
+FIREBASE_SERVICE_ACCOUNT_KEY = os.environ.get(
+    "FIREBASE_SERVICE_ACCOUNT_KEY", 
+    str(BASE_DIR / 'firebase-key.json.json') # Path from list_dir
+)

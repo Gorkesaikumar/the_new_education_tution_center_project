@@ -5,35 +5,43 @@ from .models import FCMToken
 import json
 
 @login_required
-@csrf_exempt # Token storage can be CSRF exempt if authenticated, or you can pass CSRF token in JS
+@csrf_exempt
 def save_fcm_token(request):
     """
     Save or update an FCM token for the current user.
-    Expects JSON: {"token": "...", "device_id": "..."}
+    Expects JSON: {"token": "...", "device_id": "...", "device_type": "WEB", "browser": "..."}
     """
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
             token = data.get('token')
             device_id = data.get('device_id')
+            device_type = data.get('device_type', 'WEB')
+            browser = data.get('browser')
 
             if not token:
                 return JsonResponse({'status': 'error', 'message': 'Token missing'}, status=400)
 
-            # Update or create token for this user
-            # We use update_or_create to ensure we don't duplicate tokens for the same device if possible
-            # or just get_or_create to avoid duplicates site-wide if the token is unique
-            fcm_token, created = FCMToken.objects.get_or_create(
-                token=token,
-                defaults={'user': request.user, 'device_id': device_id}
-            )
+            from django.utils import timezone
             
-            if not created:
-                fcm_token.user = request.user
-                fcm_token.device_id = device_id
-                fcm_token.save()
+            # Using update_or_create on the token string as it is unique
+            fcm_token, created = FCMToken.objects.update_or_create(
+                token=token,
+                defaults={
+                    'user': request.user,
+                    'device_id': device_id,
+                    'device_type': device_type,
+                    'browser': browser,
+                    'is_active': True,
+                    'last_used_at': timezone.now()
+                }
+            )
 
-            return JsonResponse({'status': 'success', 'message': 'Token saved successfully'})
+            return JsonResponse({
+                'status': 'success', 
+                'message': 'Token registered successfully',
+                'created': created
+            })
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
     

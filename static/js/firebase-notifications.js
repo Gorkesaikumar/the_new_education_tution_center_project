@@ -44,16 +44,25 @@ async function setupPushNotifications() {
  */
 async function sendTokenToServer(token) {
     try {
+        // Simple browser detection for better backend tracking
+        const userAgent = navigator.userAgent;
+        let browserName = "Unknown";
+        if (userAgent.match(/chrome|chromium|crios/i)) browserName = "Chrome";
+        else if (userAgent.match(/firefox|fxios/i)) browserName = "Firefox";
+        else if (userAgent.match(/safari/i)) browserName = "Safari";
+        else if (userAgent.match(/edg/i)) browserName = "Edge";
+
         const response = await fetch('/notifications/save-token/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                // CSRF token is handled by the csrf_exempt decorator on the view for simplicity,
-                // but adding it here is better production practice if you have it available.
+                // CSRF token is handled by the csrf_exempt decorator on the view
             },
             body: JSON.stringify({
                 token: token,
-                device_id: navigator.userAgent // Simple device ID
+                device_id: userAgent,
+                device_type: /Mobi|Android/i.test(userAgent) ? 'MOBILE' : 'WEB',
+                browser: browserName
             })
         });
         const data = await response.json();
