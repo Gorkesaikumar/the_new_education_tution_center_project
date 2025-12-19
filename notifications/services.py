@@ -61,16 +61,11 @@ def send_push_notification(user_ids, title, body, data=None, click_action=None):
                 body=body,
             ),
             data=message_data,
-            tokens=batch,
-            webpush=messaging.WebpushConfig(
-                fcm_options=messaging.WebpushFCMOptions(
-                    link=click_action or "/"
-                )
-            )
+            tokens=batch
         )
 
         try:
-            response = messaging.send_multicast(message)
+            response = messaging.send_each_for_multicast(message)
             _handle_batch_response(response, batch)
             logger.info(f"Successfully sent {response.success_count} notifications.")
         except Exception as e:

@@ -124,5 +124,5 @@ FIREBASE_MEASUREMENT_ID = os.environ.get("FIREBASE_MEASUREMENT_ID", "")
 # FIREBASE ADMIN SDK (FOR BACKEND PUSH)
 FIREBASE_SERVICE_ACCOUNT_KEY = os.environ.get(
     "FIREBASE_SERVICE_ACCOUNT_KEY", 
-    str(BASE_DIR / 'firebase-key.json.json') # Path from list_dir
+    str(BASE_DIR / 'firebase-key.json') 
 )
