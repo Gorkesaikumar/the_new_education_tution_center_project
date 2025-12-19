@@ -23,8 +23,27 @@ async function setupPushNotifications() {
         if (permission === 'granted') {
             console.log('Notification permission granted.');
             
+            // Wait for sw_registration from pwa.js if not yet available
+            if (!window.sw_registration) {
+                console.log('Waiting for service worker registration...');
+                let attempts = 0;
+                while (!window.sw_registration && attempts < 10) {
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    attempts++;
+                }
+            }
+
+            if (!window.sw_registration) {
+                console.warn('Service worker registration not found. Notifications might not work in background.');
+            }
+
             // Get FCM Token
-            const token = await messaging.getToken({ vapidKey: VAPID_KEY });
+            // We pass the registration from pwa.js to ensure we use the unified worker
+            const token = await messaging.getToken({ 
+                vapidKey: VAPID_KEY,
+                serviceWorkerRegistration: window.sw_registration 
+            });
+
             if (token) {
                 console.log('FCM Token:', token);
                 await sendTokenToServer(token);
@@ -76,8 +95,8 @@ async function sendTokenToServer(token) {
 if ('serviceWorker' in navigator && 'PushManager' in window) {
     // We wait for the page to load and the SW to be ready
     window.addEventListener('load', () => {
-        // We assume the service worker is already registered in base.html
-        // setupPushNotifications(); // Call this when you want to prompt (usually after login)
+        // We assume the service worker is already registered in pwa.js
+        // setupPushNotifications();
     });
 }
 

@@ -26,22 +26,11 @@ if ('serviceWorker' in navigator) {
     // Register ROOT service worker
     navigator.serviceWorker.register('/service-worker.js')
       .then(reg => {
-        console.log('Service Worker registered:', reg.scope);
+        console.log('Unified Service Worker registered:', reg.scope);
+        window.sw_registration = reg; // Store for FCM
 
-        // 🔥 FORCE UPDATE (important for Cloud Run + cache busting)
+        // 🔥 FORCE UPDATE
         reg.update();
-
-        // Optional: reload page when new SW activates
-        reg.addEventListener('updatefound', () => {
-          const newWorker = reg.installing;
-          if (newWorker) {
-            newWorker.addEventListener('statechange', () => {
-              if (newWorker.state === 'activated') {
-                console.log('New Service Worker activated');
-              }
-            });
-          }
-        });
       })
       .catch(err => {
         console.error('Service Worker registration failed:', err);

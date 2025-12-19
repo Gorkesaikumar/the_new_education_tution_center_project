@@ -178,21 +178,8 @@ def announcement_delete(request, pk):
 @never_cache
 def service_worker(request):
     """
-    Serve the main service worker with correct content type and scope.
-    """
-    sw_path = settings.BASE_DIR / 'static' / 'sw.js'
-    try:
-        with open(sw_path, 'r') as f:
-            content = f.read()
-    except FileNotFoundError:
-        content = ""
-    return HttpResponse(content, content_type='application/javascript')
-
-@never_cache
-def fcm_service_worker(request):
-    """
-    Serve the Firebase Messaging Service Worker from the root.
-    Rendered as a template to support environment variables.
+    Serve the unified service worker (caching + FCM) from a template.
+    This prevents clashes between two different SW registrations.
     """
     context = {
         'FIREBASE_API_KEY': settings.FIREBASE_API_KEY,
@@ -203,4 +190,11 @@ def fcm_service_worker(request):
         'FIREBASE_APP_ID': settings.FIREBASE_APP_ID,
         'FIREBASE_MEASUREMENT_ID': settings.FIREBASE_MEASUREMENT_ID,
     }
-    return render(request, 'firebase-messaging-sw.js', context, content_type='application/javascript')
+    return render(request, 'sw.js', context, content_type='application/javascript')
+
+@never_cache
+def fcm_service_worker(request):
+    """
+    Also serve the same content at the default Firebase location as a fallback.
+    """
+    return service_worker(request)
