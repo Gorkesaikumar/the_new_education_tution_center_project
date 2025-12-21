@@ -30,3 +30,5 @@ Thumbs.db
 firebase-key.json
 *.json
 
+
+!static/manifest.json

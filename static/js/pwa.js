@@ -58,8 +58,8 @@ window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
 
-  // Show install UI ONLY on mobile
-  if (isMobile && installContainer) {
+  // Show install UI
+  if (installContainer) {
     installContainer.style.display = 'flex';
   }
 });
