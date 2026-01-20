@@ -1,6 +1,6 @@
 from .base import *
 import os
-import dj_database_url
+
 
 DEBUG = False
 
@@ -26,24 +26,39 @@ if not CSRF_TRUSTED_ORIGINS:
 # -------------------------------------------------
 # DATABASE (BUILD-SAFE + RUNTIME-STRICT)
 # -------------------------------------------------
-DATABASE_URL = os.environ.get("DATABASE_URL")
+# -------------------------------------------------
+# DATABASE (CL explicitly configured)
+# -------------------------------------------------
+DB_NAME = os.environ.get("DB_NAME")
+DB_USER = os.environ.get("DB_USER")
+DB_PASSWORD = os.environ.get("DB_PASSWORD")
+DB_HOST = os.environ.get("DB_HOST")
+DB_PORT = os.environ.get("DB_PORT")
 
-if DATABASE_URL:
-    DATABASES = {
-        "default": dj_database_url.parse(
-            DATABASE_URL,
-            conn_max_age=60,
-            ssl_require=False,
-        )
-    }
-    DATABASES["default"]["ATOMIC_REQUESTS"] = True
-
-
+if not all([DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT]):
+    # Allow build process to succeed without DB credentials
+    if os.environ.get("DJANGO_ALLOW_NO_DB"):
+         DATABASES = {
+            "default": {
+                "ENGINE": "django.db.backends.dummy",
+            }
+        }
+    else:
+        # In production runtime, we MUST crash if credentials are missing
+        # This prevents "ImproperlyConfigured" with vague messages later
+        from django.core.exceptions import ImproperlyConfigured
+        raise ImproperlyConfigured("Missing required database environment variables (DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT)")
 else:
-    # Build-time safe dummy DB (Cloud Run build step)
     DATABASES = {
         "default": {
-            "ENGINE": "django.db.backends.dummy"
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": DB_NAME,
+            "USER": DB_USER,
+            "PASSWORD": DB_PASSWORD,
+            "HOST": DB_HOST,
+            "PORT": DB_PORT,
+            "CONN_MAX_AGE": 60,  # Safe for Cloud Run
+            "ATOMIC_REQUESTS": True,
         }
     }
 
