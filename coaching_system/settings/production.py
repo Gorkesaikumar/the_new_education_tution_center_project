@@ -32,10 +32,13 @@ if DATABASE_URL:
     DATABASES = {
         "default": dj_database_url.parse(
             DATABASE_URL,
-            conn_max_age=600,
-            ssl_require=True,
+            conn_max_age=60,
+            ssl_require=False,
         )
     }
+    DATABASES["default"]["ATOMIC_REQUESTS"] = True
+
+
 else:
     # Build-time safe dummy DB (Cloud Run build step)
     DATABASES = {
@@ -107,4 +110,35 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 # -------------------------------------------------
 # FIREBASE CONFIG
 # -------------------------------------------------
-FIREBASE_SERVICE_ACCOUNT_KEY = os.environ.get("FIREBASE_SERVICE_ACCOUNT_KEY")
+_firebase_key = os.environ.get("FIREBASE_SERVICE_ACCOUNT_KEY")
+if _firebase_key:
+    FIREBASE_SERVICE_ACCOUNT_KEY = _firebase_key
+
+# -------------------------------------------------
+# LOGGING
+# -------------------------------------------------
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['console'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+    },
+}

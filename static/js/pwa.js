@@ -76,6 +76,7 @@ if (installBtn) {
     console.log('Install prompt outcome:', outcome);
 
     deferredPrompt = null;
+    
   });
 }
 
