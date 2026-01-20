@@ -49,7 +49,7 @@ COPY . .
 
 # Collect static safely (NO DB access)
 RUN SECRET_KEY=dummy_build_key \
-    DJANGO_ALLOW_NO_DB=1 \
+    DJANGO_BUILD_PHASE=1 \
     python manage.py collectstatic --noinput
 
 # Create non-root user (Cloud Run best practice)

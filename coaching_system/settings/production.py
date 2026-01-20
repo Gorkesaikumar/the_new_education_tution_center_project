@@ -32,35 +32,49 @@ if not CSRF_TRUSTED_ORIGINS:
 # -------------------------------------------------
 # DATABASE (CL explicitly configured)
 # -------------------------------------------------
+# -------------------------------------------------
+# DATABASE (CL explicitly configured)
+# -------------------------------------------------
 # Explicit Debug for Cloud Run Jobs
 print(f"DEBUG: Loading settings. DB_HOST={os.environ.get('DB_HOST')}, DB_USER={os.environ.get('DB_USER')}")
 
-DB_NAME = os.environ.get("DB_NAME")
-DB_USER = os.environ.get("DB_USER")
-DB_PASSWORD = os.environ.get("DB_PASSWORD")
-DB_HOST = os.environ.get("DB_HOST")
-DB_PORT = os.environ.get("DB_PORT")
-
-if not all([DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT]):
-    from django.core.exceptions import ImproperlyConfigured
-    raise ImproperlyConfigured(
-        f"Missing required database environment variables. "
-        f"Found: DB_NAME={bool(DB_NAME)}, DB_USER={bool(DB_USER)}, "
-        f"DB_PASSWORD={bool(DB_PASSWORD)}, DB_HOST={bool(DB_HOST)}, DB_PORT={bool(DB_PORT)}"
-    )
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": DB_NAME,
-        "USER": DB_USER,
-        "PASSWORD": DB_PASSWORD,
-        "HOST": DB_HOST,
-        "PORT": DB_PORT,
-        "CONN_MAX_AGE": 60,  # Safe for Cloud Run
-        "ATOMIC_REQUESTS": True,
+# BUILD PHASE (Collectstatic / Docker Build)
+if os.environ.get("DJANGO_BUILD_PHASE"):
+    print("DEBUG: Build phase detected. Using dummy SQLite.")
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": ":memory:",
+        }
     }
-}
+else:
+    # RUNTIME (Production / Cloud Run)
+    DB_NAME = os.environ.get("DB_NAME")
+    DB_USER = os.environ.get("DB_USER")
+    DB_PASSWORD = os.environ.get("DB_PASSWORD")
+    DB_HOST = os.environ.get("DB_HOST")
+    DB_PORT = os.environ.get("DB_PORT")
+
+    if not all([DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT]):
+        from django.core.exceptions import ImproperlyConfigured
+        raise ImproperlyConfigured(
+            f"Missing required database environment variables. "
+            f"Found: DB_NAME={bool(DB_NAME)}, DB_USER={bool(DB_USER)}, "
+            f"DB_PASSWORD={bool(DB_PASSWORD)}, DB_HOST={bool(DB_HOST)}, DB_PORT={bool(DB_PORT)}"
+        )
+
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": DB_NAME,
+            "USER": DB_USER,
+            "PASSWORD": DB_PASSWORD,
+            "HOST": DB_HOST,
+            "PORT": DB_PORT,
+            "CONN_MAX_AGE": 60,  # Safe for Cloud Run
+            "ATOMIC_REQUESTS": True,
+        }
+    }
 
 # -------------------------------------------------
 # STATIC FILES (WHITENOISE)
